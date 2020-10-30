@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:random_waifu/ui/pages/DetailPage.dart';
+import 'package:random_waifu/ui/widgets/CharacterInformation/CountdownTimer.dart';
 
 class CharacterNameWidget extends StatelessWidget {
   String name;
@@ -10,7 +11,7 @@ class CharacterNameWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      flex: 17,
+      flex: 20,
       child: Ink(
           width: double.infinity,
           height: 100,
@@ -30,7 +31,9 @@ class CharacterNameWidget extends StatelessWidget {
           child: InkWell(
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return DetailPage(characterId: malId,);
+                return DetailPage(
+                  characterId: malId,
+                );
               }));
             },
             child: Row(
@@ -58,16 +61,21 @@ class CharacterNameWidget extends StatelessWidget {
                         color: Colors.grey.shade600,
                       ),
                     ),
-                    Text(
-                      name,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                    Container(
+                      constraints: BoxConstraints(maxWidth: 270),
+                      child: Text(
+                        name,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
                       ),
-                    ),
+                    )
                   ],
-                )
+                ),
+                CountdownTimer()
               ],
             ),
           )),

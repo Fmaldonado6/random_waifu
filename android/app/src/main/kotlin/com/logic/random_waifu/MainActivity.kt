@@ -1,4 +1,4 @@
-package com.example.random_waifu
+package com.logic.random_waifu
 
 import io.flutter.embedding.android.FlutterActivity
 

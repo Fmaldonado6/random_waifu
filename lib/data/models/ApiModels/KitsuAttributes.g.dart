@@ -209,3 +209,35 @@ class KitsuAttributesBuilder
 }
 
 // ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+
+// **************************************************************************
+// TypeAdapterGenerator
+// **************************************************************************
+
+class KitsuAttributesAdapter extends TypeAdapter<KitsuAttributes> {
+  @override
+  final typeId = 2;
+
+  @override
+  KitsuAttributes read(BinaryReader reader) {
+    var numOfFields = reader.readByte();
+    var fields = <int, dynamic>{
+      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return KitsuAttributes();
+  }
+
+  @override
+  void write(BinaryWriter writer, KitsuAttributes obj) {
+    writer
+      ..writeByte(4)
+      ..writeByte(0)
+      ..write(obj.description)
+      ..writeByte(1)
+      ..write(obj.name)
+      ..writeByte(2)
+      ..write(obj.malId)
+      ..writeByte(3)
+      ..write(obj.image);
+  }
+}

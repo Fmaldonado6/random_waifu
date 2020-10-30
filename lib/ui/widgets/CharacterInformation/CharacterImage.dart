@@ -8,7 +8,7 @@ class CharacterImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      flex: 90,
+      flex: 70,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),

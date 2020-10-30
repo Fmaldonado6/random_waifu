@@ -20,18 +20,21 @@ class SavedCharacterAdapter extends TypeAdapter<SavedCharacter> {
       characterId: fields[0] as int,
       imageUrl: fields[1] as String,
       name: fields[2] as String,
+      data: fields[3] as KitsuData,
     );
   }
 
   @override
   void write(BinaryWriter writer, SavedCharacter obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.characterId)
       ..writeByte(1)
       ..write(obj.imageUrl)
       ..writeByte(2)
-      ..write(obj.name);
+      ..write(obj.name)
+      ..writeByte(3)
+      ..write(obj.data);
   }
 }

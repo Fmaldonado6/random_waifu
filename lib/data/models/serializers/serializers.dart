@@ -10,8 +10,6 @@ import 'package:random_waifu/data/models/ApiModels/KitsuAttributes.dart';
 import 'package:random_waifu/data/models/ApiModels/KitsuCharacterInformation.dart';
 import 'package:random_waifu/data/models/ApiModels/KitsuData.dart';
 import 'package:random_waifu/data/models/ApiModels/KitsuImage.dart';
-import 'package:random_waifu/data/models/ApiModels/SavedCharacter.dart';
-import 'package:random_waifu/data/models/ApiModels/SavedInformation.dart';
 
 part 'serializers.g.dart';
 

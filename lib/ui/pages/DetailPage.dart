@@ -20,14 +20,14 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   void initState() {
-    super.initState();
     _detailBloc.getCharacterInformation(widget.characterId);
+    super.initState();
   }
 
   @override
   void dispose() {
-    super.dispose();
     _detailBloc.close();
+    super.dispose();
   }
 
   @override

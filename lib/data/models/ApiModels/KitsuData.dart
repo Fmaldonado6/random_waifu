@@ -2,17 +2,18 @@ library KitsuData;
 
 import 'dart:convert';
 
-import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:hive/hive.dart';
 import 'package:random_waifu/data/models/serializers/serializers.dart';
 
 import 'KitsuAttributes.dart';
 
 part 'KitsuData.g.dart';
+@HiveType(typeId: 1)
 
 abstract class KitsuData implements Built<KitsuData, KitsuDataBuilder> {
-
+  @HiveField(0)
   KitsuAttributes get attributes;
 
   KitsuData._();
