@@ -1,0 +1,2 @@
+class KitsuSearchError implements Exception{}
+
