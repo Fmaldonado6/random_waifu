@@ -1,24 +1,23 @@
 import 'package:kiwi/kiwi.dart' as kiwi;
 import 'package:http/http.dart' as http;
-import 'package:random_waifu/data/network/JikanApi.dart';
-import 'package:random_waifu/data/network/KitsuApi.dart';
-import 'package:random_waifu/data/repositories/JikanRepository.dart';
-import 'package:random_waifu/data/repositories/KitsuRepository.dart';
+import 'package:random_waifu/services/AuthService.dart';
+import 'package:random_waifu/services/DatabaseService.dart';
+import 'package:random_waifu/services/JikanService.dart';
 import 'package:random_waifu/services/PushNotificationService.dart';
-import 'package:random_waifu/ui/bloc/DetailBloc/DetailBloc.dart';
-import 'package:random_waifu/ui/bloc/DetailBloc/DetailState.dart';
-import 'package:random_waifu/ui/bloc/InformationBloc/InformationBloc.dart';
-import 'package:random_waifu/ui/bloc/InformationBloc/InformationState.dart';
+import 'package:random_waifu/services/waifusService.dart';
+import 'package:random_waifu/ui/bloc/DetailBloc/DetailCubit.dart';
+import 'package:random_waifu/ui/bloc/InformationBloc/InformationCubit.dart';
+import 'package:random_waifu/ui/bloc/authCubit/auth_cubit.dart';
 
 void initKiwi() {
   kiwi.KiwiContainer()
     ..registerInstance(http.Client())
     ..registerSingleton((container) => PushNotificationService())
-    ..registerFactory((c) => KitsuApi(c.resolve()))
-    ..registerFactory((c) => JikanApi(c.resolve()))
-    ..registerFactory((c) => KitsuRepository(c.resolve()))
-    ..registerFactory((c) => JikanRepository(c.resolve()))
-    ..registerFactory(
-        (c) => InformationBloc(InformationState.loading(), c.resolve(),c.resolve()))
-    ..registerFactory((c) => DetailBloc(DetailState.loading(), c.resolve()));
+    ..registerSingleton((container) => AuthService())
+    ..registerSingleton((container) => DatabaseService())
+    ..registerFactory((c) => JikanService(c.resolve()))
+    ..registerFactory((c) => WaifusService())
+    ..registerFactory((c) => AuthCubit(c.resolve(), c.resolve()))
+    ..registerFactory((c) => InformationCubit(c.resolve(), c.resolve()))
+    ..registerFactory((c) => DetailCubit(c.resolve()));
 }

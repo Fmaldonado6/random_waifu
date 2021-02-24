@@ -1,38 +1,20 @@
-library DetailState;
+import 'package:random_waifu/data/models/models.dart';
 
+abstract class DetailState {
+  const DetailState();
+}
 
-import 'package:built_value/built_value.dart';
-import 'package:random_waifu/data/models/ApiModels/CharacterInformation.dart';
+class DetailStateLoading extends DetailState {
+  const DetailStateLoading();
+}
 
-part 'DetailState.g.dart';
+class DetailStateLoaded extends DetailState {
+  final Waifu waifu;
+  const DetailStateLoaded(this.waifu);
+}
 
-abstract class DetailState implements Built<DetailState, DetailStateBuilder> {
-  bool get isLoading;
-  bool get hasError;
-  CharacterInformation get characterInformation;
+class DetailStateError extends DetailState {
+  final String error;
 
-  DetailState._();
-
-  factory DetailState([updates(DetailStateBuilder b)]) = _$DetailState;
-
-  factory DetailState.loading() {
-    return new DetailState((b) => b
-      ..isLoading = true
-      ..hasError = false
-      ..characterInformation = null);
-  }
-
-  factory DetailState.error() {
-    return DetailState((b) => b
-      ..isLoading = false
-      ..hasError = true
-      ..characterInformation=null);
-  }
-
-  factory DetailState.success(CharacterInformation characterInformation) {
-    return DetailState((b) => b
-      ..isLoading = false
-      ..hasError = false
-      ..characterInformation.replace(characterInformation));
-  }
+  const DetailStateError(this.error);
 }

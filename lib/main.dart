@@ -1,15 +1,14 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:random_waifu/InjectionContainer.dart';
-import 'package:random_waifu/data/models/ApiModels/KitsuAttributes.dart';
-import 'package:random_waifu/data/models/ApiModels/KitsuData.dart';
-import 'package:random_waifu/data/models/ApiModels/KitsuImage.dart';
-import 'package:random_waifu/data/models/ApiModels/SavedCharacter.dart';
+import 'package:random_waifu/data/models/models.dart';
 import 'package:random_waifu/ui/pages/MainPage.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   initKiwi();
@@ -17,11 +16,6 @@ void main() async {
   final appDocumentDirectory = await getApplicationDocumentsDirectory();
   Hive.init(appDocumentDirectory.path);
   Hive.registerAdapter(SavedCharacterAdapter());
-  Hive.registerAdapter(KitsuDataAdapter());
-  Hive.registerAdapter(KitsuAttributesAdapter());
-  Hive.registerAdapter(KitsuImageAdapter());
-
-  
 
   runApp(
     MyApp(),

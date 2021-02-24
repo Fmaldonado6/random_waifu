@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-class CharacterDetailImage extends StatelessWidget {
+class RoundedImage extends StatelessWidget {
   final String imageUrl;
-  const CharacterDetailImage({Key key, @required this.imageUrl})
-      : super(key: key);
+  const RoundedImage({Key key, @required this.imageUrl}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

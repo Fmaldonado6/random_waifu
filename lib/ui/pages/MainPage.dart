@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart' as kiwi;
-import 'package:random_waifu/ui/bloc/InformationBloc/InformationBloc.dart';
+import 'package:random_waifu/ui/bloc/InformationBloc/InformationCubit.dart';
 import 'package:random_waifu/ui/bloc/InformationBloc/InformationState.dart';
 import 'package:random_waifu/ui/pages/HistoryPage.dart';
 import 'package:random_waifu/ui/widgets/CharacterInformation/CharacterInformationWidget.dart';
@@ -17,7 +17,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final _informationBloc = kiwi.KiwiContainer().resolve<InformationBloc>();
+  final _informationBloc = kiwi.KiwiContainer().resolve<InformationCubit>();
 
   @override
   void initState() {
@@ -65,35 +65,37 @@ class _MainPageState extends State<MainPage> {
           IconButton(
             icon: Icon(Icons.collections_bookmark),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return HistoryPage();
-              },));
+              Navigator.push(context, MaterialPageRoute(
+                builder: (_) {
+                  return HistoryPage();
+                },
+              ));
             },
           ),
         ],
       ),
       body: BlocBuilder(
-        bloc: _informationBloc,
+        cubit: _informationBloc,
         builder: (context, InformationState state) {
-          if (state.isLoading)
+          if (state is InformationStateLoading)
             return Center(
               child: CircularProgressIndicator(
                 backgroundColor: Colors.white,
               ),
             );
 
-          if (state.hasError) {
-            return ErrorMessages(
-              clickedFunction: retry,
+          if (state is InformationStateLoaded) {
+            return Center(
+              child: CharacterInformationWidget(
+                imageUrl: state.waifu.image_url,
+                name: state.waifu.title,
+                malId: state.waifu.mal_id,
+              ),
             );
           }
-          return Center(
-            child: CharacterInformationWidget(
-              imageUrl:
-                  state.characterInformation.data.attributes.image.original,
-              name: state.characterInformation.data.attributes.name,
-              malId: state.characterInformation.data.attributes.malId,
-            ),
+
+          return ErrorMessages(
+            clickedFunction: retry,
           );
         },
       ),

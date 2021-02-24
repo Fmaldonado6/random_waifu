@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:random_waifu/ui/bloc/InformationBloc/InformationBloc.dart';
-import 'package:random_waifu/ui/bloc/InformationBloc/InformationEvent.dart';
+import 'package:random_waifu/ui/bloc/InformationBloc/InformationCubit.dart';
 
 class CountdownTimer extends StatefulWidget {
   CountdownTimer({Key key}) : super(key: key);
@@ -33,7 +32,7 @@ class _CountdownTimerState extends State<CountdownTimer>
                 ? 1.0
                 : _animationController.value)
         .whenComplete(
-            () => BlocProvider.of<InformationBloc>(context).getRandomWaifu());
+            () => BlocProvider.of<InformationCubit>(context).getRandomWaifu());
   }
 
   @override

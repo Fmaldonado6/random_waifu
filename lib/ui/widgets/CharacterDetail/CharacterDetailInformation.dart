@@ -1,33 +1,42 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_admob/native_admob_controller.dart';
-import 'package:random_waifu/data/models/ApiModels/CharacterInformation.dart';
+import 'package:random_waifu/data/models/models.dart';
 import 'package:random_waifu/ui/widgets/CharacterDetail/CharacterExpandableWidget.dart';
 import 'package:random_waifu/ui/widgets/CharacterDetail/CharacterSideImage.dart';
 import 'package:flutter_native_admob/flutter_native_admob.dart';
 
 //ca-app-pub-4382391968703736/3980387355
 class CharacterDetailInformation extends StatefulWidget {
-  final CharacterInformation characterInformation;
+  final Waifu characterInformation;
   String about;
   static const _adUnitID = "ca-app-pub-4382391968703736/3980387355";
-
 
   CharacterDetailInformation({Key key, this.characterInformation})
       : super(key: key) {
     about = characterInformation.about
         .replaceAll(new RegExp(r'\\n'), '\n')
-        .replaceAll(new RegExp(r'\/'), '').replaceAll(new RegExp(r'<spoiler>'), "").replaceAll(new RegExp(r'<//spoiler>'), "");
+        .replaceAll(new RegExp(r'\/'), '')
+        .replaceAll(new RegExp(r'<spoiler>'), "")
+        .replaceAll(new RegExp(r'<//spoiler>'), "");
   }
 
   @override
-  _CharacterDetailInformationState createState() => _CharacterDetailInformationState();
+  _CharacterDetailInformationState createState() =>
+      _CharacterDetailInformationState();
 }
 
-class _CharacterDetailInformationState extends State<CharacterDetailInformation> {
+class _CharacterDetailInformationState
+    extends State<CharacterDetailInformation> {
   final _controller = NativeAdmobController();
 
-    @override
+  @override
+  void initState() {
+    super.initState();
+    _controller.setTestDeviceIds(["61B459AEEFB59EDE3D5B4B0268E5D490"]);
+  }
+
+  @override
   void dispose() {
     _controller.dispose();
     super.dispose();
@@ -72,8 +81,8 @@ class _CharacterDetailInformationState extends State<CharacterDetailInformation>
                         leading: CharacterSideImage(
                             imageUrl: widget.characterInformation
                                 .animeography[index].image_url),
-                        title:
-                            Text(widget.characterInformation.animeography[index].name),
+                        title: Text(widget
+                            .characterInformation.animeography[index].name),
                         subtitle: Text(
                             "Role: ${widget.characterInformation.animeography[index].role}"),
                       );
@@ -97,8 +106,8 @@ class _CharacterDetailInformationState extends State<CharacterDetailInformation>
                         leading: CharacterSideImage(
                             imageUrl: widget.characterInformation
                                 .mangaography[index].image_url),
-                        title:
-                            Text(widget.characterInformation.mangaography[index].name),
+                        title: Text(widget
+                            .characterInformation.mangaography[index].name),
                         subtitle: Text(
                             "Role: ${widget.characterInformation.mangaography[index].role}"),
                       );
@@ -122,8 +131,8 @@ class _CharacterDetailInformationState extends State<CharacterDetailInformation>
                         leading: CharacterSideImage(
                             imageUrl: widget.characterInformation
                                 .voice_actors[index].image_url),
-                        title:
-                            Text(widget.characterInformation.voice_actors[index].name),
+                        title: Text(widget
+                            .characterInformation.voice_actors[index].name),
                         subtitle: Text(
                             "Language: ${widget.characterInformation.voice_actors[index].language}"),
                       );

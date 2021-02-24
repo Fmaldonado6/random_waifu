@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart' as kiwi;
-import 'package:random_waifu/ui/bloc/DetailBloc/DetailBloc.dart';
+import 'package:random_waifu/ui/bloc/DetailBloc/DetailCubit.dart';
 import 'package:random_waifu/ui/bloc/DetailBloc/DetailState.dart';
 import 'package:random_waifu/ui/widgets/CharacterDetail/CharacterDetail.dart';
 import 'package:random_waifu/ui/widgets/ErrorMessages/ErrorMessages.dart';
@@ -16,11 +16,11 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
-  final _detailBloc = kiwi.KiwiContainer().resolve<DetailBloc>();
+  final _detailBloc = kiwi.KiwiContainer().resolve<DetailCubit>();
 
   @override
   void initState() {
-    _detailBloc.getCharacterInformation(widget.characterId);
+    _detailBloc.getWaifuInformation(widget.characterId);
     super.initState();
   }
 
@@ -54,20 +54,20 @@ class _DetailPageState extends State<DetailPage> {
           ],
         ),
         child: BlocBuilder(
-          bloc: _detailBloc,
+          cubit: _detailBloc,
           builder: (context, DetailState state) {
-            if (state.isLoading)
+            if (state is DetailStateLoading)
               return Center(
                 child: CircularProgressIndicator(),
               );
 
-            if (state.hasError)
-              return ErrorMessages(
-                clickedFunction: retry,
+            if (state is DetailStateLoaded)
+              return CharacterDetail(
+                characterInformation: state.waifu,
               );
 
-            return CharacterDetail(
-              characterInformation: state.characterInformation,
+            return ErrorMessages(
+              clickedFunction: retry,
             );
           },
         ),
@@ -76,6 +76,6 @@ class _DetailPageState extends State<DetailPage> {
   }
 
   void retry() {
-    _detailBloc.getCharacterInformation(widget.characterId);
+    _detailBloc.getWaifuInformation(widget.characterId);
   }
 }

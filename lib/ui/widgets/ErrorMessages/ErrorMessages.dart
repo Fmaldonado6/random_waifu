@@ -15,10 +15,14 @@ class ErrorMessages extends StatelessWidget {
             size: 55,
             color: Colors.grey,
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           RaisedButton(
             onPressed: clickedFunction,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18),
+            ),
             child: Text("RETRY"),
             color: Colors.indigo.shade100,
           )

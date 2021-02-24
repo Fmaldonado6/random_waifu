@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:flutter_native_admob/native_admob_controller.dart';
 import 'package:hive/hive.dart';
-import 'package:random_waifu/data/models/ApiModels/SavedCharacter.dart';
+import 'package:random_waifu/data/models/models.dart';
 import 'package:random_waifu/ui/widgets/CharacterDetail/CharacterSideImage.dart';
 
 import 'DetailPage.dart';
@@ -21,10 +21,12 @@ class _HistoryPageState extends State<HistoryPage> {
   final _controller = NativeAdmobController();
   double _adHeigt = 0;
   StreamSubscription _subscription;
+
   @override
   void initState() {
-    _subscription = _controller.stateChanged.listen(_onStateChanged);
     super.initState();
+    _subscription = _controller.stateChanged.listen(_onStateChanged);
+    _controller.setTestDeviceIds(["61B459AEEFB59EDE3D5B4B0268E5D490"]);
   }
 
   @override
@@ -87,8 +89,7 @@ class _HistoryPageState extends State<HistoryPage> {
   }
 
   Widget _buildList() {
-     final savedCharacters = Hive.box('savedCharacters');
-
+    final savedCharacters = Hive.box('savedCharacters');
     return Container(
       margin: EdgeInsets.only(top: 20),
       child: ListView.separated(

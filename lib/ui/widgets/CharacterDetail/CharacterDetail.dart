@@ -1,11 +1,11 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:random_waifu/data/models/ApiModels/CharacterInformation.dart';
-import 'package:random_waifu/ui/widgets/CharacterDetail/CharacterDetailImage.dart';
+import 'package:random_waifu/data/models/models.dart';
 import 'package:random_waifu/ui/widgets/CharacterDetail/CharacterDetailInformation.dart';
+import 'package:random_waifu/ui/widgets/shared/RoundedImage.dart';
 
 class CharacterDetail extends StatelessWidget {
-  final CharacterInformation characterInformation;
+  final Waifu characterInformation;
   CharacterDetail({Key key, this.characterInformation}) : super(key: key);
 
   @override
@@ -13,7 +13,7 @@ class CharacterDetail extends StatelessWidget {
     return Container(
       child: Column(
         children: <Widget>[
-          CharacterDetailImage(
+          RoundedImage(
             imageUrl: characterInformation.image_url,
           ),
           Center(
