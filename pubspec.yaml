@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.1.1+13
+version: 1.1.2+14
 
 environment:
   sdk: ">=2.8.4 <3.0.0"
@@ -70,8 +70,7 @@ flutter_icons:
 
 # The following section is specific to Flutter.
 flutter:
-  assets:
-    - assets/waifus.json
+
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
