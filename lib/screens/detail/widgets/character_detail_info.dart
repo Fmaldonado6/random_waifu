@@ -1,6 +1,7 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_admob/native_admob_controller.dart';
+import 'package:random_waifu/app_config.dart';
 import 'package:random_waifu/models/models.dart';
 import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:random_waifu/screens/detail/widgets/expandable_widget.dart';
@@ -9,7 +10,7 @@ import 'package:random_waifu/screens/detail/widgets/side_image.dart';
 class CharacterDetailInformation extends StatefulWidget {
   final Waifu characterInformation;
   final String date;
-  static const _adUnitID = "ca-app-pub-4382391968703736/3980387355";
+  final _adUnitID = AppConfig().adId;
 
   CharacterDetailInformation({
     Key key,
@@ -129,7 +130,7 @@ class _CharacterDetailInformationState
             height: 100,
             child: NativeAdmob(
               controller: _controller,
-              adUnitID: CharacterDetailInformation._adUnitID,
+              adUnitID: widget._adUnitID,
               loading: Center(
                 child: CircularProgressIndicator(),
               ),

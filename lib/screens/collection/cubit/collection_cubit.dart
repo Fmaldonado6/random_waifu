@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:flutter_native_admob/native_admob_controller.dart';
 import 'package:hive/hive.dart';
+import 'package:random_waifu/app_config.dart';
 import 'package:random_waifu/models/models.dart';
 import 'package:random_waifu/repositories/local_database_repository.dart';
 import 'package:random_waifu/screens/collection/cubit/collection_state.dart';
@@ -16,7 +17,7 @@ class CollectionCubit extends Cubit<CollectionState> {
   Box<dynamic> savedWaifus;
   ScrollController scrollController;
   final _controller = NativeAdmobController();
-  var _adUnitID = "ca-app-pub-4382391968703736/3980387355";
+  var _adUnitID = AppConfig().adId;
   StreamSubscription _subscription;
   double _adHeigt = 0;
   int currentCharacters = 0;
