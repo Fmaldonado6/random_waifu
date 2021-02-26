@@ -48,22 +48,22 @@ class HomeCubit extends Cubit<HomeState> {
       bool shouldFetchWaifu = today.day != lastWaifuDate && today.hour >= 0 ||
           lastWaifuDate == null;
 
-      if (shouldFetchWaifu)
+      if (shouldFetchWaifu) {
         do {
           waifu = await this.waifusService.getRandomWaifu();
         } while (await this._databaseRepository.characterExists(waifu.mal_id));
-      else
+        
+        final newCharacter = SavedCharacter(
+          characterId: waifu.mal_id,
+          date: _getDate(),
+          imageUrl: waifu.image_url,
+          name: waifu.title,
+        );
+
+        await this._databaseRepository.addWaifu(newCharacter);
+        await this._databaseRepository.resetTimer();
+      } else
         waifu = this._databaseRepository.loadLastWaifu();
-
-      final newCharacter = SavedCharacter(
-        characterId: waifu.mal_id,
-        date: _getDate(),
-        imageUrl: waifu.image_url,
-        name: waifu.title,
-      );
-
-      await this._databaseRepository.addWaifu(newCharacter);
-      await this._databaseRepository.resetTimer();
 
       emit(HomeStateLoaded(waifu));
     } catch (e) {
