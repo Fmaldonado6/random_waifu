@@ -103,13 +103,13 @@ class _CharacterDetailInformationState
             child: widget.characterInformation.voice_actors.length == 0
                 ? ListTile(
                     leading: Icon(Icons.help_outline),
-                    title: Text("No voice actors found"),
+                    title: Text("No voice actresses found"),
                   )
                 : _getRolesList(
                     widget.characterInformation.voice_actors,
                     "Language",
                   ),
-            header: "Voice actors",
+            header: "Voice actresses",
           ),
           Divider(),
           widget.date != null

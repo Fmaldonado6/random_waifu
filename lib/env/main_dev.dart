@@ -13,7 +13,6 @@ void main() async {
   final appDocumentDirectory = await getApplicationDocumentsDirectory();
   Hive.init(appDocumentDirectory.path);
   Hive.registerAdapter(SavedCharacterAdapter());
-  Firebase.initializeApp();
   AppConfig(adId: "ca-app-pub-3940256099942544/2247696110");
   runApp(
     MyApp(),

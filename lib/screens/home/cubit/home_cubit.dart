@@ -52,7 +52,6 @@ class HomeCubit extends Cubit<HomeState> {
         do {
           waifu = await this.waifusService.getRandomWaifu();
         } while (await this._databaseRepository.characterExists(waifu.mal_id));
-        
         final newCharacter = SavedCharacter(
           characterId: waifu.mal_id,
           date: _getDate(),
