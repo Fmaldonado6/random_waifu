@@ -14,7 +14,7 @@ class WaifuListItem extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: Colors.grey.shade300,
+            color: Colors.grey.shade200,
           ),
         ),
       ),

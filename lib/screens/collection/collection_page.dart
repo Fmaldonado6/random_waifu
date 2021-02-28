@@ -4,6 +4,7 @@ import 'package:random_waifu/screens/collection/cubit/collection_cubit.dart';
 import 'package:random_waifu/screens/collection/cubit/collection_state.dart';
 import 'package:random_waifu/screens/collection/widgets/collection_loaded.dart';
 import 'package:kiwi/kiwi.dart' as kiwi;
+import 'package:random_waifu/widgets/error_message.dart';
 
 class CollectionPage extends StatefulWidget {
   CollectionPage({Key key}) : super(key: key);
@@ -68,8 +69,9 @@ class _CollectionPageState extends State<CollectionPage> {
 
               if (state is CollectionStateLoaded)
                 return CollectionLoaded(waifus: state.waifus);
-
-              return Center(child: CircularProgressIndicator());
+              return ErrorMessages(
+                clickedFunction: this._collectionCubit.getCollection,
+              );
             },
           ),
         ),
