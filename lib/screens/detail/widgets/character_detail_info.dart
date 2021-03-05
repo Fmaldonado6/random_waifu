@@ -81,7 +81,7 @@ class _CharacterDetailInformationState
                   )
                 : _getRolesList(
                     widget.characterInformation.animeography,
-                    "Role",
+                    Subtitles.animes.index,
                   ),
             header: "Animes",
           ),
@@ -94,7 +94,7 @@ class _CharacterDetailInformationState
                   )
                 : _getRolesList(
                     widget.characterInformation.mangaography,
-                    "Role",
+                    Subtitles.mangas.index,
                   ),
             header: "Mangas",
           ),
@@ -107,7 +107,7 @@ class _CharacterDetailInformationState
                   )
                 : _getRolesList(
                     widget.characterInformation.voice_actors,
-                    "Language",
+                    Subtitles.actresses.index,
                   ),
             header: "Voice actresses",
           ),
@@ -142,7 +142,7 @@ class _CharacterDetailInformationState
     );
   }
 
-  ListView _getRolesList(List<AnimeInformation> list, String subtitle) {
+  ListView _getRolesList(List<AnimeInformation> list, int subtitle) {
     return ListView.builder(
       itemCount: list.length,
       shrinkWrap: true,
@@ -154,10 +154,14 @@ class _CharacterDetailInformationState
           ),
           title: Text(list[index].name),
           subtitle: Text(
-            "$subtitle: ${list[index].language}",
+            subtitle > Subtitles.mangas.index
+                ? "Language: ${list[index].language}"
+                : "Role: ${list[index].role}",
           ),
         );
       },
     );
   }
 }
+
+enum Subtitles { animes, mangas, actresses }

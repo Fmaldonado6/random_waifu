@@ -19,11 +19,37 @@ class SavedCharacter {
     this.characterId,
     this.imageUrl,
     this.name,
-    this.date,
+    this.date
   });
   factory SavedCharacter.fromJson(Map<String, dynamic> json) =>
       _$SavedCharacterFromJson(json);
   Map<String, dynamic> toJson() => _$SavedCharacterToJson(this);
+}
+
+@HiveType(typeId: 1)
+class KitsuData {
+  @HiveField(0)
+  KitsuAttributes attributes;
+
+  KitsuData();
+}
+
+@HiveType(typeId: 2)
+class KitsuAttributes {
+  @HiveField(0)
+  String description;
+  @HiveField(1)
+  String name;
+  @HiveField(2)
+  int malId;
+  @HiveField(3)
+  KitsuImage image;
+}
+
+@HiveType(typeId: 3)
+class KitsuImage {
+  @HiveField(0)
+  String original;
 }
 
 @JsonSerializable()

@@ -49,6 +49,112 @@ class SavedCharacterAdapter extends TypeAdapter<SavedCharacter> {
           typeId == other.typeId;
 }
 
+class KitsuDataAdapter extends TypeAdapter<KitsuData> {
+  @override
+  final int typeId = 1;
+
+  @override
+  KitsuData read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return KitsuData()..attributes = fields[0] as KitsuAttributes;
+  }
+
+  @override
+  void write(BinaryWriter writer, KitsuData obj) {
+    writer
+      ..writeByte(1)
+      ..writeByte(0)
+      ..write(obj.attributes);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is KitsuDataAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class KitsuAttributesAdapter extends TypeAdapter<KitsuAttributes> {
+  @override
+  final int typeId = 2;
+
+  @override
+  KitsuAttributes read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return KitsuAttributes()
+      ..description = fields[0] as String
+      ..name = fields[1] as String
+      ..malId = fields[2] as int
+      ..image = fields[3] as KitsuImage;
+  }
+
+  @override
+  void write(BinaryWriter writer, KitsuAttributes obj) {
+    writer
+      ..writeByte(4)
+      ..writeByte(0)
+      ..write(obj.description)
+      ..writeByte(1)
+      ..write(obj.name)
+      ..writeByte(2)
+      ..write(obj.malId)
+      ..writeByte(3)
+      ..write(obj.image);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is KitsuAttributesAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class KitsuImageAdapter extends TypeAdapter<KitsuImage> {
+  @override
+  final int typeId = 3;
+
+  @override
+  KitsuImage read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return KitsuImage()..original = fields[0] as String;
+  }
+
+  @override
+  void write(BinaryWriter writer, KitsuImage obj) {
+    writer
+      ..writeByte(1)
+      ..writeByte(0)
+      ..write(obj.original);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is KitsuImageAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
