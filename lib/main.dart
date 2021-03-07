@@ -13,7 +13,11 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Random Waifu',
         theme: ThemeData(
-          appBarTheme: AppBarTheme(elevation: 0, color: Colors.indigo),
+          appBarTheme: AppBarTheme(
+            elevation: 0,
+            color: Colors.indigo,
+            brightness: Brightness.dark,
+          ),
           primarySwatch: Colors.indigo,
           accentColor: Colors.indigo,
           visualDensity: VisualDensity.adaptivePlatformDensity,
