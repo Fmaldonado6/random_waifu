@@ -20,7 +20,7 @@ class SavedCharacterAdapter extends TypeAdapter<SavedCharacter> {
       characterId: fields[0] as int,
       imageUrl: fields[1] as String,
       name: fields[2] as String,
-      date: fields[3] as String,
+      date: fields[4] as String,
     );
   }
 
@@ -34,7 +34,7 @@ class SavedCharacterAdapter extends TypeAdapter<SavedCharacter> {
       ..write(obj.imageUrl)
       ..writeByte(2)
       ..write(obj.name)
-      ..writeByte(3)
+      ..writeByte(4)
       ..write(obj.date);
   }
 

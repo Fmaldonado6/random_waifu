@@ -12,7 +12,7 @@ class SavedCharacter {
   final String imageUrl;
   @HiveField(2)
   final String name;
-  @HiveField(3)
+  @HiveField(4)
   final String date;
 
   SavedCharacter({
