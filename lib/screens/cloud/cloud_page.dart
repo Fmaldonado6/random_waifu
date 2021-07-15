@@ -60,7 +60,7 @@ class _CloudPageState extends State<CloudPage> {
         child: BlocProvider(
           create: (context) => _cloudCubit,
           child: BlocBuilder<CloudCubit, CloudState>(
-            cubit: _cloudCubit,
+            bloc: _cloudCubit,
             builder: (context, state) {
               if (state is CloudStateLogin)
                 return Center(

@@ -34,15 +34,15 @@ class CharacterInformationWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                  icon: Icon(Icons.feedback),
+                  icon: Icon(Icons.autorenew),
                   color: Colors.white,
                   onPressed: () => ConfirmDialog().show(
                     context: context,
-                    title: "Not a waifu report",
-                    confirm: "Report",
-                    text: "Would you like to report this character?",
+                    title: "Change waifu",
+                    confirm: "Watch",
+                    text: "Watch an ad to change your todays' waifu!",
                     callback: () {
-                      BlocProvider.of<HomeCubit>(context).reportWaifu(waifu);
+                      BlocProvider.of<HomeCubit>(context).showAd();
                       Navigator.of(context).pop();
                     },
                   ),

@@ -1,5 +1,6 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:random_waifu/models/models.dart';
 import 'package:random_waifu/screens/detail/widgets/character_detail_info.dart';
 import 'package:random_waifu/widgets/rounded_image.dart';
@@ -7,8 +8,13 @@ import 'package:random_waifu/widgets/rounded_image.dart';
 class CharacterDetail extends StatelessWidget {
   final Waifu characterInformation;
   final String date;
-  CharacterDetail({Key key, this.characterInformation, this.date})
-      : super(key: key);
+  final NativeAd ad;
+  CharacterDetail({
+    Key key,
+    this.characterInformation,
+    this.date,
+    this.ad,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +37,9 @@ class CharacterDetail extends StatelessWidget {
           CharacterDetailInformation(
             characterInformation: characterInformation,
             date: date,
-          )
+            adWidget: ad,
+          ),
+       
         ],
       ),
     );

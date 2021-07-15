@@ -1,6 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:random_waifu/app_config.dart';
 import 'package:random_waifu/screens/collection/collection_page.dart';
 import 'package:random_waifu/screens/home/cubit/home_cubit.dart';
 import 'package:random_waifu/screens/home/cubit/home_state.dart';
@@ -22,7 +23,8 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    this._homeCubit.getRandomWaifu();
+    this._homeCubit.loadAd(AppConfig().rewardedAd);
+    this._homeCubit.initApp();
   }
 
   @override
@@ -41,7 +43,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void retry() {
-    _homeCubit.getRandomWaifu();
+    _homeCubit.initApp();
   }
 
   @override
@@ -75,7 +77,7 @@ class _HomePageState extends State<HomePage> {
       body: BlocProvider(
         create: (context) => _homeCubit,
         child: BlocBuilder<HomeCubit, HomeState>(
-          cubit: _homeCubit,
+          bloc: _homeCubit,
           builder: (context, state) {
             if (state is HomeStateLoading)
               return Center(

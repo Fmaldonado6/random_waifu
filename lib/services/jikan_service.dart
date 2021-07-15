@@ -15,7 +15,7 @@ class JikanService {
 
     final urlEncoded = Uri.encodeFull(urlRaw);
 
-    final response = await client.get(urlEncoded);
+    final response = await client.get(Uri.parse(urlEncoded));
     if (response.statusCode == 200)
       return Waifu.fromJson(jsonDecode(response.body));
 

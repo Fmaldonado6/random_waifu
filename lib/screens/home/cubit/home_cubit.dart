@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:random_waifu/app_config.dart';
 import 'package:random_waifu/models/models.dart';
 import 'package:random_waifu/repositories/local_database_repository.dart';
 import 'package:random_waifu/screens/home/cubit/home_state.dart';
@@ -11,6 +13,9 @@ class HomeCubit extends Cubit<HomeState> {
   final WaifusService waifusService;
   final PushNotificationService pushNotificationService;
   final DatabaseRepository _databaseRepository;
+
+  RewardedAd _ad;
+
   HomeCubit(
     this.waifusService,
     this._databaseRepository,
@@ -32,13 +37,58 @@ class HomeCubit extends Cubit<HomeState> {
     getRandomWaifu();
   }
 
-  Future getRandomWaifu() async {
+  Future loadAd(String adId) async {
+    await RewardedAd.load(
+      adUnitId: adId,
+      request: AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (RewardedAd ad) {
+          this._ad = ad;
+        },
+        onAdFailedToLoad: (LoadAdError error) {
+          print("Error loading ad $error");
+        },
+      ),
+    );
+    _ad.fullScreenContentCallback = FullScreenContentCallback(
+      onAdDismissedFullScreenContent: (RewardedAd ad) {
+        print('$ad onAdDismissedFullScreenContent.');
+        ad.dispose();
+      },
+      onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
+        ad.dispose();
+      },
+    );
+  }
+
+  void showAd() async {
+    await this.loadAd(AppConfig().rewardedAd);
+    _ad.show(
+      onUserEarnedReward: (RewardedAd ad, RewardItem item) async {
+        await this._databaseRepository.deleteLastWaifu();
+        this.getRandomWaifu();
+      },
+    );
+  }
+
+  Future initApp() async {
     emit(HomeStateLoading());
 
     try {
       await _databaseRepository.init();
       await pushNotificationService.initialise();
       await Firebase.initializeApp();
+      this.getRandomWaifu();
+    } catch (e) {
+      print(e);
+      emit(HomeStateError(e.toString()));
+    }
+  }
+
+  Future getRandomWaifu() async {
+    emit(HomeStateLoading());
+
+    try {
       var lastWaifuDate = this._databaseRepository.getLastWaifuDate();
 
       var today = DateTime.now();

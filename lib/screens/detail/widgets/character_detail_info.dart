@@ -1,22 +1,18 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_admob/native_admob_controller.dart';
-import 'package:random_waifu/app_config.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:random_waifu/models/models.dart';
-import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:random_waifu/screens/detail/widgets/expandable_widget.dart';
 import 'package:random_waifu/screens/detail/widgets/side_image.dart';
 
 class CharacterDetailInformation extends StatefulWidget {
   final Waifu characterInformation;
   final String date;
-  final _adUnitID = AppConfig().adId;
+  final NativeAd adWidget;
 
-  CharacterDetailInformation({
-    Key key,
-    this.characterInformation,
-    this.date,
-  }) : super(key: key);
+  CharacterDetailInformation(
+      {Key key, this.characterInformation, this.date, this.adWidget})
+      : super(key: key);
 
   @override
   _CharacterDetailInformationState createState() =>
@@ -25,11 +21,8 @@ class CharacterDetailInformation extends StatefulWidget {
 
 class _CharacterDetailInformationState
     extends State<CharacterDetailInformation> {
-  final _controller = NativeAdmobController();
-
   @override
   void dispose() {
-    _controller.dispose();
     super.dispose();
   }
 
@@ -128,14 +121,13 @@ class _CharacterDetailInformationState
             width: double.infinity,
             margin: EdgeInsets.only(top: 30),
             height: 100,
-            child: NativeAdmob(
-              controller: _controller,
-              adUnitID: widget._adUnitID,
-              loading: Center(
-                child: CircularProgressIndicator(),
-              ),
-              type: NativeAdmobType.full,
-            ),
+            child: widget.adWidget != null
+                ? AdWidget(
+                    ad: widget.adWidget,
+                  )
+                : Center(
+                    child: CircularProgressIndicator(),
+                  ),
           )
         ],
       ),

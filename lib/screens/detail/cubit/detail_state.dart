@@ -1,4 +1,5 @@
-
+import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:random_waifu/models/models.dart';
 
 abstract class DetailState {
@@ -11,7 +12,8 @@ class DetailStateLoading extends DetailState {
 
 class DetailStateLoaded extends DetailState {
   final Waifu waifu;
-  const DetailStateLoaded(this.waifu);
+  final NativeAd adWidget;
+  const DetailStateLoaded(this.waifu, this.adWidget);
 }
 
 class DetailStateError extends DetailState {

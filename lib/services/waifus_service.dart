@@ -16,7 +16,7 @@ class WaifusService {
   Future<JsonWaifu> getRandomWaifu() async {
     final urlEncoded = Uri.encodeFull(url);
 
-    final response = await client.get(urlEncoded);
+    final response = await client.get(Uri.parse(urlEncoded));
     if (response.statusCode != 200) throw new AppError();
 
     final json = jsonDecode(response.body) as List<Object>;
@@ -28,7 +28,4 @@ class WaifusService {
 
     return list[index];
   }
-
-
-
 }

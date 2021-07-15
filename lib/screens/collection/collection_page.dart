@@ -59,7 +59,7 @@ class _CollectionPageState extends State<CollectionPage> {
         child: BlocProvider(
           create: (context) => _collectionCubit,
           child: BlocBuilder<CollectionCubit, CollectionState>(
-            cubit: _collectionCubit,
+            bloc: _collectionCubit,
             builder: (context, state) {
               if (state is CollectionStateLoading)
                 return Center(

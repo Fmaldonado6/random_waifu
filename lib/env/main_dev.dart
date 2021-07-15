@@ -6,6 +6,7 @@ import 'package:random_waifu/main.dart';
 import 'package:random_waifu/models/models.dart';
 import 'package:hive/hive.dart';
 import 'package:random_waifu/services/push_notification_service.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 void main() async {
   initKiwi();
@@ -16,7 +17,11 @@ void main() async {
   Hive.registerAdapter(KitsuDataAdapter());
   Hive.registerAdapter(KitsuAttributesAdapter());
   Hive.registerAdapter(KitsuImageAdapter());
-  AppConfig(adId: "ca-app-pub-3940256099942544/2247696110");
+  await MobileAds.instance.initialize();
+  AppConfig(
+    adId: "ca-app-pub-3940256099942544/2247696110",
+    rewardedAd: "ca-app-pub-3940256099942544/5224354917",
+  );
   runApp(
     MyApp(),
   );

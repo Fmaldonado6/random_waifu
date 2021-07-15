@@ -14,14 +14,16 @@ class ConfirmDialog {
           title: Text(title),
           content: Text(text),
           actions: <Widget>[
-            RaisedButton(
-              color: Colors.indigoAccent,
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.indigoAccent,
+              ),
               onPressed: () async {
                 callback();
               },
               child: Text(confirm),
             ),
-            FlatButton(
+            TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },

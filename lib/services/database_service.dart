@@ -14,10 +14,7 @@ class DatabaseService {
   }
 
   Future<FireBaseResponse> loadWaifus(String id) async {
-    print(id);
     var snapshot = await db.child(id).once();
-
-    print(snapshot);
 
     var json = jsonDecode(snapshot.value);
 

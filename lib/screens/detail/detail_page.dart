@@ -54,7 +54,7 @@ class _DetailPageState extends State<DetailPage> {
           ],
         ),
         child: BlocBuilder<DetailCubit, DetailState>(
-          cubit: _detailBloc,
+          bloc: _detailBloc,
           builder: (context, DetailState state) {
             if (state is DetailStateLoading)
               return Center(
@@ -65,6 +65,7 @@ class _DetailPageState extends State<DetailPage> {
               return CharacterDetail(
                 characterInformation: state.waifu,
                 date: widget.date,
+                ad: state.adWidget,
               );
 
             return ErrorMessages(
