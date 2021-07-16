@@ -1,7 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
-import 'package:random_waifu/models/models.dart';
+import 'package:random_waifu/data/database/entities/entities.dart';
 
 
 @singleton

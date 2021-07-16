@@ -1,0 +1,55 @@
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:injectable/injectable.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
+
+@singleton
+class PushNotificationService {
+  Future initialise() async {
+    final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    const androidSettings = AndroidInitializationSettings('app_icon');
+    const androidChannel = AndroidNotificationChannel(
+      'channel_id_1',
+      "Channel",
+      "Notifications",
+      importance: Importance.max,
+    );
+
+    final initializationSettings =
+        InitializationSettings(android: androidSettings);
+
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(androidChannel);
+
+    tz.initializeTimeZones();
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+      'channel_id_1',
+      'Channel',
+      'Notifications',
+    );
+
+    const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+
+    final now = tz.TZDateTime.now(tz.local);
+
+    print("Difference ${23 - now.hour}");
+
+    final difference = tz.TZDateTime.now(tz.local).add(Duration(
+      hours: 23 - now.hour,
+      minutes: 59 - now.minute,
+      seconds: 60 - now.second,
+    ));
+
+    await flutterLocalNotificationsPlugin.zonedSchedule(0, "New waifu!",
+        "A new waifu is available!", difference, platformChannelSpecifics,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        androidAllowWhileIdle: true,
+        matchDateTimeComponents: DateTimeComponents.time);
+  }
+}

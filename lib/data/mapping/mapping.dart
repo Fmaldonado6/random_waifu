@@ -1,18 +1,19 @@
 import 'package:hive/hive.dart';
-import 'package:random_waifu/models/models.dart';
+import 'package:random_waifu/data/database/entities/entities.dart';
+import 'package:random_waifu/data/models/models.dart';
 
 class Mapping {
   static JsonWaifu savedWaifuToJsonWaifu(SavedCharacter savedCharacter) {
     return JsonWaifu(
         anime: savedCharacter.anime,
-        image_url: savedCharacter.imageUrl,
-        mal_id: savedCharacter.characterId,
+        imageUrl: savedCharacter.imageUrl,
+        malId: savedCharacter.characterId,
         manga: savedCharacter.manga,
         title: savedCharacter.name,
         date: savedCharacter.date);
   }
 
-  static List<JsonWaifu> savedWaifuBoxToLJsonWaifuList(
+  static List<JsonWaifu> savedWaifuBoxToJsonWaifuList(
     Box<SavedCharacter> savedCharacter,
   ) {
     final list = <JsonWaifu>[];
@@ -21,8 +22,8 @@ class Mapping {
       list.add(JsonWaifu(
         anime: element.anime,
         date: element.date,
-        image_url: element.imageUrl,
-        mal_id: element.characterId,
+        imageUrl: element.imageUrl,
+        malId: element.characterId,
         manga: element.manga,
         title: element.name,
       ));
@@ -39,9 +40,9 @@ class Mapping {
   static SavedCharacter jsonWaifuToSavedCharacter(JsonWaifu jsonWaifu) {
     return SavedCharacter(
       anime: jsonWaifu.anime,
-      characterId: jsonWaifu.mal_id,
+      characterId: jsonWaifu.malId,
       date: _getDate(),
-      imageUrl: jsonWaifu.image_url,
+      imageUrl: jsonWaifu.imageUrl,
       manga: jsonWaifu.manga,
       name: jsonWaifu.title,
     );

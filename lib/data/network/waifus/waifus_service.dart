@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
+import 'package:random_waifu/data/models/models.dart';
 import 'package:random_waifu/data/network/data_service.dart';
-import 'package:random_waifu/models/models.dart';
 
+@singleton
 class WaifusService extends DataService {
   WaifusService(
     Dio dio,

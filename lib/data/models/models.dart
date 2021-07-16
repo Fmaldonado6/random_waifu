@@ -1,26 +1,25 @@
-import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:random_waifu/data/database/entities/entities.dart';
 
 part 'models.g.dart';
 
-
 @JsonSerializable()
 class JsonWaifu {
   String? title;
-  int? mal_id;
-  String? image_url;
+  @JsonKey(name: "mal_id")
+  int? malId;
+  @JsonKey(name: "image_url")
+  String? imageUrl;
   AnimeInformation? anime;
   AnimeInformation? manga;
   String? date;
-  JsonWaifu({
-    this.title,
-    this.mal_id,
-    this.image_url,
-    this.anime,
-    this.manga,
-    this.date
-  });
+  JsonWaifu(
+      {this.title,
+      this.malId,
+      this.imageUrl,
+      this.anime,
+      this.manga,
+      this.date});
 
   factory JsonWaifu.fromJson(Map<String, dynamic> json) =>
       _$JsonWaifuFromJson(json);
@@ -31,23 +30,24 @@ class JsonWaifu {
 class Waifu {
   String? name;
   String? about;
-  String? image_url;
+  @JsonKey(name: "image_url")
+  String? imageUrl;
   List<AnimeInformation>? animeography;
   List<AnimeInformation>? mangaography;
-  List<AnimeInformation>? voice_actors;
+  @JsonKey(name: "voice_actors")
+  List<AnimeInformation>? voiceActors;
 
   Waifu(
       {this.name,
       this.about,
-      this.image_url,
+      this.imageUrl,
       this.animeography,
       this.mangaography,
-      this.voice_actors});
+      this.voiceActors});
 
   factory Waifu.fromJson(Map<String, dynamic> json) => _$WaifuFromJson(json);
   Map<String, dynamic> toJson() => _$WaifuToJson(this);
 }
-
 
 @JsonSerializable()
 class FireBaseResponse {

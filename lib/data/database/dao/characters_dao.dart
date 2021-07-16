@@ -1,6 +1,7 @@
+import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
 import 'package:random_waifu/data/database/database.dart';
-import 'package:random_waifu/models/models.dart';
+import 'package:random_waifu/data/database/entities/entities.dart';
 
 @singleton
 class CharactersDao {
@@ -12,19 +13,23 @@ class CharactersDao {
     await database.characterBox?.add(waifu);
   }
 
-  void saveAll(List<SavedCharacter> waifu) async {
+  Future<Box<SavedCharacter>> getWaifus() async{
+    return database.characterBox!;
+  }
+
+  Future saveAll(List<SavedCharacter> waifu) async {
     await database.characterBox?.addAll(waifu);
   }
 
-  void updateWaifu(SavedCharacter waifu, int position) async {
+  Future updateWaifu(SavedCharacter waifu, int position) async {
     await database.characterBox?.putAt(position, waifu);
   }
 
-  void deleteWaifu(SavedCharacter waifu, int position) async {
+  Future deleteWaifu(SavedCharacter waifu, int position) async {
     await database.characterBox?.deleteAt(position);
   }
 
-  void deleteAll() async {
+  Future deleteAll() async {
     await database.characterBox?.clear();
   }
 }
