@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:random_waifu/screens/detail/cubit/detail_cubit.dart';
-import 'package:kiwi/kiwi.dart' as kiwi;
-import 'package:random_waifu/screens/detail/cubit/detail_state.dart';
-import 'package:random_waifu/screens/detail/widgets/character_detail.dart';
-import 'package:random_waifu/widgets/error_message.dart';
+import 'package:random_waifu/di/injection_config.dart';
+import 'package:random_waifu/ui/screens/detail/cubit/detail_cubit.dart';
+import 'package:random_waifu/ui/screens/detail/cubit/detail_state.dart';
+import 'package:random_waifu/ui/screens/detail/widgets/character_detail.dart';
+import 'package:random_waifu/ui/widgets/error_message.dart';
 
 class DetailPage extends StatefulWidget {
   final int characterId;
@@ -20,7 +20,7 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
-  final _detailBloc = kiwi.KiwiContainer().resolve<DetailCubit>();
+  final _detailBloc = getIt.get<DetailCubit>();
 
   @override
   void initState() {

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:random_waifu/screens/collection/cubit/collection_cubit.dart';
-import 'package:random_waifu/screens/collection/cubit/collection_state.dart';
-import 'package:random_waifu/screens/collection/widgets/collection_loaded.dart';
-import 'package:kiwi/kiwi.dart' as kiwi;
-import 'package:random_waifu/widgets/error_message.dart';
+import 'package:random_waifu/di/injection_config.dart';
+import 'package:random_waifu/ui/screens/collection/cubit/collection_cubit.dart';
+import 'package:random_waifu/ui/screens/collection/cubit/collection_state.dart';
+import 'package:random_waifu/ui/widgets/error_message.dart';
+
+import 'widgets/collection_loaded.dart';
 
 class CollectionPage extends StatefulWidget {
   CollectionPage({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class CollectionPage extends StatefulWidget {
 }
 
 class _CollectionPageState extends State<CollectionPage> {
-  final _collectionCubit = kiwi.KiwiContainer().resolve<CollectionCubit>();
+  final _collectionCubit = getIt.get<CollectionCubit>();
 
   @override
   void initState() {

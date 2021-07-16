@@ -1,9 +1,8 @@
-import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:random_waifu/models/models.dart';
-import 'package:random_waifu/screens/detail/widgets/character_detail_info.dart';
-import 'package:random_waifu/widgets/rounded_image.dart';
+import 'package:random_waifu/data/models/models.dart';
+import 'package:random_waifu/ui/screens/detail/widgets/character_detail_info.dart';
+import 'package:random_waifu/ui/widgets/rounded_image.dart';
 
 class CharacterDetail extends StatelessWidget {
   final Waifu characterInformation;
@@ -22,7 +21,7 @@ class CharacterDetail extends StatelessWidget {
       child: Column(
         children: <Widget>[
           RoundedImage(
-            imageUrl: characterInformation.image_url ?? "",
+            imageUrl: characterInformation.imageUrl ?? "",
           ),
           Center(
             child: Container(

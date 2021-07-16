@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:hive/hive.dart';
-import 'package:random_waifu/screens/collection/widgets/waifu_list_item.dart';
+import 'package:random_waifu/data/models/models.dart';
+import 'package:random_waifu/ui/screens/collection/widgets/waifu_list_item.dart';
 
 class CollectionLoaded extends StatefulWidget {
-  final Box<dynamic> waifus;
+  final List<JsonWaifu> waifus;
   final NativeAd? ad;
   CollectionLoaded({
     Key? key,
@@ -36,7 +36,7 @@ class _CollectionLoadedState extends State<CollectionLoaded> {
             itemCount: widget.waifus.length,
             itemBuilder: (context, index) {
               return WaifuListItem(
-                waifu: widget.waifus.getAt(index),
+                waifu: widget.waifus[index]
               );
             },
           ),

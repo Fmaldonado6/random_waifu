@@ -13,7 +13,7 @@ class CloudStateLogin extends CloudState {
 }
 
 class CloudStateCompleted extends CloudState {
-  final User userInformation;
+  final User? userInformation;
 
   const CloudStateCompleted(this.userInformation);
 }

@@ -1,7 +1,7 @@
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter/material.dart';
-import 'package:random_waifu/screens/cloud/cubit/cloud_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:random_waifu/ui/screens/cloud/cubit/cloud_cubit.dart';
 
 class LoginWidget extends StatelessWidget {
   const LoginWidget({Key? key}) : super(key: key);

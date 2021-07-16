@@ -1,14 +1,17 @@
 import 'package:bloc/bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:injectable/injectable.dart';
 import 'package:random_waifu/app_config.dart';
-import 'package:random_waifu/models/models.dart';
-import 'package:random_waifu/screens/detail/cubit/detail_state.dart';
-import 'package:random_waifu/services/jikan_service.dart';
+import 'package:random_waifu/data/models/models.dart';
+import 'package:random_waifu/data/repositories/waifu_repository.dart';
 
+import 'detail_state.dart';
+
+@injectable
 class DetailCubit extends Cubit<DetailState> {
-  final JikanService jikanService;
+  final WaifuRepository _waifuRepository;
   Waifu? waifu;
-  DetailCubit(this.jikanService) : super(DetailStateLoading());
+  DetailCubit(this._waifuRepository) : super(DetailStateLoading());
 
   void initAd(String adId) {
     final ad = NativeAd(
@@ -28,7 +31,7 @@ class DetailCubit extends Cubit<DetailState> {
   Future getWaifuInformation(int malId) async {
     emit(DetailStateLoading());
     try {
-      waifu = await this.jikanService.getCharacterInformation(malId);
+      waifu = await this._waifuRepository.getWaifuInfo(malId);
       initAd(AppConfig().adId);
       emit(DetailStateLoaded(waifu!, null));
     } catch (e) {

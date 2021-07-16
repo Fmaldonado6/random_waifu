@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:random_waifu/models/models.dart';
-import 'package:random_waifu/screens/detail/detail_page.dart';
+import 'package:random_waifu/data/models/models.dart';
+import 'package:random_waifu/ui/screens/detail/detail_page.dart';
 
 class WaifuListItem extends StatelessWidget {
-  final SavedCharacter waifu;
+  final JsonWaifu waifu;
 
   const WaifuListItem({Key? key,required this.waifu}) : super(key: key);
 
@@ -32,7 +32,7 @@ class WaifuListItem extends StatelessWidget {
               clipBehavior: Clip.antiAlias,
             ),
             title: Text(
-              waifu.name ?? "",
+              waifu.title ?? "",
               style: TextStyle(
                 fontSize: 18,
               ),
@@ -42,7 +42,7 @@ class WaifuListItem extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => DetailPage(
-                  characterId: waifu.characterId!,
+                  characterId: waifu.malId!,
                   date: waifu.date,
                 ),
               ),

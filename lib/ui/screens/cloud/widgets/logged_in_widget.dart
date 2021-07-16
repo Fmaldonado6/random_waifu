@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:random_waifu/screens/cloud/cubit/cloud_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:random_waifu/widgets/confirm_dialog_widget.dart';
-import 'package:random_waifu/widgets/rounded_image.dart';
+import 'package:random_waifu/ui/screens/cloud/cubit/cloud_cubit.dart';
+import 'package:random_waifu/ui/widgets/confirm_dialog_widget.dart';
+import 'package:random_waifu/ui/widgets/rounded_image.dart';
 
 class LoggedInWidget extends StatelessWidget {
   final User userInformation;

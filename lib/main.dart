@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:random_waifu/screens/home/home_page.dart';
 import 'package:flutter/services.dart';
+import 'package:random_waifu/ui/screens/home/home_page.dart';
 
 class MyApp extends StatelessWidget {
   @override

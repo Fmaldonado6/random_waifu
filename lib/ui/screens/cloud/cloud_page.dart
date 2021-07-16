@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:random_waifu/screens/cloud/cubit/cloud_cubit.dart';
-import 'package:random_waifu/screens/cloud/cubit/cloud_state.dart';
-import 'package:kiwi/kiwi.dart' as kiwi;
-import 'package:random_waifu/screens/cloud/widgets/logged_in_widget.dart';
-import 'package:random_waifu/screens/cloud/widgets/login_widget.dart';
-import 'package:random_waifu/screens/home/cubit/home_cubit.dart';
+import 'package:random_waifu/di/injection_config.dart';
+import 'package:random_waifu/ui/screens/cloud/cubit/cloud_cubit.dart';
+import 'package:random_waifu/ui/screens/cloud/cubit/cloud_state.dart';
+import 'package:random_waifu/ui/screens/cloud/widgets/logged_in_widget.dart';
+import 'package:random_waifu/ui/screens/cloud/widgets/login_widget.dart';
 
 class CloudPage extends StatefulWidget {
   CloudPage({Key? key}) : super(key: key);
@@ -15,7 +14,7 @@ class CloudPage extends StatefulWidget {
 }
 
 class _CloudPageState extends State<CloudPage> {
-  final _cloudCubit = kiwi.KiwiContainer().resolve<CloudCubit>();
+  final _cloudCubit = getIt.get<CloudCubit>();
 
   @override
   void initState() {
@@ -69,7 +68,7 @@ class _CloudPageState extends State<CloudPage> {
 
               if (state is CloudStateCompleted && state.userInformation != null)
                 return LoggedInWidget(
-                  userInformation: state.userInformation,
+                  userInformation: state.userInformation!,
                 );
 
               return LoginWidget();

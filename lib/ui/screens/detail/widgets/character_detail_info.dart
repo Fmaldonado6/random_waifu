@@ -1,9 +1,10 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:random_waifu/models/models.dart';
-import 'package:random_waifu/screens/detail/widgets/expandable_widget.dart';
-import 'package:random_waifu/screens/detail/widgets/side_image.dart';
+import 'package:random_waifu/data/database/entities/entities.dart';
+import 'package:random_waifu/data/models/models.dart';
+import 'package:random_waifu/ui/screens/detail/widgets/expandable_widget.dart';
+import 'package:random_waifu/ui/screens/detail/widgets/side_image.dart';
 
 class CharacterDetailInformation extends StatefulWidget {
   final Waifu characterInformation;
@@ -97,13 +98,13 @@ class _CharacterDetailInformationState
           ),
           Divider(),
           CharacterExpandableWidget(
-            child: widget.characterInformation.voice_actors?.length == 0
+            child: widget.characterInformation.voiceActors?.length == 0
                 ? ListTile(
                     leading: Icon(Icons.help_outline),
                     title: Text("No voice actresses found"),
                   )
                 : _getRolesList(
-                    widget.characterInformation.voice_actors!,
+                    widget.characterInformation.mangaography!,
                     Subtitles.actresses.index,
                   ),
             header: "Voice actresses",

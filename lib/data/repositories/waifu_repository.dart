@@ -33,10 +33,16 @@ class WaifuRepository {
     );
   }
 
+  Future clearWaifu() async {
+    await _charactersDao.deleteAll();
+    _localWaifus?.clear();
+  }
+
   Future addWaifu(JsonWaifu waifu) async {
     await _charactersDao.saveWaifu(Mapping.jsonWaifuToSavedCharacter(waifu));
     _localWaifus?.add(waifu);
   }
+
 
   Future<Waifu> getWaifuInfo(int id) async {
     return await _jikanService.getWaifuInfo(id);
