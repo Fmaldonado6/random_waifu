@@ -9,11 +9,11 @@ class CharactersDao {
 
   CharactersDao(this.database);
 
-  void saveWaifu(SavedCharacter waifu) async {
+  Future saveWaifu(SavedCharacter waifu) async {
     await database.characterBox?.add(waifu);
   }
 
-  Future<Box<SavedCharacter>> getWaifus() async{
+  Future<Box<SavedCharacter>> getWaifus() async {
     return database.characterBox!;
   }
 
@@ -25,11 +25,21 @@ class CharactersDao {
     await database.characterBox?.putAt(position, waifu);
   }
 
-  Future deleteWaifu(SavedCharacter waifu, int position) async {
+  Future deleteWaifu(int position) async {
     await database.characterBox?.deleteAt(position);
   }
 
   Future deleteAll() async {
     await database.characterBox?.clear();
+  }
+
+  Future<bool> characterExists(int id) async {
+    final characters = database.characterBox;
+    for (var i = 0; i < characters!.length; i++) {
+      var character = characters.getAt(i) as SavedCharacter;
+      if (character.characterId == id) return true;
+    }
+
+    return false;
   }
 }

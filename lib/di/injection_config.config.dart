@@ -37,6 +37,7 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   gh.singleton<_i12.CharactersDao>(_i12.CharactersDao(get<_i4.Database>()));
   gh.singleton<_i13.WaifuRepository>(_i13.WaifuRepository(
       get<_i12.CharactersDao>(),
+      get<_i10.TodayDao>(),
       get<_i7.JikanService>(),
       get<_i11.WaifusService>()));
   return get;

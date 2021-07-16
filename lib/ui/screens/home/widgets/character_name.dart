@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:random_waifu/screens/detail/detail_page.dart';
-import 'package:random_waifu/screens/home/widgets/countdown_timer.dart';
+import 'package:random_waifu/ui/screens/detail/detail_page.dart';
+import 'package:random_waifu/ui/screens/home/widgets/countdown_timer.dart';
 
 class CharacterNameWidget extends StatelessWidget {
   final String name;

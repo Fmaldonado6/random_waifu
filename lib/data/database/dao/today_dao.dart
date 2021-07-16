@@ -7,8 +7,12 @@ class TodayDao {
 
   TodayDao(this.database);
 
-  void addToday(DateTime now) async {
+  Future addToday(DateTime now) async {
     await database.todayBox?.clear();
     await database.todayBox?.add(now.day);
+  }
+
+  Future<int?> getToday() async {
+    return database.todayBox?.values.first;
   }
 }

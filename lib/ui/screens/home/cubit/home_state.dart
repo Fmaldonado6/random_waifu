@@ -1,5 +1,5 @@
 
-import 'package:random_waifu/models/models.dart';
+import 'package:random_waifu/data/models/models.dart';
 
 abstract class HomeState {
   const HomeState();

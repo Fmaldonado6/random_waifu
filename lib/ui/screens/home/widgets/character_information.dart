@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:random_waifu/models/models.dart';
-import 'package:random_waifu/screens/cloud/cloud_page.dart';
-import 'package:random_waifu/screens/home/cubit/home_cubit.dart';
-import 'package:random_waifu/screens/home/widgets/character_image.dart';
-import 'package:random_waifu/screens/home/widgets/character_name.dart';
-import 'package:random_waifu/widgets/confirm_dialog_widget.dart';
+import 'package:random_waifu/data/models/models.dart';
+import 'package:random_waifu/ui/screens/cloud/cloud_page.dart';
+import 'package:random_waifu/ui/screens/home/cubit/home_cubit.dart';
+import 'package:random_waifu/ui/screens/home/widgets/character_image.dart';
+import 'package:random_waifu/ui/screens/home/widgets/character_name.dart';
+import 'package:random_waifu/ui/widgets/confirm_dialog_widget.dart';
 
 class CharacterInformationWidget extends StatelessWidget {
   final JsonWaifu waifu;
@@ -24,7 +24,7 @@ class CharacterInformationWidget extends StatelessWidget {
           height: MediaQuery.of(context).size.height / 15,
         ),
         CharacterImage(
-          imageUrl: waifu.image_url ?? "",
+          imageUrl: waifu.imageUrl ?? "",
         ),
         Container(
             margin: EdgeInsets.only(top: 30, bottom: 30),
@@ -65,7 +65,7 @@ class CharacterInformationWidget extends StatelessWidget {
             )),
         CharacterNameWidget(
           name: waifu.title!,
-          malId: waifu.mal_id!,
+          malId: waifu.malId!,
         ),
       ],
     );

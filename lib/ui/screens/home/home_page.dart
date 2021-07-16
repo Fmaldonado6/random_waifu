@@ -2,12 +2,12 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:random_waifu/app_config.dart';
-import 'package:random_waifu/screens/collection/collection_page.dart';
-import 'package:random_waifu/screens/home/cubit/home_cubit.dart';
-import 'package:random_waifu/screens/home/cubit/home_state.dart';
-import 'package:random_waifu/screens/home/widgets/character_information.dart';
-import 'package:kiwi/kiwi.dart' as kiwi;
-import 'package:random_waifu/widgets/error_message.dart';
+import 'package:random_waifu/di/injection_config.dart';
+import 'package:random_waifu/ui/screens/collection/collection_page.dart';
+import 'package:random_waifu/ui/screens/home/cubit/home_cubit.dart';
+import 'package:random_waifu/ui/screens/home/cubit/home_state.dart';
+import 'package:random_waifu/ui/screens/home/widgets/character_information.dart';
+import 'package:random_waifu/ui/widgets/error_message.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,13 +18,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _homeCubit = kiwi.KiwiContainer().resolve<HomeCubit>();
+  final _homeCubit = getIt.get<HomeCubit>();
 
   @override
   void initState() {
     super.initState();
     this._homeCubit.loadAd(AppConfig().rewardedAd);
-    this._homeCubit.initApp();
   }
 
   @override
@@ -43,7 +42,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void retry() {
-    _homeCubit.initApp();
+    _homeCubit.getRandomWaifu();
   }
 
   @override
