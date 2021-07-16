@@ -40,7 +40,7 @@ class CharacterInformationWidget extends StatelessWidget {
                     context: context,
                     title: "Change waifu",
                     confirm: "Watch",
-                    text: "Watch an ad to change your todays' waifu!",
+                    text: "Watch an ad to change your today's waifu!",
                     callback: () {
                       BlocProvider.of<HomeCubit>(context).showAd();
                       Navigator.of(context).pop();

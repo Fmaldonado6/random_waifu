@@ -39,7 +39,7 @@ class PushNotificationService {
 
     final difference = tz.TZDateTime.now(tz.local).add(Duration(
       hours: 23 - now.hour,
-      minutes: 60 - now.minute,
+      minutes: 59 - now.minute,
       seconds: 60 - now.second,
     ));
 
