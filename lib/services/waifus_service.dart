@@ -24,6 +24,10 @@ class WaifusService {
   }
 
   Future<List<JsonWaifu>> getWaifusList() async {
+
+    if(waifus != null)
+      return waifus!;
+
     final urlEncoded = Uri.encodeFull(url);
     final response = await client.get(Uri.parse(urlEncoded));
     if (response.statusCode != 200) throw new AppError();

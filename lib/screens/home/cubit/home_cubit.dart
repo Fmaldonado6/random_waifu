@@ -98,14 +98,6 @@ class HomeCubit extends Cubit<HomeState> {
       bool shouldFetchWaifu = today.day != lastWaifuDate && today.hour >= 0 ||
           lastWaifuDate == null;
 
-      waifu = this._databaseRepository.loadLastWaifu();
-
-      print(waifu.manga);
-      print(waifu.anime);
-
-      if (waifu.anime == null && waifu.manga == null)
-        waifu = await updateWaifus();
-
       if (shouldFetchWaifu) {
         do {
           waifu = await this.waifusService.getRandomWaifu();
@@ -121,7 +113,13 @@ class HomeCubit extends Cubit<HomeState> {
         await this._databaseRepository.addWaifu(newCharacter);
         await this._databaseRepository.resetTimer();
       } else
-        emit(HomeStateLoaded(waifu));
+        waifu = this._databaseRepository.loadLastWaifu();
+
+
+      if (waifu.anime == null && waifu.manga == null)
+        waifu = await updateWaifus();
+
+      emit(HomeStateLoaded(waifu));
     } catch (e) {
       print(e);
       emit(HomeStateError(e.toString()));
@@ -144,8 +142,6 @@ class HomeCubit extends Cubit<HomeState> {
         characterId: waifu.characterId,
         date: waifu.date,
         imageUrl: waifu.imageUrl,
-        manga: waifus[waifu.characterId]?.manga,
-        anime: waifus[waifu.characterId]?.anime,
         name: waifu.name,
       );
 
