@@ -65,13 +65,14 @@ class JsonWaifu {
   String? image_url;
   AnimeInformation? anime;
   AnimeInformation? manga;
-
+  String? date;
   JsonWaifu({
     this.title,
     this.mal_id,
     this.image_url,
     this.anime,
     this.manga,
+    this.date
   });
 
   factory JsonWaifu.fromJson(Map<String, dynamic> json) =>

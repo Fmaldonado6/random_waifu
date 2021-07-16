@@ -230,6 +230,7 @@ JsonWaifu _$JsonWaifuFromJson(Map<String, dynamic> json) {
     manga: json['manga'] == null
         ? null
         : AnimeInformation.fromJson(json['manga'] as Map<String, dynamic>),
+    date: json['date'] as String?,
   );
 }
 
@@ -239,6 +240,7 @@ Map<String, dynamic> _$JsonWaifuToJson(JsonWaifu instance) => <String, dynamic>{
       'image_url': instance.image_url,
       'anime': instance.anime,
       'manga': instance.manga,
+      'date': instance.date,
     };
 
 Waifu _$WaifuFromJson(Map<String, dynamic> json) {
