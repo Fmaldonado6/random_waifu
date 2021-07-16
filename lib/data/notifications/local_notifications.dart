@@ -5,6 +5,10 @@ import 'package:timezone/timezone.dart' as tz;
 
 @singleton
 class PushNotificationService {
+  PushNotificationService() {
+    this.initialise();
+  }
+
   Future initialise() async {
     final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     const androidSettings = AndroidInitializationSettings('app_icon');
