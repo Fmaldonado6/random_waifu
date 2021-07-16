@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:injectable/injectable.dart';
 import 'package:random_waifu/app_config.dart';
 import 'package:random_waifu/data/models/models.dart';
 import 'package:random_waifu/data/repositories/waifu_repository.dart';
 import 'package:random_waifu/ui/screens/collection/cubit/collection_state.dart';
 
+@injectable
 class CollectionCubit extends Cubit<CollectionState> {
   final WaifuRepository _waifuRepository;
   List<JsonWaifu> savedWaifus = [];

@@ -2,11 +2,13 @@ import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:injectable/injectable.dart';
 import 'package:random_waifu/app_config.dart';
 import 'package:random_waifu/data/models/models.dart';
 import 'package:random_waifu/data/repositories/waifu_repository.dart';
 import 'package:random_waifu/ui/screens/home/cubit/home_state.dart';
 
+@injectable
 class HomeCubit extends Cubit<HomeState> {
   WaifuRepository _waifuRepository;
   RewardedAd? _ad;

@@ -1,10 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:random_waifu/data/mapping/mapping.dart';
 import 'package:random_waifu/data/network/auth_service/auth_service.dart';
 import 'package:random_waifu/data/network/firebase/firebase_service.dart';
 import 'package:random_waifu/data/repositories/waifu_repository.dart';
 import 'package:random_waifu/ui/screens/cloud/cubit/cloud_state.dart';
 
+@injectable
 class CloudCubit extends Cubit<CloudState> {
   final AuthService _authService;
   final FirebaseService _databaseService;
