@@ -1,9 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hive/hive.dart';
-import 'package:random_waifu/app_config.dart';
 import 'package:random_waifu/screens/collection/widgets/waifu_list_item.dart';
 
 class CollectionLoaded extends StatefulWidget {

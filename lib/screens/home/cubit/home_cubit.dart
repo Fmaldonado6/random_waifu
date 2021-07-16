@@ -115,7 +115,6 @@ class HomeCubit extends Cubit<HomeState> {
       } else
         waifu = this._databaseRepository.loadLastWaifu();
 
-
       if (waifu.anime == null && waifu.manga == null)
         waifu = await updateWaifus();
 
@@ -142,13 +141,15 @@ class HomeCubit extends Cubit<HomeState> {
         characterId: waifu.characterId,
         date: waifu.date,
         imageUrl: waifu.imageUrl,
+        manga: waifus[waifu.characterId]?.manga,
+        anime: waifus[waifu.characterId]?.anime,
         name: waifu.name,
       );
 
       await _databaseRepository.updateWaifu(savedWaifu, pos++);
 
-      print(savedWaifu.manga);
     });
+    
     return JsonWaifu(
       anime: savedWaifu.anime,
       image_url: savedWaifu.imageUrl,

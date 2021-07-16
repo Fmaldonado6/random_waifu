@@ -38,6 +38,12 @@ class _CollectionPageState extends State<CollectionPage> {
           "Collection",
           style: TextStyle(fontSize: 25),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.filter_list),
+          )
+        ],
         backgroundColor: Colors.transparent,
       ),
       body: Container(
