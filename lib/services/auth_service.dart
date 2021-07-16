@@ -11,11 +11,11 @@ class AuthService {
     try {
       final result = await googleSignIn.signIn();
 
-      final auth = await result.authentication;
+      final auth = await result?.authentication;
 
       final credential = GoogleAuthProvider.credential(
-        accessToken: auth.accessToken,
-        idToken: auth.idToken,
+        accessToken: auth?.accessToken,
+        idToken: auth?.idToken,
       );
 
       final authResult = await _auth.signInWithCredential(credential);
@@ -32,5 +32,5 @@ class AuthService {
     await googleSignIn.signOut();
   }
 
-  Future<User> get currentUser async => _auth.currentUser;
+  Future<User?> get currentUser async => _auth.currentUser;
 }

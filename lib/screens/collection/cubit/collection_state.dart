@@ -13,7 +13,7 @@ class CollectionStateLoading extends CollectionState {
 
 class CollectionStateLoaded extends CollectionState {
   final Box<dynamic> waifus;
-  final NativeAd ad;
+  final NativeAd? ad;
   const CollectionStateLoaded(this.waifus, this.ad);
 }
 

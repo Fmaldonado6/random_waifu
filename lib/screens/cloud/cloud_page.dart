@@ -8,7 +8,7 @@ import 'package:random_waifu/screens/cloud/widgets/login_widget.dart';
 import 'package:random_waifu/screens/home/cubit/home_cubit.dart';
 
 class CloudPage extends StatefulWidget {
-  CloudPage({Key key}) : super(key: key);
+  CloudPage({Key? key}) : super(key: key);
 
   @override
   _CloudPageState createState() => _CloudPageState();

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 class ConfirmDialog {
-  void show(
-      {BuildContext context,
-      String title,
-      String text,
-      String confirm = "Ok",
-      Function callback}) {
+  void show({
+    required BuildContext context,
+    required String title,
+    required String text,
+    required Function callback,
+    String confirm = "Ok",
+  }) {
     showDialog(
       context: context,
       builder: (BuildContext context) {

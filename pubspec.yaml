@@ -18,13 +18,13 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.2.1+27
 
 environment:
-  sdk: ">=2.8.4 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   http: ^0.13.3
-  random_string: ^2.1.0
+  random_string: ^2.3.1
   expandable_bottom_sheet: ^1.1.0
   expandable: ^5.0.1
   path_provider: ^2.0.2
@@ -41,7 +41,7 @@ dependencies:
   firebase_auth: ^3.0.0
   firebase_database: ^7.1.2
   json_serializable: ^4.1.4
-  flutter_auth_buttons: ^0.10.0
+  auth_buttons: ^1.0.1+4
   google_mobile_ads: ^0.13.2
   flutter_local_notifications: ^6.0.0
 

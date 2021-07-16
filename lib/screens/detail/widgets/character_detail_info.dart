@@ -7,12 +7,15 @@ import 'package:random_waifu/screens/detail/widgets/side_image.dart';
 
 class CharacterDetailInformation extends StatefulWidget {
   final Waifu characterInformation;
-  final String date;
-  final NativeAd adWidget;
+  final String? date;
+  final NativeAd? adWidget;
 
-  CharacterDetailInformation(
-      {Key key, this.characterInformation, this.date, this.adWidget})
-      : super(key: key);
+  CharacterDetailInformation({
+    Key? key,
+    required this.characterInformation,
+    this.date,
+    this.adWidget,
+  }) : super(key: key);
 
   @override
   _CharacterDetailInformationState createState() =>
@@ -27,7 +30,7 @@ class _CharacterDetailInformationState
   }
 
   String _getAboutWithoutSpoiler() {
-    return widget.characterInformation.about
+    return widget.characterInformation.about!
         .replaceAll(new RegExp(r'\\n'), '\n')
         .replaceAll(new RegExp(r'\/'), '')
         .replaceAll(new RegExp(r'<spoiler>'), "")
@@ -46,6 +49,7 @@ class _CharacterDetailInformationState
             child: Column(
               children: <Widget>[
                 ExpandablePanel(
+                  collapsed: Container(),
                   header: Text(
                     "About",
                     style: TextStyle(
@@ -67,39 +71,39 @@ class _CharacterDetailInformationState
           ),
           Divider(),
           CharacterExpandableWidget(
-            child: widget.characterInformation.animeography.length == 0
+            child: widget.characterInformation.animeography?.length == 0
                 ? ListTile(
                     leading: Icon(Icons.help_outline),
                     title: Text("No animes found"),
                   )
                 : _getRolesList(
-                    widget.characterInformation.animeography,
+                    widget.characterInformation.animeography!,
                     Subtitles.animes.index,
                   ),
             header: "Animes",
           ),
           Divider(),
           CharacterExpandableWidget(
-            child: widget.characterInformation.mangaography.length == 0
+            child: widget.characterInformation.mangaography?.length == 0
                 ? ListTile(
                     leading: Icon(Icons.help_outline),
                     title: Text("No mangas found"),
                   )
                 : _getRolesList(
-                    widget.characterInformation.mangaography,
+                    widget.characterInformation.mangaography!,
                     Subtitles.mangas.index,
                   ),
             header: "Mangas",
           ),
           Divider(),
           CharacterExpandableWidget(
-            child: widget.characterInformation.voice_actors.length == 0
+            child: widget.characterInformation.voice_actors?.length == 0
                 ? ListTile(
                     leading: Icon(Icons.help_outline),
                     title: Text("No voice actresses found"),
                   )
                 : _getRolesList(
-                    widget.characterInformation.voice_actors,
+                    widget.characterInformation.voice_actors!,
                     Subtitles.actresses.index,
                   ),
             header: "Voice actresses",
@@ -123,7 +127,7 @@ class _CharacterDetailInformationState
             height: 100,
             child: widget.adWidget != null
                 ? AdWidget(
-                    ad: widget.adWidget,
+                    ad: widget.adWidget!,
                   )
                 : Center(
                     child: CircularProgressIndicator(),
@@ -142,9 +146,9 @@ class _CharacterDetailInformationState
       itemBuilder: (context, index) {
         return ListTile(
           leading: CharacterSideImage(
-            imageUrl: list[index].image_url,
+            imageUrl: list[index].image_url ?? "",
           ),
-          title: Text(list[index].name),
+          title: Text(list[index].name!),
           subtitle: Text(
             subtitle > Subtitles.mangas.index
                 ? "Language: ${list[index].language}"

@@ -5,7 +5,6 @@ import 'package:random_waifu/screens/cloud/cubit/cloud_state.dart';
 import 'package:random_waifu/services/auth_service.dart';
 import 'package:random_waifu/services/database_service.dart';
 
-
 class CloudCubit extends Cubit<CloudState> {
   final AuthService _authService;
   final DatabaseService _databaseService;
@@ -20,7 +19,6 @@ class CloudCubit extends Cubit<CloudState> {
       final userInformation = await _authService.currentUser;
 
       if (userInformation == null) return emit(CloudStateInitial());
-      print(userInformation);
 
       emit(CloudStateCompleted(userInformation));
     } catch (e) {
@@ -33,7 +31,7 @@ class CloudCubit extends Cubit<CloudState> {
     try {
       var savedCharacters = _databaseRepository.getCharacters();
 
-      var characters = List<SavedCharacter>();
+      var characters = <SavedCharacter>[];
 
       for (var i = 0; i < savedCharacters.length; i++) {
         characters.add(savedCharacters.getAt(i));
@@ -51,18 +49,19 @@ class CloudCubit extends Cubit<CloudState> {
       var characters = await _databaseService.loadWaifus(id);
       var lastWaifu = this._databaseRepository.loadLastWaifu();
 
-      if (characters.waifus.last.characterId != lastWaifu.mal_id) {
+      if (characters.waifus?.last.characterId != lastWaifu.mal_id) {
         var newCharacter = SavedCharacter(
           characterId: lastWaifu.mal_id,
           imageUrl: lastWaifu.image_url,
           name: lastWaifu.title,
         );
-        characters.waifus.add(newCharacter);
+        characters.waifus?.add(newCharacter);
       }
 
       await _databaseRepository.clearCharacters();
 
-      await this._databaseRepository.addWaifuList(characters.waifus);
+      if (characters.waifus != null)
+        await this._databaseRepository.addWaifuList(characters.waifus!);
 
       return true;
     } catch (e) {

@@ -6,7 +6,11 @@ class CharacterNameWidget extends StatelessWidget {
   final String name;
   final int malId;
 
-  CharacterNameWidget({Key key, this.name, this.malId}) : super(key: key);
+  CharacterNameWidget({
+    Key? key,
+    required this.name,
+    required this.malId,
+  }) : super(key: key);
 
   getDateFormated() {
     return "${DateTime.now().day} / ${DateTime.now().month} / ${DateTime.now().year}";

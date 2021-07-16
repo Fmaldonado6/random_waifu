@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 class ErrorMessages extends StatelessWidget {
-  final Function clickedFunction;
-  const ErrorMessages({Key key, this.clickedFunction}) : super(key: key);
+  final VoidCallback clickedFunction;
+  const ErrorMessages({
+    Key? key,
+    required this.clickedFunction,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

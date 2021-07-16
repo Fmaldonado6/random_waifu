@@ -8,8 +8,12 @@ import 'package:random_waifu/screens/collection/widgets/waifu_list_item.dart';
 
 class CollectionLoaded extends StatefulWidget {
   final Box<dynamic> waifus;
-  final NativeAd ad;
-  CollectionLoaded({Key key, this.waifus, this.ad});
+  final NativeAd? ad;
+  CollectionLoaded({
+    Key? key,
+    required this.waifus,
+    this.ad,
+  });
 
   @override
   _CollectionLoadedState createState() => _CollectionLoadedState();
@@ -55,7 +59,7 @@ class _CollectionLoadedState extends State<CollectionLoaded> {
           height: widget.ad != null ? 100 : 0,
           child: widget.ad != null
               ? AdWidget(
-                  ad: widget.ad,
+                  ad: widget.ad!,
                 )
               : Container(),
         ),

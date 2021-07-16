@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:random_waifu/screens/home/cubit/home_cubit.dart';
 
 class CountdownTimer extends StatefulWidget {
-  CountdownTimer({Key key}) : super(key: key);
+  CountdownTimer({Key? key}) : super(key: key);
 
   @override
   _CountdownTimerState createState() => _CountdownTimerState();
@@ -11,8 +11,8 @@ class CountdownTimer extends StatefulWidget {
 
 class _CountdownTimerState extends State<CountdownTimer>
     with TickerProviderStateMixin {
-  AnimationController _animationController;
-  TimeOfDay today;
+  AnimationController? _animationController;
+  TimeOfDay today = TimeOfDay.now();
   var tomorrow;
   var difference;
   @override
@@ -27,10 +27,10 @@ class _CountdownTimerState extends State<CountdownTimer>
     _animationController = AnimationController(
         vsync: this, duration: Duration(seconds: difference));
     _animationController
-        .reverse(
-            from: _animationController.value == 0.0
+        ?.reverse(
+            from: _animationController?.value == 0.0
                 ? 1.0
-                : _animationController.value)
+                : _animationController?.value)
         .whenComplete(
             () => BlocProvider.of<HomeCubit>(context).getRandomWaifu());
   }
@@ -40,7 +40,7 @@ class _CountdownTimerState extends State<CountdownTimer>
     return Expanded(
       flex: 25,
       child: AnimatedBuilder(
-        animation: _animationController,
+        animation: _animationController!,
         builder: (context, child) => Container(
             height: 100,
             margin: EdgeInsets.only(right: 20),
@@ -72,14 +72,14 @@ class _CountdownTimerState extends State<CountdownTimer>
 
   String get timerString {
     Duration duration =
-        _animationController.duration * _animationController.value;
+        _animationController!.duration! * _animationController!.value;
 
     return '${duration.inHours}:${duration.inMinutes.remainder(60).toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
   }
 
   @override
   void dispose() {
-    _animationController.dispose();
+    _animationController?.dispose();
     super.dispose();
   }
 }

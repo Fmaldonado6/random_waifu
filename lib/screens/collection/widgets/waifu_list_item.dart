@@ -5,7 +5,7 @@ import 'package:random_waifu/screens/detail/detail_page.dart';
 class WaifuListItem extends StatelessWidget {
   final SavedCharacter waifu;
 
-  const WaifuListItem({Key key, this.waifu}) : super(key: key);
+  const WaifuListItem({Key? key,required this.waifu}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class WaifuListItem extends StatelessWidget {
           child: ListTile(
             leading: Material(
               child: Image.network(
-                waifu.imageUrl,
+                waifu.imageUrl ?? "",
                 width: 45,
               ),
               elevation: 4.0,
@@ -32,7 +32,7 @@ class WaifuListItem extends StatelessWidget {
               clipBehavior: Clip.antiAlias,
             ),
             title: Text(
-              waifu.name,
+              waifu.name ?? "",
               style: TextStyle(
                 fontSize: 18,
               ),
@@ -42,7 +42,7 @@ class WaifuListItem extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => DetailPage(
-                  characterId: waifu.characterId,
+                  characterId: waifu.characterId!,
                   date: waifu.date,
                 ),
               ),

@@ -7,11 +7,11 @@ import 'package:random_waifu/widgets/rounded_image.dart';
 
 class CharacterDetail extends StatelessWidget {
   final Waifu characterInformation;
-  final String date;
-  final NativeAd ad;
+  final String? date;
+  final NativeAd? ad;
   CharacterDetail({
-    Key key,
-    this.characterInformation,
+    Key? key,
+    required this.characterInformation,
     this.date,
     this.ad,
   }) : super(key: key);
@@ -22,13 +22,13 @@ class CharacterDetail extends StatelessWidget {
       child: Column(
         children: <Widget>[
           RoundedImage(
-            imageUrl: characterInformation.image_url,
+            imageUrl: characterInformation.image_url ?? "",
           ),
           Center(
             child: Container(
               margin: EdgeInsets.only(top: 20),
               child: Text(
-                characterInformation.name,
+                characterInformation.name ?? "",
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
               ),
             ),
@@ -39,7 +39,6 @@ class CharacterDetail extends StatelessWidget {
             date: date,
             adWidget: ad,
           ),
-       
         ],
       ),
     );

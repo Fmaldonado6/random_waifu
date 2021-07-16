@@ -8,8 +8,12 @@ import 'package:random_waifu/widgets/error_message.dart';
 
 class DetailPage extends StatefulWidget {
   final int characterId;
-  final String date;
-  DetailPage({Key key, this.characterId, this.date}) : super(key: key);
+  final String? date;
+  DetailPage({
+    Key? key,
+    required this.characterId,
+    this.date,
+  }) : super(key: key);
 
   @override
   _DetailPageState createState() => _DetailPageState();

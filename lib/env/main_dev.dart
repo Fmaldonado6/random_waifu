@@ -14,6 +14,7 @@ void main() async {
   final appDocumentDirectory = await getApplicationDocumentsDirectory();
   Hive.init(appDocumentDirectory.path);
   Hive.registerAdapter(SavedCharacterAdapter());
+  Hive.registerAdapter(AnimeInformationAdapter());
   Hive.registerAdapter(KitsuDataAdapter());
   Hive.registerAdapter(KitsuAttributesAdapter());
   Hive.registerAdapter(KitsuImageAdapter());

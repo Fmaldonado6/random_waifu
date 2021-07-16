@@ -1,10 +1,10 @@
+import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:random_waifu/screens/cloud/cubit/cloud_cubit.dart';
-import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginWidget extends StatelessWidget {
-  const LoginWidget({Key key}) : super(key: key);
+  const LoginWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class LoginWidget extends StatelessWidget {
         Divider(),
         Container(
           margin: EdgeInsets.only(top: 20),
-          child: GoogleSignInButton(
+          child: GoogleAuthButton(
             onPressed: () => {context.read<CloudCubit>().login()},
           ),
         )

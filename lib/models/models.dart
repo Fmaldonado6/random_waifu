@@ -7,19 +7,25 @@ part 'models.g.dart';
 @HiveType(typeId: 0)
 class SavedCharacter {
   @HiveField(0)
-  final int characterId;
+  final int? characterId;
   @HiveField(1)
-  final String imageUrl;
+  final String? imageUrl;
   @HiveField(2)
-  final String name;
+  final String? name;
   @HiveField(4)
-  final String date;
+  final String? date;
+  @HiveField(5)
+  final AnimeInformation? anime;
+  @HiveField(6)
+  final AnimeInformation? manga;
 
   SavedCharacter({
     this.characterId,
     this.imageUrl,
     this.name,
-    this.date
+    this.date,
+    this.anime,
+    this.manga,
   });
   factory SavedCharacter.fromJson(Map<String, dynamic> json) =>
       _$SavedCharacterFromJson(json);
@@ -29,7 +35,7 @@ class SavedCharacter {
 @HiveType(typeId: 1)
 class KitsuData {
   @HiveField(0)
-  KitsuAttributes attributes;
+  KitsuAttributes? attributes;
 
   KitsuData();
 }
@@ -37,28 +43,36 @@ class KitsuData {
 @HiveType(typeId: 2)
 class KitsuAttributes {
   @HiveField(0)
-  String description;
+  String? description;
   @HiveField(1)
-  String name;
+  String? name;
   @HiveField(2)
-  int malId;
+  int? malId;
   @HiveField(3)
-  KitsuImage image;
+  KitsuImage? image;
 }
 
 @HiveType(typeId: 3)
 class KitsuImage {
   @HiveField(0)
-  String original;
+  String? original;
 }
 
 @JsonSerializable()
 class JsonWaifu {
-  String title;
-  int mal_id;
-  String image_url;
+  String? title;
+  int? mal_id;
+  String? image_url;
+  AnimeInformation? anime;
+  AnimeInformation? manga;
 
-  JsonWaifu({this.title, this.mal_id, this.image_url});
+  JsonWaifu({
+    this.title,
+    this.mal_id,
+    this.image_url,
+    this.anime,
+    this.manga,
+  });
 
   factory JsonWaifu.fromJson(Map<String, dynamic> json) =>
       _$JsonWaifuFromJson(json);
@@ -67,12 +81,12 @@ class JsonWaifu {
 
 @JsonSerializable()
 class Waifu {
-  String name;
-  String about;
-  String image_url;
-  List<AnimeInformation> animeography;
-  List<AnimeInformation> mangaography;
-  List<AnimeInformation> voice_actors;
+  String? name;
+  String? about;
+  String? image_url;
+  List<AnimeInformation>? animeography;
+  List<AnimeInformation>? mangaography;
+  List<AnimeInformation>? voice_actors;
 
   Waifu(
       {this.name,
@@ -87,11 +101,16 @@ class Waifu {
 }
 
 @JsonSerializable()
+@HiveType(typeId: 4)
 class AnimeInformation {
-  String name;
-  String image_url;
-  String role;
-  String language;
+  @HiveType(typeId: 0)
+  int? mal_id;
+  @HiveType(typeId: 1)
+  String? name;
+  @HiveType(typeId: 2)
+  String? image_url;
+  String? role;
+  String? language;
 
   AnimeInformation({
     this.name,
@@ -108,7 +127,7 @@ class AnimeInformation {
 
 @JsonSerializable()
 class FireBaseResponse {
-  List<SavedCharacter> waifus;
+  List<SavedCharacter>? waifus;
 
   FireBaseResponse();
 

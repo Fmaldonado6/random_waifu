@@ -12,7 +12,7 @@ class DetailStateLoading extends DetailState {
 
 class DetailStateLoaded extends DetailState {
   final Waifu waifu;
-  final NativeAd adWidget;
+  final NativeAd? adWidget;
   const DetailStateLoaded(this.waifu, this.adWidget);
 }
 

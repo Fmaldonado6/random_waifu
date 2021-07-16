@@ -8,7 +8,7 @@ import 'package:random_waifu/widgets/rounded_image.dart';
 class LoggedInWidget extends StatelessWidget {
   final User userInformation;
 
-  LoggedInWidget({Key key, @required this.userInformation}) : super(key: key);
+  LoggedInWidget({Key? key, required this.userInformation}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +16,13 @@ class LoggedInWidget extends StatelessWidget {
       child: Column(
         children: <Widget>[
           RoundedImage(
-            imageUrl: userInformation.photoURL,
+            imageUrl: userInformation.photoURL ?? "",
           ),
           Center(
             child: Container(
               margin: EdgeInsets.only(top: 20),
               child: Text(
-                userInformation.displayName,
+                userInformation.displayName ?? "",
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
               ),
             ),
@@ -33,10 +33,12 @@ class LoggedInWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                RaisedButton.icon(
-                  color: Colors.indigo.shade100,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18),
+                ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.indigo.shade100,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
+                    ),
                   ),
                   onPressed: () => ConfirmDialog().show(
                     context: context,
@@ -49,10 +51,12 @@ class LoggedInWidget extends StatelessWidget {
                     "Save waifus",
                   ),
                 ),
-                RaisedButton.icon(
-                  color: Colors.indigo.shade100,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18),
+                ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.indigo.shade100,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
+                    ),
                   ),
                   onPressed: () => ConfirmDialog().show(
                     context: context,
@@ -70,7 +74,7 @@ class LoggedInWidget extends StatelessWidget {
           ),
           Container(
             margin: EdgeInsets.only(top: 10),
-            child: FlatButton(
+            child: TextButton(
               onPressed: () => context.read<CloudCubit>().signOut(),
               child: Text(
                 "Sign out",
@@ -90,7 +94,7 @@ class LoggedInWidget extends StatelessWidget {
     var string = "Waifus saved!";
     if (!res) string = "Couldn´t save waifus!";
 
-    Scaffold.of(context).showSnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(string),
       ),
@@ -104,7 +108,7 @@ class LoggedInWidget extends StatelessWidget {
     var string = "Waifus loaded!";
     if (!res) string = "Couldn´t load waifus!";
 
-    Scaffold.of(context).showSnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(string),
       ),

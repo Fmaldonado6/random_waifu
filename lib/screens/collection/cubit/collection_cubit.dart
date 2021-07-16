@@ -9,9 +9,9 @@ import 'package:random_waifu/repositories/local_database_repository.dart';
 import 'package:random_waifu/screens/collection/cubit/collection_state.dart';
 
 class CollectionCubit extends Cubit<CollectionState> {
-  DatabaseRepository _databaseRepository;
-  Box<dynamic> savedWaifus;
-  ScrollController scrollController;
+  final DatabaseRepository _databaseRepository;
+  Box<dynamic>? savedWaifus;
+  ScrollController? scrollController;
 
   CollectionCubit(this._databaseRepository) : super(CollectionStateLoading());
 
@@ -22,7 +22,7 @@ class CollectionCubit extends Cubit<CollectionState> {
       request: AdRequest(),
       listener: NativeAdListener(
         onAdLoaded: (ad) {
-          emit(CollectionStateLoaded(savedWaifus, ad));
+          emit(CollectionStateLoaded(savedWaifus!, ad as NativeAd));
         },
       ),
     );
@@ -35,7 +35,7 @@ class CollectionCubit extends Cubit<CollectionState> {
       emit(CollectionStateLoading());
       savedWaifus = this._databaseRepository.getCharacters();
       this.initAd(AppConfig().adId);
-      emit(CollectionStateLoaded(savedWaifus, null));
+      emit(CollectionStateLoaded(savedWaifus!, null));
     } catch (e) {
       emit(CollectionStateError(e.toString()));
     }

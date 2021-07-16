@@ -14,6 +14,10 @@ class DatabaseRepository {
     await Hive.box(CharacterBox).add(waifu);
   }
 
+  updateWaifu(SavedCharacter waifu,int position) async {
+    await Hive.box(CharacterBox).putAt(position, waifu);
+  }
+
   resetTimer() async {
     await Hive.box(TodayBox).clear();
     await Hive.box(TodayBox).add(DateTime.now().day);
@@ -43,13 +47,14 @@ class DatabaseRepository {
 
   JsonWaifu loadLastWaifu() {
     final waifus = Hive.box(CharacterBox);
-    final last = waifus.getAt(waifus.length - 1);
+    final last = waifus.getAt(waifus.length - 1) as SavedCharacter;
 
     return JsonWaifu(
-      title: last.name,
-      mal_id: last.characterId,
-      image_url: last.imageUrl,
-    );
+        title: last.name,
+        mal_id: last.characterId,
+        image_url: last.imageUrl,
+        anime: last.anime,
+        manga: last.manga);
   }
 
   getLastWaifuDate() {
@@ -61,6 +66,4 @@ class DatabaseRepository {
     await Hive.box(TodayBox).clear();
     await characters.deleteAt(characters.length - 1);
   }
-
-
 }

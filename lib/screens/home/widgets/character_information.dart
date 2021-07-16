@@ -10,8 +10,8 @@ import 'package:random_waifu/widgets/confirm_dialog_widget.dart';
 class CharacterInformationWidget extends StatelessWidget {
   final JsonWaifu waifu;
   CharacterInformationWidget({
-    Key key,
-    this.waifu,
+    Key? key,
+    required this.waifu,
   }) : super(key: key);
 
   @override
@@ -24,7 +24,7 @@ class CharacterInformationWidget extends StatelessWidget {
           height: MediaQuery.of(context).size.height / 15,
         ),
         CharacterImage(
-          imageUrl: waifu.image_url,
+          imageUrl: waifu.image_url ?? "",
         ),
         Container(
             margin: EdgeInsets.only(top: 30, bottom: 30),
@@ -64,8 +64,8 @@ class CharacterInformationWidget extends StatelessWidget {
               ],
             )),
         CharacterNameWidget(
-          name: waifu.title,
-          malId: waifu.mal_id,
+          name: waifu.title!,
+          malId: waifu.mal_id!,
         ),
       ],
     );

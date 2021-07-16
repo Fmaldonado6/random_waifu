@@ -7,7 +7,7 @@ import 'package:kiwi/kiwi.dart' as kiwi;
 import 'package:random_waifu/widgets/error_message.dart';
 
 class CollectionPage extends StatefulWidget {
-  CollectionPage({Key key}) : super(key: key);
+  CollectionPage({Key? key}) : super(key: key);
 
   @override
   _CollectionPageState createState() => _CollectionPageState();

@@ -14,7 +14,7 @@ class HomeCubit extends Cubit<HomeState> {
   final PushNotificationService pushNotificationService;
   final DatabaseRepository _databaseRepository;
 
-  RewardedAd _ad;
+  RewardedAd? _ad;
 
   HomeCubit(
     this.waifusService,
@@ -50,7 +50,7 @@ class HomeCubit extends Cubit<HomeState> {
         },
       ),
     );
-    _ad.fullScreenContentCallback = FullScreenContentCallback(
+    _ad?.fullScreenContentCallback = FullScreenContentCallback(
       onAdDismissedFullScreenContent: (RewardedAd ad) {
         print('$ad onAdDismissedFullScreenContent.');
         ad.dispose();
@@ -63,7 +63,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   void showAd() async {
     await this.loadAd(AppConfig().rewardedAd);
-    _ad.show(
+    _ad?.show(
       onUserEarnedReward: (RewardedAd ad, RewardItem item) async {
         await this._databaseRepository.deleteLastWaifu();
         this.getRandomWaifu();
@@ -98,27 +98,68 @@ class HomeCubit extends Cubit<HomeState> {
       bool shouldFetchWaifu = today.day != lastWaifuDate && today.hour >= 0 ||
           lastWaifuDate == null;
 
+      waifu = this._databaseRepository.loadLastWaifu();
+
+      print(waifu.manga);
+      print(waifu.anime);
+
+      if (waifu.anime == null && waifu.manga == null)
+        waifu = await updateWaifus();
+
       if (shouldFetchWaifu) {
         do {
           waifu = await this.waifusService.getRandomWaifu();
-        } while (await this._databaseRepository.characterExists(waifu.mal_id));
+        } while (await this._databaseRepository.characterExists(waifu.mal_id!));
         final newCharacter = SavedCharacter(
-          characterId: waifu.mal_id,
-          date: _getDate(),
-          imageUrl: waifu.image_url,
-          name: waifu.title,
-        );
+            characterId: waifu.mal_id,
+            date: _getDate(),
+            imageUrl: waifu.image_url,
+            name: waifu.title,
+            anime: waifu.anime,
+            manga: waifu.manga);
 
         await this._databaseRepository.addWaifu(newCharacter);
         await this._databaseRepository.resetTimer();
       } else
-        waifu = this._databaseRepository.loadLastWaifu();
-
-      emit(HomeStateLoaded(waifu));
+        emit(HomeStateLoaded(waifu));
     } catch (e) {
       print(e);
       emit(HomeStateError(e.toString()));
     }
+  }
+
+  Future<JsonWaifu> updateWaifus() async {
+    final waifus = Map<int, JsonWaifu>.fromIterable(
+      await waifusService.getWaifusList(),
+      key: (e) => e.mal_id,
+    );
+
+    final savedWaifus = _databaseRepository.getCharacters();
+    SavedCharacter savedWaifu = SavedCharacter();
+    int pos = 0;
+    savedWaifus.values.forEach((element) async {
+      final waifu = element as SavedCharacter;
+
+      savedWaifu = SavedCharacter(
+        characterId: waifu.characterId,
+        date: waifu.date,
+        imageUrl: waifu.imageUrl,
+        manga: waifus[waifu.characterId]?.manga,
+        anime: waifus[waifu.characterId]?.anime,
+        name: waifu.name,
+      );
+
+      await _databaseRepository.updateWaifu(savedWaifu, pos++);
+
+      print(savedWaifu.manga);
+    });
+    return JsonWaifu(
+      anime: savedWaifu.anime,
+      image_url: savedWaifu.imageUrl,
+      mal_id: savedWaifu.characterId,
+      manga: savedWaifu.manga,
+      title: savedWaifu.name,
+    );
   }
 
   String _getDate() {

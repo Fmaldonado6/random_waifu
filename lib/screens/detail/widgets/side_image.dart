@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 class CharacterSideImage extends StatelessWidget {
   final String imageUrl;
-  const CharacterSideImage({Key key, @required this.imageUrl})
-      : super(key: key);
+  const CharacterSideImage({
+    Key? key,
+    required this.imageUrl,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

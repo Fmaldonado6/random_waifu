@@ -7,7 +7,7 @@ import 'package:random_waifu/services/jikan_service.dart';
 
 class DetailCubit extends Cubit<DetailState> {
   final JikanService jikanService;
-  Waifu waifu;
+  Waifu? waifu;
   DetailCubit(this.jikanService) : super(DetailStateLoading());
 
   void initAd(String adId) {
@@ -17,7 +17,7 @@ class DetailCubit extends Cubit<DetailState> {
       request: AdRequest(),
       listener: NativeAdListener(
         onAdLoaded: (ad) {
-          emit(DetailStateLoaded(waifu, ad));
+          emit(DetailStateLoaded(waifu!, ad as NativeAd));
         },
       ),
     );
@@ -30,7 +30,7 @@ class DetailCubit extends Cubit<DetailState> {
     try {
       waifu = await this.jikanService.getCharacterInformation(malId);
       initAd(AppConfig().adId);
-      emit(DetailStateLoaded(waifu, null));
+      emit(DetailStateLoaded(waifu!, null));
     } catch (e) {
       emit(DetailStateError(e.toString()));
     }

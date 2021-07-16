@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CharacterImage extends StatelessWidget {
   final String imageUrl;
 
-  CharacterImage({Key key, this.imageUrl}) : super(key: key);
+  CharacterImage({Key? key,required this.imageUrl}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
