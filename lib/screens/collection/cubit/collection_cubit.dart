@@ -18,7 +18,7 @@ class CollectionCubit extends Cubit<CollectionState> {
   void initAd(String adId) {
     final ad = NativeAd(
       adUnitId: adId,
-      factoryId: "",
+      factoryId: "adFactory",
       request: AdRequest(),
       listener: NativeAdListener(
         onAdLoaded: (ad) {

@@ -13,7 +13,7 @@ class DetailCubit extends Cubit<DetailState> {
   void initAd(String adId) {
     final ad = NativeAd(
       adUnitId: adId,
-      factoryId: "",
+      factoryId: "adFactory",
       request: AdRequest(),
       listener: NativeAdListener(
         onAdLoaded: (ad) {

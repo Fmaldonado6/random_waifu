@@ -68,7 +68,10 @@ class _CollectionPageState extends State<CollectionPage> {
                 ));
 
               if (state is CollectionStateLoaded)
-                return CollectionLoaded(waifus: state.waifus);
+                return CollectionLoaded(
+                  waifus: state.waifus,
+                  ad: state.ad,
+                );
               return ErrorMessages(
                 clickedFunction: this._collectionCubit.getCollection,
               );
