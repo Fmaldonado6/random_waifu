@@ -5,7 +5,6 @@ import 'package:random_waifu/injection_container.dart';
 import 'package:random_waifu/main.dart';
 import 'package:random_waifu/models/models.dart';
 import 'package:hive/hive.dart';
-import 'package:random_waifu/services/push_notification_service.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 void main() async {
