@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:random_waifu/app_config.dart';
+import 'package:random_waifu/di/injection_config.dart';
 import 'package:random_waifu/injection_container.dart';
 import 'package:random_waifu/main.dart';
 import 'package:random_waifu/models/models.dart';
@@ -9,8 +10,10 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 void main() async {
   initKiwi();
+  configureInjection();
   WidgetsFlutterBinding.ensureInitialized();
   final appDocumentDirectory = await getApplicationDocumentsDirectory();
+
   Hive.init(appDocumentDirectory.path);
   Hive.registerAdapter(SavedCharacterAdapter());
   Hive.registerAdapter(AnimeInformationAdapter());
