@@ -54,6 +54,11 @@ class HomeCubit extends Cubit<HomeState> {
     );
   }
 
+  Future init() async {
+    await this._waifuRepository.init();
+    this.getRandomWaifu();
+  }
+
   Future getRandomWaifu() async {
     emit(HomeStateLoading());
 
@@ -63,26 +68,27 @@ class HomeCubit extends Cubit<HomeState> {
       final localWaifus = await _waifuRepository.localWaifus;
       final waifusList = await _waifuRepository.waifus;
 
-      await updateWaifus(localWaifus, waifusList);
-
-      JsonWaifu waifu = localWaifus.last;
+      JsonWaifu? waifu = localWaifus.isEmpty ? null : localWaifus.last;
 
       if (shouldFetchWaifu) {
         bool exists = true;
 
         while (exists) {
           final random = Random().nextInt(waifusList.length);
+          print(waifusList.length);
+          print(random);
           waifu = waifusList[random];
           exists = await this._waifuRepository.characterExists(waifu.malId!);
+          print(exists);
         }
 
-        await this._waifuRepository.addWaifu(waifu);
+        await this._waifuRepository.addWaifu(waifu!);
         await this._waifuRepository.resetDay();
       }
 
-      emit(HomeStateLoaded(waifu));
+      emit(HomeStateLoaded(waifu!));
     } catch (e) {
-      print(e);
+      print("Error: $e");
       emit(HomeStateError(e.toString()));
     }
   }

@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    this._homeCubit.init();
     this._homeCubit.loadAd(AppConfig().rewardedAd);
   }
 

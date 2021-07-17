@@ -1,8 +1,8 @@
-import 'package:dio/src/dio.dart';
+import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:random_waifu/data/models/models.dart';
 import 'package:random_waifu/data/network/data_service.dart';
-@singleton
+@Singleton()
 class JikanService extends DataService {
   JikanService(Dio dio) : super("https://api.jikan.moe/v3/", dio);
 

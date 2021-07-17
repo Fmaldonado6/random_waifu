@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:random_waifu/data/database/entities/entities.dart';
 import 'package:random_waifu/data/models/models.dart';
 
-@singleton
+@Injectable()
 class FirebaseService {
   final db = FirebaseDatabase.instance.reference();
 

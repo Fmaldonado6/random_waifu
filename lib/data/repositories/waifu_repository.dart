@@ -21,10 +21,14 @@ class WaifuRepository {
   );
 
   List<JsonWaifu>? _waifus;
-  Future<List<JsonWaifu>> get waifus async => await getLocalWaifus();
+  Future<List<JsonWaifu>> get waifus async => await getWaifus();
 
   List<JsonWaifu>? _localWaifus;
-  Future<List<JsonWaifu>> get localWaifus async => await getWaifus();
+  Future<List<JsonWaifu>> get localWaifus async => await getLocalWaifus();
+
+  Future init() async {
+    await this._charactersDao.database.init();
+  }
 
   Future updateWaifus(JsonWaifu waifu, int position) async {
     await _charactersDao.updateWaifu(
@@ -42,7 +46,6 @@ class WaifuRepository {
     await _charactersDao.saveWaifu(Mapping.jsonWaifuToSavedCharacter(waifu));
     _localWaifus?.add(waifu);
   }
-
 
   Future<Waifu> getWaifuInfo(int id) async {
     return await _jikanService.getWaifuInfo(id);

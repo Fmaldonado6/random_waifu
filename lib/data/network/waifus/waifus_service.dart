@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:random_waifu/data/models/models.dart';
 import 'package:random_waifu/data/network/data_service.dart';
 
-@singleton
+@Singleton()
+@Injectable()
 class WaifusService extends DataService {
   WaifusService(
     Dio dio,
@@ -11,6 +14,7 @@ class WaifusService extends DataService {
 
   Future<List<JsonWaifu>> getWaifuList() async {
     final res = await this.dio.get(this.apiUrl);
+    print(res.data);
     final json = res.data as List<dynamic>;
     return json.map((e) => JsonWaifu.fromJson(e)).toList();
   }
