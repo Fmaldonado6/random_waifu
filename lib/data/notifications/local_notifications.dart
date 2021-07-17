@@ -43,7 +43,6 @@ class PushNotificationService {
     final midnight =
         DateTime(now.year, now.month, now.day, 23, 59, 59, 59, 59).toUtc();
 
-    print("Difference ${midnight.hour - now.hour}");
 
     final difference = tz.TZDateTime.now(tz.local).add(Duration(
       hours: midnight.hour - now.hour,
