@@ -40,13 +40,15 @@ class PushNotificationService {
         NotificationDetails(android: androidPlatformChannelSpecifics);
 
     final now = tz.TZDateTime.now(tz.local);
+    final midnight =
+        DateTime(now.year, now.month, now.day, 23, 59, 59, 59, 59).toUtc();
 
-    print("Difference ${23 - now.hour}");
+    print("Difference ${midnight.hour - now.hour}");
 
     final difference = tz.TZDateTime.now(tz.local).add(Duration(
-      hours: 23 - now.hour,
-      minutes: 59 - now.minute,
-      seconds: 60 - now.second,
+      hours: midnight.hour - now.hour,
+      minutes: midnight.minute - now.minute,
+      seconds: midnight.second - now.second,
     ));
 
     await flutterLocalNotificationsPlugin.zonedSchedule(0, "New waifu!",
