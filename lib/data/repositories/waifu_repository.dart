@@ -37,6 +37,11 @@ class WaifuRepository {
     );
   }
 
+  Future updateWaifuByValue(JsonWaifu waifu) async {
+    await _charactersDao
+        .updateWaifuByValue(Mapping.jsonWaifuToSavedCharacter(waifu));
+  }
+
   Future clearWaifu() async {
     await _charactersDao.deleteAll();
     _localWaifus?.clear();

@@ -64,8 +64,7 @@ class CharacterInformationWidget extends StatelessWidget {
               ],
             )),
         CharacterNameWidget(
-          name: waifu.title!,
-          malId: waifu.malId!,
+          waifu: waifu,
         ),
       ],
     );

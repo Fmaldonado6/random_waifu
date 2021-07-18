@@ -42,7 +42,7 @@ class WaifuListItem extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => DetailPage(
-                  characterId: waifu.malId!,
+                  waifu: waifu,
                   date: waifu.date,
                 ),
               ),

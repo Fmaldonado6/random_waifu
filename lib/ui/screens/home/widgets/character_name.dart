@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:random_waifu/data/models/models.dart';
 import 'package:random_waifu/ui/screens/detail/detail_page.dart';
 import 'package:random_waifu/ui/screens/home/widgets/countdown_timer.dart';
 
 class CharacterNameWidget extends StatelessWidget {
-  final String name;
-  final int malId;
+  final JsonWaifu waifu;
 
   CharacterNameWidget({
     Key? key,
-    required this.name,
-    required this.malId,
+    required this.waifu,
   }) : super(key: key);
 
   getDateFormated() {
@@ -40,7 +39,7 @@ class CharacterNameWidget extends StatelessWidget {
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (_) {
               return DetailPage(
-                characterId: malId,
+                waifu: waifu,
                 date: getDateFormated(),
               );
             }));
@@ -73,7 +72,7 @@ class CharacterNameWidget extends StatelessWidget {
                   Container(
                     constraints: BoxConstraints(maxWidth: 270),
                     child: Text(
-                      name,
+                      waifu.title ?? "",
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 20,

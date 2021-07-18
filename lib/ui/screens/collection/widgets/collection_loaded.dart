@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:random_waifu/data/models/models.dart';
 import 'package:random_waifu/ui/screens/collection/widgets/card_image.dart';
+import 'package:random_waifu/ui/screens/detail/detail_page.dart';
 
 class CollectionLoaded extends StatefulWidget {
   final List<JsonWaifu> waifus;
@@ -58,7 +59,15 @@ class _CollectionLoadedState extends State<CollectionLoaded> {
                 subtitle: waifu.anime != null
                     ? waifu.anime!.name!
                     : waifu.manga!.name!,
-                onPressed: () {},
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailPage(
+                      waifu: waifu,
+                      date: waifu.date,
+                    ),
+                  ),
+                ),
               );
             },
           ),

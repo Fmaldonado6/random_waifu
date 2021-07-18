@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:random_waifu/data/models/models.dart';
 import 'package:random_waifu/di/injection_config.dart';
 import 'package:random_waifu/ui/screens/detail/cubit/detail_cubit.dart';
 import 'package:random_waifu/ui/screens/detail/cubit/detail_state.dart';
@@ -7,11 +8,11 @@ import 'package:random_waifu/ui/screens/detail/widgets/character_detail.dart';
 import 'package:random_waifu/ui/widgets/error_message.dart';
 
 class DetailPage extends StatefulWidget {
-  final int characterId;
+  final JsonWaifu waifu;
   final String? date;
   DetailPage({
     Key? key,
-    required this.characterId,
+    required this.waifu,
     this.date,
   }) : super(key: key);
 
@@ -24,7 +25,7 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   void initState() {
-    _detailBloc.getWaifuInformation(widget.characterId);
+    _detailBloc.getWaifuInformation(widget.waifu);
     super.initState();
   }
 
@@ -74,7 +75,7 @@ class _DetailPageState extends State<DetailPage> {
 
             return ErrorMessages(
               clickedFunction: () =>
-                  _detailBloc.getWaifuInformation(widget.characterId),
+                  _detailBloc.getWaifuInformation(widget.waifu),
             );
           },
         ),

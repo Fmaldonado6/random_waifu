@@ -25,6 +25,22 @@ class CharactersDao {
     await database.characterBox?.putAt(position, waifu);
   }
 
+  Future updateWaifuByValue(SavedCharacter waifu) async {
+    int pos = 0;
+    bool found = false;
+    database.characterBox?.values.forEach((element) {
+      if (element.characterId == waifu.characterId) {
+        found = true;
+        return;
+      }
+      pos++;
+    });
+
+    if (!found) return;
+
+    await database.characterBox?.putAt(pos, waifu);
+  }
+
   Future deleteWaifu(int position) async {
     await database.characterBox?.deleteAt(position);
   }

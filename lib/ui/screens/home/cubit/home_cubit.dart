@@ -107,8 +107,8 @@ class HomeCubit extends Cubit<HomeState> {
     for (var i = 0; i < local.length; i++) {
       var element = local[i];
 
-      print("anime ${map[element.malId]?.anime?.toJson().toString()}");
-      print("anime ${element.anime?.toJson().toString()}");
+      if (element.anime != null || element.manga != null) continue;
+
       element.manga = map[element.malId]?.manga;
       element.anime = map[element.malId]?.anime;
 
