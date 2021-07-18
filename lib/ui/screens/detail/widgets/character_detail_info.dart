@@ -104,7 +104,7 @@ class _CharacterDetailInformationState
                     title: Text("No voice actresses found"),
                   )
                 : _getRolesList(
-                    widget.characterInformation.mangaography!,
+                    widget.characterInformation.voiceActors!,
                     Subtitles.actresses.index,
                   ),
             header: "Voice actresses",

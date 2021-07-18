@@ -61,11 +61,11 @@ class KitsuImage {
 @JsonSerializable()
 @HiveType(typeId: 4)
 class AnimeInformation {
-  @HiveType(typeId: 0)
+  @HiveField(0)
   int? mal_id;
-  @HiveType(typeId: 1)
+  @HiveField(1)
   String? name;
-  @HiveType(typeId: 2)
+  @HiveField(2)
   String? image_url;
   String? role;
   String? language;

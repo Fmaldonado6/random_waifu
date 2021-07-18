@@ -5,12 +5,13 @@ import 'package:random_waifu/data/models/models.dart';
 class Mapping {
   static JsonWaifu savedWaifuToJsonWaifu(SavedCharacter savedCharacter) {
     return JsonWaifu(
-        anime: savedCharacter.anime,
-        imageUrl: savedCharacter.imageUrl,
-        malId: savedCharacter.characterId,
-        manga: savedCharacter.manga,
-        title: savedCharacter.name,
-        date: savedCharacter.date);
+      anime: savedCharacter.anime,
+      imageUrl: savedCharacter.imageUrl,
+      malId: savedCharacter.characterId,
+      manga: savedCharacter.manga,
+      title: savedCharacter.name,
+      date: savedCharacter.date,
+    );
   }
 
   static List<JsonWaifu> savedWaifuBoxToJsonWaifuList(
@@ -19,6 +20,7 @@ class Mapping {
     final list = <JsonWaifu>[];
 
     savedCharacter.values.forEach((element) {
+      print(element.anime?.toJson().toString());
       list.add(JsonWaifu(
         anime: element.anime,
         date: element.date,
@@ -41,7 +43,7 @@ class Mapping {
     return SavedCharacter(
       anime: jsonWaifu.anime,
       characterId: jsonWaifu.malId,
-      date: _getDate(),
+      date: jsonWaifu.date ?? _getDate(),
       imageUrl: jsonWaifu.imageUrl,
       manga: jsonWaifu.manga,
       name: jsonWaifu.title,

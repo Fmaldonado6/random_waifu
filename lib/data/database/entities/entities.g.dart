@@ -171,12 +171,22 @@ class AnimeInformationAdapter extends TypeAdapter<AnimeInformation> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return AnimeInformation();
+    return AnimeInformation(
+      name: fields[1] as String?,
+      image_url: fields[2] as String?,
+    )..mal_id = fields[0] as int?;
   }
 
   @override
   void write(BinaryWriter writer, AnimeInformation obj) {
-    writer..writeByte(0);
+    writer
+      ..writeByte(3)
+      ..writeByte(0)
+      ..write(obj.mal_id)
+      ..writeByte(1)
+      ..write(obj.name)
+      ..writeByte(2)
+      ..write(obj.image_url);
   }
 
   @override

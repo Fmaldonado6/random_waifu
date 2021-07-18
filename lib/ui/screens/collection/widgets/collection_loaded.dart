@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:random_waifu/data/models/models.dart';
-import 'package:random_waifu/ui/screens/collection/widgets/waifu_list_item.dart';
+import 'package:random_waifu/ui/screens/collection/widgets/card_image.dart';
 
 class CollectionLoaded extends StatefulWidget {
   final List<JsonWaifu> waifus;
@@ -32,11 +32,33 @@ class _CollectionLoadedState extends State<CollectionLoaded> {
     return Column(
       children: [
         Expanded(
-          child: ListView.builder(
+          // child: ListView.builder(
+          //   itemCount: widget.waifus.length,
+          //   itemBuilder: (context, index) {
+          //     return WaifuListItem(
+          //       waifu: widget.waifus[index]
+          //     );
+          //   },
+          // ),
+          child: GridView.builder(
+            padding: EdgeInsets.all(10),
             itemCount: widget.waifus.length,
+            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 150,
+              childAspectRatio: 3 / 4,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+            ),
             itemBuilder: (context, index) {
-              return WaifuListItem(
-                waifu: widget.waifus[index]
+              final waifu = widget.waifus[index];
+
+              return CardImage(
+                imageUrl: waifu.imageUrl ?? "",
+                title: waifu.title ?? "",
+                subtitle: waifu.anime != null
+                    ? waifu.anime!.name!
+                    : waifu.manga!.name!,
+                onPressed: () {},
               );
             },
           ),

@@ -68,6 +68,8 @@ class HomeCubit extends Cubit<HomeState> {
       final localWaifus = await _waifuRepository.localWaifus;
       final waifusList = await _waifuRepository.waifus;
 
+      await this.updateWaifus(localWaifus, waifusList);
+
       JsonWaifu? waifu = localWaifus.isEmpty ? null : localWaifus.last;
 
       if (shouldFetchWaifu) {
@@ -75,11 +77,8 @@ class HomeCubit extends Cubit<HomeState> {
 
         while (exists) {
           final random = Random().nextInt(waifusList.length);
-          print(waifusList.length);
-          print(random);
           waifu = waifusList[random];
           exists = await this._waifuRepository.characterExists(waifu.malId!);
-          print(exists);
         }
 
         await this._waifuRepository.addWaifu(waifu!);
@@ -108,9 +107,10 @@ class HomeCubit extends Cubit<HomeState> {
     for (var i = 0; i < local.length; i++) {
       var element = local[i];
 
-      if (element.anime != null || element.manga != null) continue;
-
-      element = map[i] as JsonWaifu;
+      print("anime ${map[element.malId]?.anime?.toJson().toString()}");
+      print("anime ${element.anime?.toJson().toString()}");
+      element.manga = map[element.malId]?.manga;
+      element.anime = map[element.malId]?.anime;
 
       await _waifuRepository.updateWaifus(element, i);
     }

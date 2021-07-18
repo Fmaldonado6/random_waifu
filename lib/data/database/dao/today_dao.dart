@@ -13,6 +13,8 @@ class TodayDao {
   }
 
   Future<int?> getToday() async {
-    return database.todayBox?.values.first;
+    return database.todayBox!.values.length > 0
+        ? database.todayBox?.values.elementAt(0)
+        : null;
   }
 }

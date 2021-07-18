@@ -14,7 +14,6 @@ class WaifusService extends DataService {
 
   Future<List<JsonWaifu>> getWaifuList() async {
     final res = await this.dio.get(this.apiUrl);
-    print(res.data);
     final json = res.data as List<dynamic>;
     return json.map((e) => JsonWaifu.fromJson(e)).toList();
   }
