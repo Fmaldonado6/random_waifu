@@ -47,8 +47,8 @@ class HomeCubit extends Cubit<HomeState> {
       onUserEarnedReward: (RewardedAd ad, RewardItem item) async {
         final savedWaifus = await this._waifuRepository.localWaifus;
 
-        await this._waifuRepository.removeWaifu(savedWaifus.length);
-
+        await this._waifuRepository.removeWaifu(savedWaifus.length - 1);
+        await this._waifuRepository.clearDay();
         this.getRandomWaifu();
       },
     );
@@ -65,10 +65,10 @@ class HomeCubit extends Cubit<HomeState> {
     try {
       bool shouldFetchWaifu = await shouldFetch();
 
+      await _waifuRepository.updateWaifusInfo();
+
       final localWaifus = await _waifuRepository.localWaifus;
       final waifusList = await _waifuRepository.waifus;
-
-      await this.updateWaifus(localWaifus, waifusList);
 
       JsonWaifu? waifu = localWaifus.isEmpty ? null : localWaifus.last;
 
@@ -87,7 +87,6 @@ class HomeCubit extends Cubit<HomeState> {
 
       emit(HomeStateLoaded(waifu!));
     } catch (e) {
-      print("Error: $e");
       emit(HomeStateError(e.toString()));
     }
   }
@@ -99,20 +98,5 @@ class HomeCubit extends Cubit<HomeState> {
 
     return today.day != lastWaifuDate && today.hour >= 0 ||
         lastWaifuDate == null;
-  }
-
-  Future updateWaifus(List<JsonWaifu> local, List<JsonWaifu> network) async {
-    final map = Map<int, JsonWaifu>.fromIterable(network, key: (e) => e.malId);
-
-    for (var i = 0; i < local.length; i++) {
-      var element = local[i];
-
-      if (element.anime != null || element.manga != null) continue;
-
-      element.manga = map[element.malId]?.manga;
-      element.anime = map[element.malId]?.anime;
-
-      await _waifuRepository.updateWaifus(element, i);
-    }
   }
 }

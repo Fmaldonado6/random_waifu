@@ -62,6 +62,8 @@ class CloudCubit extends Cubit<CloudState> {
             );
       }
 
+      _waifuRepository.updateWaifusInfo();
+
       return true;
     } catch (e) {
       return false;

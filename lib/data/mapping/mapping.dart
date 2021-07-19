@@ -20,7 +20,6 @@ class Mapping {
     final list = <JsonWaifu>[];
 
     savedCharacter.values.forEach((element) {
-      print(element.anime?.toJson().toString());
       list.add(JsonWaifu(
         anime: element.anime,
         date: element.date,

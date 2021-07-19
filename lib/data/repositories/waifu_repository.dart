@@ -31,6 +31,7 @@ class WaifuRepository {
   }
 
   Future updateWaifus(JsonWaifu waifu, int position) async {
+    (await this.localWaifus)[position] = waifu;
     await _charactersDao.updateWaifu(
       Mapping.jsonWaifuToSavedCharacter(waifu),
       position,
@@ -38,6 +39,12 @@ class WaifuRepository {
   }
 
   Future updateWaifuByValue(JsonWaifu waifu) async {
+    final local = await this.localWaifus;
+    final position =
+        local.indexWhere((element) => element.malId == waifu.malId);
+
+    _localWaifus![position] = waifu;
+
     await _charactersDao
         .updateWaifuByValue(Mapping.jsonWaifuToSavedCharacter(waifu));
   }
@@ -83,7 +90,37 @@ class WaifuRepository {
     await this._todayDao.addToday(DateTime.now());
   }
 
+    Future clearDay() async {
+    await this._todayDao.clear();
+  }
+
   Future<bool> characterExists(int malId) async {
     return await this._charactersDao.characterExists(malId);
+  }
+
+  Future removeWaifuByValue(JsonWaifu waifu) async {
+    _localWaifus?.removeWhere((element) => element.malId == waifu.malId);
+    await _charactersDao
+        .removeWaifuByValue(Mapping.jsonWaifuToSavedCharacter(waifu));
+  }
+
+  Future updateWaifusInfo() async {
+    final local = await localWaifus;
+    final network = await waifus;
+    final map = Map<int, JsonWaifu>.fromIterable(network, key: (e) => e.malId);
+
+    for (var i = 0; i < local.length; i++) {
+      final waifu = _localWaifus![i];
+      final mapElement = map[waifu.malId];
+
+      if (waifu.anime?.name != null ||
+          waifu.manga?.name != null ||
+          waifu.anime != null ||
+          waifu.manga != null ||
+          mapElement == null) continue;
+      waifu.manga = mapElement.manga;
+      waifu.anime = mapElement.anime;
+      await updateWaifus(waifu, i);
+    }
   }
 }

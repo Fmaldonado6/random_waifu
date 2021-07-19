@@ -12,6 +12,10 @@ class TodayDao {
     await database.todayBox?.add(now.day);
   }
 
+  Future clear() async {
+    await database.todayBox?.clear();
+  }
+
   Future<int?> getToday() async {
     return database.todayBox!.values.length > 0
         ? database.todayBox?.values.elementAt(0)

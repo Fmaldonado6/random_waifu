@@ -12,7 +12,7 @@ class CollectionCubit extends Cubit<CollectionState> {
   final WaifuRepository _waifuRepository;
   List<JsonWaifu> savedWaifus = [];
   ScrollController? scrollController;
-
+  NativeAd? ad;
   CollectionCubit(this._waifuRepository) : super(CollectionStateLoading());
 
   void initAd(String adId) {
@@ -22,7 +22,8 @@ class CollectionCubit extends Cubit<CollectionState> {
       request: AdRequest(),
       listener: NativeAdListener(
         onAdLoaded: (ad) {
-          emit(CollectionStateLoaded(savedWaifus, ad as NativeAd));
+          this.ad = ad as NativeAd;
+          emit(CollectionStateLoaded(savedWaifus, this.ad));
         },
       ),
     );
@@ -39,5 +40,11 @@ class CollectionCubit extends Cubit<CollectionState> {
     } catch (e) {
       emit(CollectionStateError(e.toString()));
     }
+  }
+
+  void invertList() {
+    savedWaifus = savedWaifus.reversed.toList();
+    print(savedWaifus.reversed);
+    emit(CollectionStateLoaded(savedWaifus, this.ad));
   }
 }

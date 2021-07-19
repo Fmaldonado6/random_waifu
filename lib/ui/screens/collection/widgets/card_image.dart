@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CardImage extends StatelessWidget {
   final String imageUrl;
   final String title;
-  final String subtitle;
+  final String? subtitle;
 
   final VoidCallback? onPressed;
 
@@ -45,24 +45,27 @@ class CardImage extends StatelessWidget {
                 flex: 2,
                 child: Padding(
                   padding: EdgeInsets.all(5),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        title,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: 14),
-                      ),
-                      Text(
-                        subtitle,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey,
+                  child: Container(
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          title,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontSize: 14),
                         ),
-                      ),
-                    ],
+                        Text(
+                          subtitle ?? "",
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               )
