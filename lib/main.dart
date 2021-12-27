@@ -10,18 +10,20 @@ class MyApp extends StatelessWidget {
       statusBarColor: Colors.indigo,
     ));
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Random Waifu',
-        theme: ThemeData(
-          appBarTheme: AppBarTheme(
-            elevation: 0,
-            color: Colors.indigo,
-            brightness: Brightness.dark,
+      debugShowCheckedModeBanner: false,
+      title: 'Random Waifu',
+      theme: ThemeData(
+        appBarTheme: AppBarTheme(
+          elevation: 0,
+          color: Colors.indigo,
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarIconBrightness: Brightness.light,
           ),
-          primarySwatch: Colors.indigo,
-          accentColor: Colors.indigo,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: HomePage());
+        primarySwatch: Colors.indigo,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: HomePage(),
+    );
   }
 }
