@@ -14,8 +14,9 @@ class CloudStateLogin extends CloudState {
 
 class CloudStateCompleted extends CloudState {
   final User? userInformation;
+  final bool autoSave;
 
-  const CloudStateCompleted(this.userInformation);
+  const CloudStateCompleted(this.userInformation,this.autoSave);
 }
 
 class CloudStateError extends CloudState {

@@ -225,8 +225,8 @@ Map<String, dynamic> _$SavedCharacterToJson(SavedCharacter instance) =>
       'imageUrl': instance.imageUrl,
       'name': instance.name,
       'date': instance.date,
-      'anime': instance.anime,
-      'manga': instance.manga,
+      'anime': instance.anime?.toJson(),
+      'manga': instance.manga?.toJson(),
     };
 
 AnimeInformation _$AnimeInformationFromJson(Map<String, dynamic> json) {

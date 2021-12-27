@@ -10,18 +10,19 @@ class FirebaseService {
   final db = FirebaseDatabase.instance.reference();
 
   void saveWaifus(List<SavedCharacter> characters, String id) async {
-    var elements = FireBaseResponse();
-    elements.waifus = characters;
 
-    await db.child(id).set(jsonEncode(elements));
+    var json = characters.map((e) => e.toJson()).toList();
+
+    await db.child(id).child("waifus").set(json);
   }
 
   Future<List<SavedCharacter>> loadWaifus(String id) async {
     var snapshot = await db.child(id).once();
 
-    var json = jsonDecode(snapshot.value);
+    final Map<String,dynamic> json =snapshot.value is String ? jsonDecode(snapshot.value) : jsonDecode(jsonEncode(snapshot.value));
 
     var response = FireBaseResponse.fromJson(json);
+
     return response.waifus ?? [];
   }
 }

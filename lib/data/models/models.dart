@@ -49,7 +49,7 @@ class Waifu {
   Map<String, dynamic> toJson() => _$WaifuToJson(this);
 }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class FireBaseResponse {
   List<SavedCharacter>? waifus;
 

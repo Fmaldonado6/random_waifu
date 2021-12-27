@@ -69,6 +69,7 @@ class _CloudPageState extends State<CloudPage> {
               if (state is CloudStateCompleted && state.userInformation != null)
                 return LoggedInWidget(
                   userInformation: state.userInformation!,
+                  autoSave: state.autoSave,
                 );
 
               return LoginWidget();

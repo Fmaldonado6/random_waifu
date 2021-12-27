@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:random_waifu/data/mapping/mapping.dart';
 import 'package:random_waifu/data/network/auth_service/auth_service.dart';
 import 'package:random_waifu/data/network/firebase/firebase_service.dart';
+import 'package:random_waifu/data/preferences/preferences.dart';
 import 'package:random_waifu/data/repositories/waifu_repository.dart';
 import 'package:random_waifu/ui/screens/cloud/cubit/cloud_state.dart';
 
@@ -11,18 +13,26 @@ class CloudCubit extends Cubit<CloudState> {
   final AuthService _authService;
   final FirebaseService _databaseService;
   final WaifuRepository _waifuRepository;
-  CloudCubit(this._authService, this._databaseService, this._waifuRepository)
-      : super(CloudStateInitial());
+  final Preferences _preferences;
+  User? _userInformation;
+  bool _autoSave = true;
+  CloudCubit(
+    this._authService,
+    this._databaseService,
+    this._waifuRepository,
+    this._preferences,
+  ) : super(CloudStateInitial());
 
   Future<void> init() async {
     try {
       emit(CloudStateLogin());
 
-      final userInformation = await _authService.currentUser;
+      _userInformation = await _authService.currentUser;
+      _autoSave = _preferences.getAutoSave();
 
-      if (userInformation == null) return emit(CloudStateInitial());
+      if (_userInformation == null) return emit(CloudStateInitial());
 
-      emit(CloudStateCompleted(userInformation));
+      emit(CloudStateCompleted(_userInformation, _autoSave));
     } catch (e) {
       print(e);
       emit(CloudStateError("Error $e"));
@@ -66,6 +76,7 @@ class CloudCubit extends Cubit<CloudState> {
 
       return true;
     } catch (e) {
+      print(e);
       return false;
     }
   }
@@ -82,15 +93,21 @@ class CloudCubit extends Cubit<CloudState> {
     }
   }
 
+  Future setAutoSave() async {
+    _autoSave = !_autoSave;
+    await this._preferences.setAutoSave(_autoSave);
+    emit(CloudStateCompleted(_userInformation, _autoSave));
+  }
+
   Future<void> login() async {
     try {
       emit(CloudStateLogin());
 
-      final userInformation = await _authService.signInGoogle();
+      _userInformation = await _authService.signInGoogle();
 
-      print(userInformation);
+      _autoSave = _preferences.getAutoSave();
 
-      emit(CloudStateCompleted(userInformation));
+      emit(CloudStateCompleted(_userInformation, _autoSave));
     } catch (e) {
       print(e);
 

@@ -65,5 +65,5 @@ FireBaseResponse _$FireBaseResponseFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$FireBaseResponseToJson(FireBaseResponse instance) =>
     <String, dynamic>{
-      'waifus': instance.waifus,
+      'waifus': instance.waifus?.map((e) => e.toJson()).toList(),
     };

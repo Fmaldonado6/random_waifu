@@ -7,8 +7,13 @@ import 'package:random_waifu/ui/widgets/rounded_image.dart';
 
 class LoggedInWidget extends StatelessWidget {
   final User userInformation;
+  final bool autoSave;
 
-  LoggedInWidget({Key? key, required this.userInformation}) : super(key: key);
+  LoggedInWidget({
+    Key? key,
+    required this.userInformation,
+    required this.autoSave,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,62 +32,48 @@ class LoggedInWidget extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(
+            height: 10,
+          ),
           Divider(),
-          Container(
-            margin: EdgeInsets.only(top: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.indigo.shade100,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18),
-                    ),
-                  ),
-                  onPressed: () => ConfirmDialog().show(
-                    context: context,
-                    title: "Save waifus",
-                    text: "This action will override your cloud saved waifus",
-                    callback: () => saveWaifus(context),
-                  ),
-                  icon: Icon(Icons.upload_outlined),
-                  label: Text(
-                    "Save waifus",
-                  ),
-                ),
-                ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.indigo.shade100,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18),
-                    ),
-                  ),
-                  onPressed: () => ConfirmDialog().show(
-                    context: context,
-                    title: "Load waifus",
-                    text: "This action will override your current waifus",
-                    callback: () => loadWaifus(context),
-                  ),
-                  icon: Icon(Icons.download_outlined),
-                  label: Text(
-                    "Load waifus",
-                  ),
-                ),
-              ],
+          ListTile(
+            leading: Icon(Icons.cloud_outlined),
+            trailing: Switch(
+              value: autoSave,
+              onChanged: (value) {
+                context.read<CloudCubit>().setAutoSave();
+              },
+            ),
+            onTap: () => context.read<CloudCubit>().setAutoSave(),
+            title: Text("Auto Save"),
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.download_outlined),
+            title: Text("Load Waifus"),
+            onTap: () => ConfirmDialog().show(
+              context: context,
+              title: "Load waifus",
+              text: "This action will override your current waifus",
+              callback: () => loadWaifus(context),
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(top: 10),
-            child: TextButton(
-              onPressed: () => context.read<CloudCubit>().signOut(),
-              child: Text(
-                "Sign out",
-                style: TextStyle(
-                  color: Colors.red,
-                ),
-              ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.upload_outlined),
+            title: Text("Save Waifus"),
+            onTap: () => ConfirmDialog().show(
+              context: context,
+              title: "Save waifus",
+              text: "This action will override your cloud saved waifus",
+              callback: () => saveWaifus(context),
             ),
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.power_settings_new_outlined),
+            title: Text("Sign Out"),
+            onTap: () => context.read<CloudCubit>().signOut(),
           ),
         ],
       ),

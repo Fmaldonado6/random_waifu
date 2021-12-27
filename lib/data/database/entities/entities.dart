@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'entities.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson:true)
 @HiveType(typeId: 0)
 class SavedCharacter {
   @HiveField(0)
@@ -58,7 +58,7 @@ class KitsuImage {
   String? original;
 }
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 @HiveType(typeId: 4)
 class AnimeInformation {
   @HiveField(0)
