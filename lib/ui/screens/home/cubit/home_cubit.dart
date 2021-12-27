@@ -83,7 +83,7 @@ class HomeCubit extends Cubit<HomeState> {
 
       JsonWaifu? waifu = localWaifus.isEmpty ? null : localWaifus.last;
 
-      if (true) {
+      if (shouldFetchWaifu) {
         bool exists = true;
 
         while (exists) {
