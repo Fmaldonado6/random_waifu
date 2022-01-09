@@ -74,6 +74,7 @@ class _CountdownTimerState extends State<CountdownTimer>
     Duration duration =
         _animationController!.duration! * _animationController!.value;
 
+
     return '${duration.inHours}:${duration.inMinutes.remainder(60).toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
   }
 

@@ -36,13 +36,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.8.1"
-  auth_buttons:
-    dependency: "direct main"
-    description:
-      name: auth_buttons
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1+4"
   bloc:
     dependency: "direct main"
     description:
@@ -354,6 +347,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_signin_button:
+    dependency: "direct main"
+    description:
+      name: flutter_signin_button
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   flutter_svg:
     dependency: transitive
     description:

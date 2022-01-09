@@ -44,7 +44,7 @@ dependencies:
   firebase_auth: ^3.0.0
   firebase_database: ^7.1.2
   json_serializable: ^4.1.4
-  auth_buttons: ^1.0.1+4
+  flutter_signin_button: ^2.0.0
   google_mobile_ads: ^0.13.2
   flutter_local_notifications: ^6.0.0
   shared_preferences: ^2.0.11
