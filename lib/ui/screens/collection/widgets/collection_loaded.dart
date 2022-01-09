@@ -48,8 +48,8 @@ class _CollectionLoadedState extends State<CollectionLoaded> {
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 150,
               childAspectRatio: 3 / 4,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
+              crossAxisSpacing: 15,
+              mainAxisSpacing: 20,
             ),
             itemBuilder: (context, index) {
               final waifu = widget.waifus[index];
