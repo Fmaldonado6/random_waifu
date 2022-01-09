@@ -13,22 +13,32 @@ class CharacterExpandableWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(20, 20, 20, 10),
-      child: Column(
-        children: <Widget>[
-          ExpandablePanel(
-            collapsed: Container(),
-            header: Text(
-              header,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
+    return PhysicalModel(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(15),
+      shadowColor: Theme.of(context).colorScheme.primary.withAlpha(50),
+      elevation: 4,
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(20, 20, 20, 10),
+        child: Column(
+          children: <Widget>[
+            ExpandablePanel(
+              collapsed: Container(),
+              theme: ExpandableThemeData(
+                bodyAlignment: ExpandablePanelBodyAlignment.center,
+                useInkWell: true,
               ),
-            ),
-            expanded: child,
-          )
-        ],
+              header: Text(
+                header,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              expanded: child,
+            )
+          ],
+        ),
       ),
     );
   }

@@ -18,27 +18,10 @@ class CharacterDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
-        children: <Widget>[
-          RoundedImage(
-            imageUrl: characterInformation.imageUrl ?? "",
-          ),
-          Center(
-            child: Container(
-              margin: EdgeInsets.only(top: 20),
-              child: Text(
-                characterInformation.name ?? "",
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
-              ),
-            ),
-          ),
-          Divider(),
-          CharacterDetailInformation(
-            characterInformation: characterInformation,
-            date: date,
-            adWidget: ad,
-          ),
-        ],
+      child: CharacterDetailInformation(
+        characterInformation: characterInformation,
+        date: date,
+        adWidget: ad,
       ),
     );
   }
