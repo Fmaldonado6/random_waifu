@@ -16,6 +16,8 @@ class AuthService
 
     private val auth: FirebaseAuth = Firebase.auth
 
+    val user = auth.currentUser
+
     fun signInWithGoogle(authCredential: GoogleAuthCredential): Task<AuthResult> {
         return auth.signInWithCredential(authCredential)
     }

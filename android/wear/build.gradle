@@ -21,6 +21,7 @@ android {
 
     buildFeatures{
         viewBinding true
+        dataBinding true
     }
 
     buildTypes {
@@ -40,10 +41,14 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation 'com.google.android.material:material:1.4.0'
+    implementation 'com.google.firebase:firebase-database-ktx'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.0"
 
     kapt "com.google.dagger:hilt-android-compiler:2.40.5"
     implementation "com.google.dagger:hilt-android:2.40.5"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+
+    implementation "io.coil-kt:coil:1.4.0"
 
 
     implementation 'androidx.core:core-ktx:1.7.0'
