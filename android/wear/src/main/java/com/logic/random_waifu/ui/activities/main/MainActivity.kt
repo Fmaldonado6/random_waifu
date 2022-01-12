@@ -18,6 +18,7 @@ import com.google.firebase.ktx.Firebase
 import com.logic.random_waifu.R
 import com.logic.random_waifu.databinding.ActivityMainBinding
 import com.logic.random_waifu.ui.activities.home.HomeActivity
+import com.logic.random_waifu.ui.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -44,15 +45,23 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(intent, 0)
         }
 
-    }
+        viewModel.status.observe(this) {
+            binding.currentStatus = it
+        }
 
-    override fun onStart() {
-        super.onStart()
-        val user = auth.currentUser ?: return
+        val user = auth.currentUser
+
+        if (user == null) {
+            viewModel.changeStatus(Status.Loaded)
+            return
+        }
+
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
         finish()
+
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

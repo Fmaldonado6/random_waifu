@@ -105,7 +105,6 @@ class HomeCubit extends Cubit<HomeState> {
 
   Future _saveNewWaifu() async {
     try {
-      if (!this._preferences.getAutoSave()) return;
       final savedUser = await this._authService.currentUser;
 
       if (savedUser == null) return;

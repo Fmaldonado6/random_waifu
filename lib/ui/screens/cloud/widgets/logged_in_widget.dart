@@ -35,18 +35,7 @@ class LoggedInWidget extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          Divider(),
-          ListTile(
-            leading: Icon(Icons.cloud_outlined),
-            trailing: Switch(
-              value: autoSave,
-              onChanged: (value) {
-                context.read<CloudCubit>().setAutoSave();
-              },
-            ),
-            onTap: () => context.read<CloudCubit>().setAutoSave(),
-            title: Text("Auto Save"),
-          ),
+      
           Divider(),
           ListTile(
             leading: Icon(Icons.download_outlined),

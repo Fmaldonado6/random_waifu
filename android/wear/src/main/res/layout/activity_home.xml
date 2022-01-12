@@ -7,6 +7,7 @@
     <data>
 
         <import type="com.logic.random_waifu.ui.utils.Status" />
+
         <import type="android.view.View" />
 
         <variable
@@ -14,64 +15,14 @@
             type="Status" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#FF0000"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        />
 
 
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:visibility="@{currentStatus == Status.Loading ? View.VISIBLE : View.GONE}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:scaleType="centerCrop"
-            android:foreground="@drawable/image_foreground"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:visibility="@{currentStatus == Status.Loaded ? View.VISIBLE : View.GONE}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <TextView
-            android:id="@+id/characterName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="35dp"
-            android:layout_marginBottom="60dp"
-            android:background="#00FFFFFF"
-            android:textSize="20sp"
-            android:text="TextView"
-            android:visibility="@{currentStatus == Status.Loaded ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/animeName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="35dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="35dp"
-            android:background="#00FFFFFF"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="TextView"
-            android:textSize="16sp"
-            android:visibility="@{currentStatus == Status.Loaded ? View.VISIBLE : View.GONE}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/characterName" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
