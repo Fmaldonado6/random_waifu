@@ -60,7 +60,18 @@ class WaifuRepository {
   }
 
   Future<Waifu> getWaifuInfo(int id) async {
-    return await _jikanService.getWaifuInfo(id);
+    await Future.delayed(Duration(seconds: 1));
+    final waifu = await _jikanService.getWaifuInfo(id);
+    final seiyus = await _jikanService.getWaifuVoiceActresses(id);
+    final animes = await _jikanService.getWaifuAnime(id);
+    await Future.delayed(Duration(seconds: 1));
+    final mangas = await _jikanService.getWaifuManga(id);
+
+    waifu.mangaography = mangas;
+    waifu.animeography = animes;
+    waifu.voiceActors = seiyus;
+
+    return waifu;
   }
 
   Future<List<JsonWaifu>> getWaifus() async {
@@ -90,7 +101,7 @@ class WaifuRepository {
     await this._todayDao.addToday(DateTime.now());
   }
 
-    Future clearDay() async {
+  Future clearDay() async {
     await this._todayDao.clear();
   }
 

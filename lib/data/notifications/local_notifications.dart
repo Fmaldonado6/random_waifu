@@ -15,7 +15,7 @@ class PushNotificationService {
     const androidChannel = AndroidNotificationChannel(
       'channel_id_1',
       "Channel",
-      "Notifications",
+      description: "Notifications",
       importance: Importance.max,
     );
 
@@ -33,7 +33,6 @@ class PushNotificationService {
         AndroidNotificationDetails(
       'channel_id_1',
       'Channel',
-      'Notifications',
     );
 
     const NotificationDetails platformChannelSpecifics =
@@ -42,7 +41,6 @@ class PushNotificationService {
     final now = tz.TZDateTime.now(tz.local);
     final midnight =
         DateTime(now.year, now.month, now.day, 23, 59, 59, 59, 59).toUtc();
-
 
     final difference = tz.TZDateTime.now(tz.local).add(Duration(
       hours: midnight.hour - now.hour,

@@ -7,19 +7,20 @@ import 'package:random_waifu/data/models/models.dart';
 
 @Injectable()
 class FirebaseService {
-  final db = FirebaseDatabase.instance.reference();
+  final db = FirebaseDatabase.instance.ref();
 
-  void saveWaifus(List<SavedCharacter> characters, String id) async {
+  Future saveWaifus(List<SavedCharacter> characters, String id) async {
     var json = characters.map((e) => e.toJson()).toList();
-
-    await db.child(id).child("waifus").set(json);
+    var elements = FireBaseResponse();
+    elements.waifus = characters;
+    await db.child(id).set(jsonEncode(elements));
   }
 
   Future<List<SavedCharacter>> loadWaifus(String id) async {
-    var snapshot = await db.child(id).once();
+    var snapshot = await db.child(id).get();
 
     final Map<String, dynamic> json = snapshot.value is String
-        ? jsonDecode(snapshot.value)
+        ? jsonDecode(snapshot.value as String)
         : jsonDecode(jsonEncode(snapshot.value));
 
     var response = FireBaseResponse.fromJson(json);

@@ -54,7 +54,7 @@ class HomeCubit extends Cubit<HomeState> {
   void showAd() async {
     await this.loadAd(AppConfig().rewardedAd);
     _ad?.show(
-      onUserEarnedReward: (RewardedAd ad, RewardItem item) async {
+      onUserEarnedReward: (AdWithoutView ad, RewardItem item) async {
         final savedWaifus = await this._waifuRepository.localWaifus;
 
         await this._waifuRepository.removeWaifu(savedWaifus.length - 1);

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:random_waifu/data/database/entities/entities.dart';
 import 'package:random_waifu/data/models/models.dart';
 import 'package:random_waifu/ui/screens/detail/widgets/expandable_widget.dart';
 import 'package:random_waifu/ui/screens/detail/widgets/side_image.dart';
@@ -18,9 +17,9 @@ class CharacterDetailInformation extends StatelessWidget {
     this.adWidget,
   }) : super(key: key);
 
-  String _getAboutWithoutSpoiler() {
-    return characterInformation.about!
-        .replaceAll(new RegExp(r'\\n'), '\n')
+  String? _getAboutWithoutSpoiler() {
+    return characterInformation.about
+        ?.replaceAll(new RegExp(r'\\n'), '\n')
         .replaceAll(new RegExp(r'\/'), '')
         .replaceAll(new RegExp(r'<spoiler>'), "")
         .replaceAll(new RegExp(r'<\\spoiler>'), "");
@@ -40,7 +39,7 @@ class CharacterDetailInformation extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
             child: Text(
-              about,
+              about ?? "No information",
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.grey.shade700,
@@ -60,7 +59,7 @@ class CharacterDetailInformation extends StatelessWidget {
                   leading: Icon(Icons.help_outline),
                   title: Text("No animes found"),
                 )
-              : _getRolesList(
+              : _getAnimesList(
                   characterInformation.animeography!,
                   Subtitles.animes.index,
                 ),
@@ -76,7 +75,7 @@ class CharacterDetailInformation extends StatelessWidget {
                   leading: Icon(Icons.help_outline),
                   title: Text("No mangas found"),
                 )
-              : _getRolesList(
+              : _getMangasList(
                   characterInformation.mangaography!,
                   Subtitles.mangas.index,
                 ),
@@ -114,7 +113,7 @@ class CharacterDetailInformation extends StatelessWidget {
     );
   }
 
-  ListView _getRolesList(List<AnimeInformation> list, int subtitle) {
+  ListView _getRolesList(List<VoiceActressInformation> list, int subtitle) {
     return ListView.builder(
       padding: EdgeInsets.only(left: 10, right: 10),
       itemCount: list.length,
@@ -123,14 +122,50 @@ class CharacterDetailInformation extends StatelessWidget {
       itemBuilder: (context, index) {
         return ListTile(
           leading: CharacterSideImage(
-            imageUrl: list[index].image_url ?? "",
+            imageUrl: list[index].person?.getImage() ?? "",
           ),
           contentPadding: EdgeInsets.all(0),
-          title: Text(list[index].name!),
-          subtitle: Text(
-            subtitle > Subtitles.mangas.index
-                ? "Language: ${list[index].language}"
-                : "Role: ${list[index].role}",
+          title: Text(list[index].person?.name ?? ""),
+          subtitle: Text("Language: ${list[index].language}"),
+        );
+      },
+    );
+  }
+
+  ListView _getMangasList(List<Manga> list, int subtitle) {
+    return ListView.builder(
+      padding: EdgeInsets.only(left: 10, right: 10),
+      itemCount: list.length,
+      shrinkWrap: true,
+      physics: ClampingScrollPhysics(),
+      itemBuilder: (context, index) {
+        return ListTile(
+          leading: CharacterSideImage(
+            imageUrl: list[index].manga?.getImage() ?? "",
+          ),
+          contentPadding: EdgeInsets.all(0),
+          title: Text(list[index].manga?.title ?? ""),
+          subtitle: Text( "Role: ${list[index].role}",
+          ),
+        );
+      },
+    );
+  }
+
+  ListView _getAnimesList(List<Anime> list, int subtitle) {
+    return ListView.builder(
+      padding: EdgeInsets.only(left: 10, right: 10),
+      itemCount: list.length,
+      shrinkWrap: true,
+      physics: ClampingScrollPhysics(),
+      itemBuilder: (context, index) {
+        return ListTile(
+          leading: CharacterSideImage(
+            imageUrl: list[index].anime?.getImage() ?? "",
+          ),
+          contentPadding: EdgeInsets.all(0),
+          title: Text(list[index].anime?.title ?? ""),
+          subtitle: Text( "Role: ${list[index].role}",
           ),
         );
       },

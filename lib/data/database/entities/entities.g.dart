@@ -204,20 +204,19 @@ class AnimeInformationAdapter extends TypeAdapter<AnimeInformation> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-SavedCharacter _$SavedCharacterFromJson(Map<String, dynamic> json) {
-  return SavedCharacter(
-    characterId: json['characterId'] as int?,
-    imageUrl: json['imageUrl'] as String?,
-    name: json['name'] as String?,
-    date: json['date'] as String?,
-    anime: json['anime'] == null
-        ? null
-        : AnimeInformation.fromJson(json['anime'] as Map<String, dynamic>),
-    manga: json['manga'] == null
-        ? null
-        : AnimeInformation.fromJson(json['manga'] as Map<String, dynamic>),
-  );
-}
+SavedCharacter _$SavedCharacterFromJson(Map<String, dynamic> json) =>
+    SavedCharacter(
+      characterId: json['characterId'] as int?,
+      imageUrl: json['imageUrl'] as String?,
+      name: json['name'] as String?,
+      date: json['date'] as String?,
+      anime: json['anime'] == null
+          ? null
+          : AnimeInformation.fromJson(json['anime'] as Map<String, dynamic>),
+      manga: json['manga'] == null
+          ? null
+          : AnimeInformation.fromJson(json['manga'] as Map<String, dynamic>),
+    );
 
 Map<String, dynamic> _$SavedCharacterToJson(SavedCharacter instance) =>
     <String, dynamic>{
@@ -229,14 +228,13 @@ Map<String, dynamic> _$SavedCharacterToJson(SavedCharacter instance) =>
       'manga': instance.manga?.toJson(),
     };
 
-AnimeInformation _$AnimeInformationFromJson(Map<String, dynamic> json) {
-  return AnimeInformation(
-    name: json['name'] as String?,
-    image_url: json['image_url'] as String?,
-    role: json['role'] as String?,
-    language: json['language'] as String?,
-  )..mal_id = json['mal_id'] as int?;
-}
+AnimeInformation _$AnimeInformationFromJson(Map<String, dynamic> json) =>
+    AnimeInformation(
+      name: json['name'] as String?,
+      image_url: json['image_url'] as String?,
+      role: json['role'] as String?,
+      language: json['language'] as String?,
+    )..mal_id = json['mal_id'] as int?;
 
 Map<String, dynamic> _$AnimeInformationToJson(AnimeInformation instance) =>
     <String, dynamic>{

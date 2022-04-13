@@ -16,6 +16,7 @@ class DataService {
   }
 
   void catchError(DioError e, ErrorInterceptorHandler error) {
+    print(e.error);
     switch (e.response?.statusCode) {
       case 400:
         throw BadInput(e.message);

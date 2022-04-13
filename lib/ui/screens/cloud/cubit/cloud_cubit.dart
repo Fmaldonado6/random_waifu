@@ -46,10 +46,11 @@ class CloudCubit extends Cubit<CloudState> {
       final characterResource =
           Mapping.jsonWaifuListToSavedCharacterList(savedCharacters);
 
-      _databaseService.saveWaifus(characterResource, id);
+      await _databaseService.saveWaifus(characterResource, id);
 
       return true;
     } catch (e) {
+      print(e);
       return false;
     }
   }

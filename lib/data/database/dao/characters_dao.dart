@@ -10,6 +10,8 @@ class CharactersDao {
   CharactersDao(this.database);
 
   Future saveWaifu(SavedCharacter waifu) async {
+    final exists = await characterExists(waifu.characterId!);
+    if (exists) return;
     await database.characterBox?.add(waifu);
   }
 

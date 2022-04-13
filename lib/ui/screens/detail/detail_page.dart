@@ -39,34 +39,35 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.indigo,
-        body: CharacterAppbar(
-          date: widget.date,
-          waifu: widget.waifu,
-          body: Container(
-            color: Colors.white,
-            child: BlocBuilder<DetailCubit, DetailState>(
-              bloc: _detailBloc,
-              builder: (context, DetailState state) {
-                if (state is DetailStateLoading)
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-
-                if (state is DetailStateLoaded)
-                  return CharacterDetail(
-                    characterInformation: state.waifu,
-                    date: widget.date,
-                    ad: state.adWidget,
-                  );
-
-                return ErrorMessages(
-                  clickedFunction: () =>
-                      _detailBloc.getWaifuInformation(widget.waifu),
+      backgroundColor: Colors.indigo,
+      body: CharacterAppbar(
+        date: widget.date,
+        waifu: widget.waifu,
+        body: Container(
+          color: Colors.white,
+          child: BlocBuilder<DetailCubit, DetailState>(
+            bloc: _detailBloc,
+            builder: (context, DetailState state) {
+              if (state is DetailStateLoading)
+                return Center(
+                  child: CircularProgressIndicator(),
                 );
-              },
-            ),
+
+              if (state is DetailStateLoaded)
+                return CharacterDetail(
+                  characterInformation: state.waifu,
+                  date: widget.date,
+                  ad: state.adWidget,
+                );
+
+              return ErrorMessages(
+                clickedFunction: () =>
+                    _detailBloc.getWaifuInformation(widget.waifu),
+              );
+            },
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
