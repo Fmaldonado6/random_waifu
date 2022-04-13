@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -66,7 +68,7 @@ class CollectionCubit extends Cubit<CollectionState> {
     if (sortType == SortType.Anime) {
       final waifusWithoutAnime = <JsonWaifu>[];
 
-      final waifusByAnime = Map<String?, List<JsonWaifu>>();
+      final waifusByAnime = SplayTreeMap<String?, List<JsonWaifu>>();
 
       for (var waifu in _sortedWaifus) {
         if (waifu.getName() == null) {
@@ -85,6 +87,7 @@ class CollectionCubit extends Cubit<CollectionState> {
       final waifusByAnimeList = waifusByAnime.values.toList();
 
       waifusByAnimeList.addAll([waifusWithoutAnime]);
+
 
       return emit(CollectionStateLoaded(
         waifus: _sortedWaifus,

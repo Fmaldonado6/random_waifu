@@ -34,71 +34,76 @@ class _CollectionLoadedByAnimeState extends State<CollectionLoadedByAnime> {
     return Column(
       children: [
         Expanded(
-          child: ListView.builder(
-            itemCount: widget.waifus.length,
-            itemBuilder: (context, index) {
-              final currentWaifus = widget.waifus[index];
-              return Container(
-                margin: EdgeInsets.all(15),
-                child: PhysicalModel(
-                  shadowColor:
-                      Theme.of(context).colorScheme.primary.withAlpha(90),
-                  elevation: 7,
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.white,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ListTile(
-                        subtitle: Text(
-                          currentWaifus.first.getIsAnimeOrManga(),
-                        ),
-                        title: Text(
-                          currentWaifus.first.getName() ?? "Unknown",
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 17,
-                          ),
-                        ),
-                      ),
-                      GridView.builder(
-                        padding: EdgeInsets.all(10),
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: currentWaifus.length,
-                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 150,
-                          childAspectRatio: 3 / 4,
-                          crossAxisSpacing: 15,
-                          mainAxisSpacing: 20,
-                        ),
-                        itemBuilder: (context, index) {
-                          final waifu = currentWaifus[index];
-
-                          return CardImage(
-                            imageUrl: waifu.imageUrl ?? "",
-                            title: waifu.title ?? "",
-                            subtitle: waifu.anime != null
-                                ? waifu.anime?.name
-                                : waifu.manga?.name,
-                            onPressed: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DetailPage(
-                                  waifu: waifu,
-                                  date: waifu.date,
+          child: CustomScrollView(
+            slivers: [
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    final currentWaifus = widget.waifus[index];
+                    return Container(
+                      margin: EdgeInsets.all(15),
+                      child: PhysicalModel(
+                        shadowColor:
+                            Theme.of(context).colorScheme.primary.withAlpha(90),
+                        elevation: 7,
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.white,
+                        child: Column(
+                          children: [
+                            ListTile(
+                              subtitle: Text(
+                                currentWaifus.first.getIsAnimeOrManga(),
+                              ),
+                              title: Text(
+                                currentWaifus.first.getName() ?? "Unknown",
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 17,
                                 ),
                               ),
                             ),
-                          );
-                        },
-                      )
-                    ],
-                  ),
+                            Container(
+                              height: 200,
+                              child: ListView.builder(
+                                padding: EdgeInsets.only(left: 20, bottom: 20),
+                                scrollDirection: Axis.horizontal,
+                                itemCount: currentWaifus.length,
+                                itemBuilder: (context, gridIndex) {
+                                  final waifu = currentWaifus[gridIndex];
+                                  return Container(
+                                    width: 130,
+                                    margin: EdgeInsets.only(right: 20),
+                                    height: 200,
+                                    child: CardImage(
+                                      imageUrl: waifu.imageUrl ?? "",
+                                      title: waifu.title ?? "",
+                                      subtitle: waifu.anime != null
+                                          ? waifu.anime?.name
+                                          : waifu.manga?.name,
+                                      onPressed: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => DetailPage(
+                                            waifu: waifu,
+                                            date: waifu.date,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                  childCount: widget.waifus.length,
                 ),
-              );
-            },
+              )
+            ],
           ),
         ),
         Container(

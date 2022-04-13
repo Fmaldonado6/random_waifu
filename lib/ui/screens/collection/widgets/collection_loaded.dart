@@ -36,7 +36,6 @@ class _CollectionLoadedState extends State<CollectionLoaded> {
           child: GridView.builder(
             padding: EdgeInsets.all(10),
             itemCount: widget.waifus.length,
-            
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 150,
               childAspectRatio: 3 / 4,
@@ -49,9 +48,8 @@ class _CollectionLoadedState extends State<CollectionLoaded> {
               return CardImage(
                 imageUrl: waifu.imageUrl ?? "",
                 title: waifu.title ?? "",
-                subtitle: waifu.anime != null
-                    ? waifu.anime?.name
-                    : waifu.manga?.name,
+                subtitle:
+                    waifu.anime != null ? waifu.anime?.name : waifu.manga?.name,
                 onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(
