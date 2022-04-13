@@ -3,6 +3,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:random_waifu/data/models/models.dart';
 import 'package:random_waifu/ui/screens/detail/widgets/expandable_widget.dart';
 import 'package:random_waifu/ui/screens/detail/widgets/side_image.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CharacterDetailInformation extends StatelessWidget {
   final Waifu characterInformation;
@@ -37,7 +38,11 @@ class CharacterDetailInformation extends StatelessWidget {
         ),
         CharacterExpandableWidget(
           child: Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
+            padding: const EdgeInsets.only(
+              bottom: 8.0,
+              left: 20,
+              right: 20,
+            ),
             child: Text(
               about ?? "No information",
               style: TextStyle(
@@ -115,18 +120,17 @@ class CharacterDetailInformation extends StatelessWidget {
 
   ListView _getRolesList(List<VoiceActressInformation> list, int subtitle) {
     return ListView.builder(
-      padding: EdgeInsets.only(left: 10, right: 10),
+      padding: EdgeInsets.all(0),
       itemCount: list.length,
       shrinkWrap: true,
       physics: ClampingScrollPhysics(),
       itemBuilder: (context, index) {
-        return ListTile(
-          leading: CharacterSideImage(
-            imageUrl: list[index].person?.getImage() ?? "",
-          ),
-          contentPadding: EdgeInsets.all(0),
-          title: Text(list[index].person?.name ?? ""),
-          subtitle: Text("Language: ${list[index].language}"),
+        final current = list[index];
+        return _infoTile(
+          current.person?.name ?? "",
+          current.person?.getImage() ?? "",
+          "Language: ${current.language ?? ""}",
+          current.person?.url,
         );
       },
     );
@@ -134,19 +138,17 @@ class CharacterDetailInformation extends StatelessWidget {
 
   ListView _getMangasList(List<Manga> list, int subtitle) {
     return ListView.builder(
-      padding: EdgeInsets.only(left: 10, right: 10),
+      padding: EdgeInsets.all(0),
       itemCount: list.length,
       shrinkWrap: true,
       physics: ClampingScrollPhysics(),
       itemBuilder: (context, index) {
-        return ListTile(
-          leading: CharacterSideImage(
-            imageUrl: list[index].manga?.getImage() ?? "",
-          ),
-          contentPadding: EdgeInsets.all(0),
-          title: Text(list[index].manga?.title ?? ""),
-          subtitle: Text( "Role: ${list[index].role}",
-          ),
+        final current = list[index];
+        return _infoTile(
+          current.manga?.title ?? "",
+          current.manga?.getImage() ?? "",
+          "Role: ${current.role ?? ""}",
+          current.manga?.url,
         );
       },
     );
@@ -154,21 +156,47 @@ class CharacterDetailInformation extends StatelessWidget {
 
   ListView _getAnimesList(List<Anime> list, int subtitle) {
     return ListView.builder(
-      padding: EdgeInsets.only(left: 10, right: 10),
+      padding: EdgeInsets.all(0),
       itemCount: list.length,
       shrinkWrap: true,
       physics: ClampingScrollPhysics(),
       itemBuilder: (context, index) {
-        return ListTile(
-          leading: CharacterSideImage(
-            imageUrl: list[index].anime?.getImage() ?? "",
-          ),
-          contentPadding: EdgeInsets.all(0),
-          title: Text(list[index].anime?.title ?? ""),
-          subtitle: Text( "Role: ${list[index].role}",
-          ),
+        final current = list[index];
+        return _infoTile(
+          current.anime?.title ?? "",
+          current.anime?.getImage() ?? "",
+          "Role: ${current.role ?? ""}",
+          current.anime?.url,
         );
       },
+    );
+  }
+
+  Widget _infoTile(
+      String title, String imageUrl, String subtitle, String? url) {
+    return Material(
+      child: InkWell(
+        onTap: () async {
+          final canLaunchUrl = await canLaunch(url ?? "");
+          if (canLaunchUrl) launch(url!);
+        },
+        child: Padding(
+          padding: const EdgeInsets.only(
+            left: 20,
+            right: 20,
+          ),
+          child: ListTile(
+            leading: CharacterSideImage(
+              imageUrl: imageUrl,
+            ),
+            contentPadding: EdgeInsets.all(0),
+            title: Text(title),
+            subtitle: Text(
+              subtitle,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

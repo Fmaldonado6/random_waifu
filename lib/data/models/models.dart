@@ -13,6 +13,22 @@ class JsonWaifu {
   AnimeInformation? anime;
   AnimeInformation? manga;
   String? date;
+
+  String? getName() {
+    if (anime != null) return anime!.name;
+    if (manga != null) return manga!.name;
+
+    return null;
+  }
+
+  String getIsAnimeOrManga() {
+    if (anime != null) return "Anime";
+
+    if (manga != null) return "Manga";
+
+    return "Unknown";
+  }
+
   JsonWaifu(
       {this.title,
       this.malId,
@@ -61,11 +77,9 @@ class Anime {
   String? role;
   MediaInformation? anime;
 
-
   Anime();
 
-  factory Anime.fromJson(Map<String, dynamic> json) =>
-      _$AnimeFromJson(json);
+  factory Anime.fromJson(Map<String, dynamic> json) => _$AnimeFromJson(json);
 
   Map<String, dynamic> toJson() => _$AnimeToJson(this);
 }
@@ -75,11 +89,9 @@ class Manga {
   String? role;
   MediaInformation? manga;
 
-
   Manga();
 
-  factory Manga.fromJson(Map<String, dynamic> json) =>
-      _$MangaFromJson(json);
+  factory Manga.fromJson(Map<String, dynamic> json) => _$MangaFromJson(json);
 
   Map<String, dynamic> toJson() => _$MangaToJson(this);
 }

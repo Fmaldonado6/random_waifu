@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:random_waifu/data/models/models.dart';
 
@@ -12,8 +11,16 @@ class CollectionStateLoading extends CollectionState {
 
 class CollectionStateLoaded extends CollectionState {
   final List<JsonWaifu> waifus;
+  final List<List<JsonWaifu>>? waifusByAnime;
   final NativeAd? ad;
-  const CollectionStateLoaded(this.waifus, this.ad);
+  final SortType sortType;
+
+  const CollectionStateLoaded({
+    required this.waifus,
+    required this.sortType,
+    this.ad,
+    this.waifusByAnime,
+  });
 }
 
 class CollectionStateAdLoaded extends CollectionState {
@@ -26,3 +33,5 @@ class CollectionStateError extends CollectionState {
 
   const CollectionStateError(this.error);
 }
+
+enum SortType { Acending, Descending, Anime }

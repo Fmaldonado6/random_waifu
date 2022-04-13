@@ -19,7 +19,7 @@ class CharacterExpandableWidget extends StatelessWidget {
       shadowColor: Theme.of(context).colorScheme.primary.withAlpha(50),
       elevation: 4,
       child: Padding(
-        padding: EdgeInsets.fromLTRB(20, 20, 20, 10),
+        padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
         child: Column(
           children: <Widget>[
             ExpandablePanel(
@@ -28,11 +28,17 @@ class CharacterExpandableWidget extends StatelessWidget {
                 bodyAlignment: ExpandablePanelBodyAlignment.center,
                 useInkWell: true,
               ),
-              header: Text(
-                header,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
+              header: Padding(
+                padding: const EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                ),
+                child: Text(
+                  header,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
               expanded: child,

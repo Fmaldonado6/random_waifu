@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:random_waifu/di/injection_config.dart';
 import 'package:random_waifu/ui/screens/collection/cubit/collection_cubit.dart';
 import 'package:random_waifu/ui/screens/collection/cubit/collection_state.dart';
+import 'package:random_waifu/ui/screens/collection/widgets/collection_loaded_by_anime.dart';
 import 'package:random_waifu/ui/widgets/error_message.dart';
 
 import 'widgets/collection_loaded.dart';
@@ -40,9 +41,24 @@ class _CollectionPageState extends State<CollectionPage> {
           style: TextStyle(fontSize: 25),
         ),
         actions: [
-          IconButton(
-            onPressed: () => _collectionCubit.invertList(),
-            icon: Icon(Icons.filter_list),
+          PopupMenuButton<SortType>(
+            onSelected: (value) {
+              _collectionCubit.sort(value);
+            },
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: SortType.Acending,
+                child: Text("Ascending"),
+              ),
+              PopupMenuItem(
+                value: SortType.Descending,
+                child: Text("Descending"),
+              ),
+              PopupMenuItem(
+                value: SortType.Anime,
+                child: Text("By Anime"),
+              ),
+            ],
           )
         ],
         backgroundColor: Colors.transparent,
@@ -50,6 +66,7 @@ class _CollectionPageState extends State<CollectionPage> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
+        padding: EdgeInsets.only(top: 5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(10),
@@ -74,11 +91,17 @@ class _CollectionPageState extends State<CollectionPage> {
                   backgroundColor: Colors.white,
                 ));
 
-              if (state is CollectionStateLoaded)
-                return CollectionLoaded(
-                  waifus: state.waifus,
-                  ad: state.ad,
-                );
+              if (state is CollectionStateLoaded) {
+                return state.sortType == SortType.Anime
+                    ? CollectionLoadedByAnime(
+                        waifus: state.waifusByAnime!,
+                        ad: state.ad,
+                      )
+                    : CollectionLoaded(
+                        waifus: state.waifus,
+                        ad: state.ad,
+                      );
+              }
               return ErrorMessages(
                 clickedFunction: this._collectionCubit.getCollection,
               );

@@ -33,14 +33,6 @@ class _CollectionLoadedState extends State<CollectionLoaded> {
     return Column(
       children: [
         Expanded(
-          // child: ListView.builder(
-          //   itemCount: widget.waifus.length,
-          //   itemBuilder: (context, index) {
-          //     return WaifuListItem(
-          //       waifu: widget.waifus[index]
-          //     );
-          //   },
-          // ),
           child: GridView.builder(
             padding: EdgeInsets.all(10),
             itemCount: widget.waifus.length,

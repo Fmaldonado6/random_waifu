@@ -11,8 +11,10 @@ import 'package:random_waifu/ui/screens/collection/cubit/collection_state.dart';
 class CollectionCubit extends Cubit<CollectionState> {
   final WaifuRepository _waifuRepository;
   List<JsonWaifu> savedWaifus = [];
+  List<JsonWaifu> _sortedWaifus = [];
   ScrollController? scrollController;
   NativeAd? ad;
+  SortType sortType = SortType.Acending;
   CollectionCubit(this._waifuRepository) : super(CollectionStateLoading());
 
   void initAd(String adId) {
@@ -23,7 +25,11 @@ class CollectionCubit extends Cubit<CollectionState> {
       listener: NativeAdListener(
         onAdLoaded: (ad) {
           this.ad = ad as NativeAd;
-          emit(CollectionStateLoaded(savedWaifus, this.ad));
+          emit(CollectionStateLoaded(
+            waifus: _sortedWaifus,
+            ad: this.ad,
+            sortType: this.sortType,
+          ));
         },
       ),
     );
@@ -35,16 +41,73 @@ class CollectionCubit extends Cubit<CollectionState> {
     try {
       emit(CollectionStateLoading());
       savedWaifus = await this._waifuRepository.localWaifus;
+      _sortedWaifus = savedWaifus;
       this.initAd(AppConfig().adId);
-      emit(CollectionStateLoaded(savedWaifus, null));
+      emit(CollectionStateLoaded(
+        waifus: _sortedWaifus,
+        ad: this.ad,
+        sortType: this.sortType,
+      ));
     } catch (e) {
       emit(CollectionStateError(e.toString()));
     }
   }
 
+  void sort(SortType sortType) {
+    this.sortType = sortType;
+
+    _sortedWaifus = [...savedWaifus];
+
+    if (sortType == SortType.Acending) _sortedWaifus = savedWaifus;
+
+    if (sortType == SortType.Descending)
+      _sortedWaifus = savedWaifus.reversed.toList();
+
+    if (sortType == SortType.Anime) {
+      final waifusWithoutAnime = <JsonWaifu>[];
+
+      final waifusByAnime = Map<String?, List<JsonWaifu>>();
+
+      for (var waifu in _sortedWaifus) {
+        if (waifu.getName() == null) {
+          waifusWithoutAnime.add(waifu);
+          continue;
+        }
+
+        final exists = waifusByAnime[waifu.getName()];
+
+        if (exists == null)
+          waifusByAnime[waifu.getName()] = [waifu];
+        else
+          exists.add(waifu);
+      }
+
+      final waifusByAnimeList = waifusByAnime.values.toList();
+
+      waifusByAnimeList.addAll([waifusWithoutAnime]);
+
+      return emit(CollectionStateLoaded(
+        waifus: _sortedWaifus,
+        waifusByAnime: waifusByAnimeList,
+        ad: this.ad,
+        sortType: this.sortType,
+      ));
+    }
+
+    emit(CollectionStateLoaded(
+      waifus: _sortedWaifus,
+      ad: this.ad,
+      sortType: this.sortType,
+    ));
+  }
+
   void invertList() {
     savedWaifus = savedWaifus.reversed.toList();
-    print(savedWaifus.reversed);
-    emit(CollectionStateLoaded(savedWaifus, this.ad));
+
+    emit(CollectionStateLoaded(
+      waifus: _sortedWaifus,
+      ad: this.ad,
+      sortType: this.sortType,
+    ));
   }
 }
