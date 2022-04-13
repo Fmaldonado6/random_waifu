@@ -14,6 +14,7 @@ class CollectionCubit extends Cubit<CollectionState> {
   final WaifuRepository _waifuRepository;
   List<JsonWaifu> savedWaifus = [];
   List<JsonWaifu> _sortedWaifus = [];
+  List<List<JsonWaifu>> _waifusByAnimeList = [];
   ScrollController? scrollController;
   NativeAd? ad;
   SortType sortType = SortType.Acending;
@@ -29,6 +30,7 @@ class CollectionCubit extends Cubit<CollectionState> {
           this.ad = ad as NativeAd;
           emit(CollectionStateLoaded(
             waifus: _sortedWaifus,
+            waifusByAnime: _waifusByAnimeList,
             ad: this.ad,
             sortType: this.sortType,
           ));
@@ -47,6 +49,7 @@ class CollectionCubit extends Cubit<CollectionState> {
       this.initAd(AppConfig().adId);
       emit(CollectionStateLoaded(
         waifus: _sortedWaifus,
+        waifusByAnime: _waifusByAnimeList,
         ad: this.ad,
         sortType: this.sortType,
       ));
@@ -84,24 +87,22 @@ class CollectionCubit extends Cubit<CollectionState> {
           exists.add(waifu);
       }
 
-      final waifusByAnimeList = waifusByAnime.values.toList();
+      _waifusByAnimeList = waifusByAnime.values.toList();
 
-      waifusByAnimeList.addAll([waifusWithoutAnime]);
-
-
-      return emit(CollectionStateLoaded(
-        waifus: _sortedWaifus,
-        waifusByAnime: waifusByAnimeList,
-        ad: this.ad,
-        sortType: this.sortType,
-      ));
+      _waifusByAnimeList.addAll([waifusWithoutAnime]);
     }
+
+    ad?.dispose();
+    ad = null;
+    initAd(AppConfig().adId);
 
     emit(CollectionStateLoaded(
       waifus: _sortedWaifus,
+      waifusByAnime: _waifusByAnimeList,
       ad: this.ad,
       sortType: this.sortType,
     ));
+    
   }
 
   void invertList() {
@@ -109,6 +110,7 @@ class CollectionCubit extends Cubit<CollectionState> {
 
     emit(CollectionStateLoaded(
       waifus: _sortedWaifus,
+      waifusByAnime: _waifusByAnimeList,
       ad: this.ad,
       sortType: this.sortType,
     ));

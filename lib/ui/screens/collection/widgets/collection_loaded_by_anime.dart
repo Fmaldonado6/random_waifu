@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:random_waifu/data/models/models.dart';
+import 'package:random_waifu/ui/screens/collection/widgets/ad_builder.dart';
 import 'package:random_waifu/ui/screens/collection/widgets/card_image.dart';
 import 'package:random_waifu/ui/screens/detail/detail_page.dart';
 
@@ -106,24 +107,7 @@ class _CollectionLoadedByAnimeState extends State<CollectionLoadedByAnime> {
             ],
           ),
         ),
-        Container(
-          decoration: BoxDecoration(
-            border: Border(
-              top: BorderSide(
-                color: widget.ad == null
-                    ? Colors.transparent
-                    : Colors.grey.shade200,
-              ),
-            ),
-          ),
-          width: double.infinity,
-          height: widget.ad != null ? 75 : 0,
-          child: widget.ad != null
-              ? AdWidget(
-                  ad: widget.ad!,
-                )
-              : Container(),
-        ),
+        AdBuilder(ad: widget.ad)
       ],
     );
   }

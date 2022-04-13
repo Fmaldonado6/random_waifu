@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:random_waifu/di/injection_config.dart';
 import 'package:random_waifu/ui/screens/collection/cubit/collection_cubit.dart';
 import 'package:random_waifu/ui/screens/collection/cubit/collection_state.dart';
+import 'package:random_waifu/ui/screens/collection/widgets/ad_builder.dart';
 import 'package:random_waifu/ui/screens/collection/widgets/collection_loaded_by_anime.dart';
 import 'package:random_waifu/ui/widgets/error_message.dart';
 

@@ -175,6 +175,7 @@ class CharacterDetailInformation extends StatelessWidget {
   Widget _infoTile(
       String title, String imageUrl, String subtitle, String? url) {
     return Material(
+      color: Colors.white,
       child: InkWell(
         onTap: () async {
           final canLaunchUrl = await canLaunch(url ?? "");

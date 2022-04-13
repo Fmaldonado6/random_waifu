@@ -4,6 +4,8 @@ import 'package:random_waifu/data/models/models.dart';
 import 'package:random_waifu/ui/screens/collection/widgets/card_image.dart';
 import 'package:random_waifu/ui/screens/detail/detail_page.dart';
 
+import 'ad_builder.dart';
+
 class CollectionLoaded extends StatefulWidget {
   final List<JsonWaifu> waifus;
   final NativeAd? ad;
@@ -63,24 +65,7 @@ class _CollectionLoadedState extends State<CollectionLoaded> {
             },
           ),
         ),
-        Container(
-          decoration: BoxDecoration(
-            border: Border(
-              top: BorderSide(
-                color: widget.ad == null
-                    ? Colors.transparent
-                    : Colors.grey.shade200,
-              ),
-            ),
-          ),
-          width: double.infinity,
-          height: widget.ad != null ? 75 : 0,
-          child: widget.ad != null
-              ? AdWidget(
-                  ad: widget.ad!,
-                )
-              : Container(),
-        ),
+        AdBuilder(ad: widget.ad)
       ],
     );
   }

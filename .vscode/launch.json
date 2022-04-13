@@ -8,6 +8,12 @@
             "flutterMode": "release"
         },
         {
+            "name": "Flutter Release Dev",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/env/main_prod.dart",
+        },
+        {
             "name": "Flutter Dev",
             "type": "dart",
             "request": "launch",
