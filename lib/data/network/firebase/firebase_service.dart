@@ -11,9 +11,8 @@ class FirebaseService {
 
   Future saveWaifus(List<SavedCharacter> characters, String id) async {
     var json = characters.map((e) => e.toJson()).toList();
-    var elements = FireBaseResponse();
-    elements.waifus = characters;
-    await db.child(id).set(jsonEncode(elements));
+  
+    await db.child(id).child("waifus").set(json);
   }
 
   Future<List<SavedCharacter>> loadWaifus(String id) async {
