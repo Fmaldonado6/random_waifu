@@ -25,6 +25,15 @@ class CollectionCubit extends Cubit<CollectionState> {
       adUnitId: adId,
       factoryId: "adFactory",
       request: AdRequest(),
+      nativeTemplateStyle: NativeTemplateStyle(
+        templateType: TemplateType.small,
+        primaryTextStyle: NativeTemplateTextStyle(size: 12),
+        secondaryTextStyle: NativeTemplateTextStyle(size: 12),
+        tertiaryTextStyle: NativeTemplateTextStyle(size: 12),
+        callToActionTextStyle: NativeTemplateTextStyle(
+          size: 12,
+        ),
+      ),
       listener: NativeAdListener(
         onAdLoaded: (ad) {
           this.ad = ad as NativeAd;
@@ -102,7 +111,6 @@ class CollectionCubit extends Cubit<CollectionState> {
       ad: this.ad,
       sortType: this.sortType,
     ));
-    
   }
 
   void invertList() {

@@ -11,6 +11,9 @@ import 'detail_state.dart';
 class DetailCubit extends Cubit<DetailState> {
   final WaifuRepository _waifuRepository;
   Waifu? waifu;
+  JsonWaifu? savedWaifu;
+  NativeAd? ad;
+  PictureStatus pictureStatus = PictureStatus.loading;
   DetailCubit(this._waifuRepository) : super(DetailStateLoading());
 
   void initAd(String adId) {
@@ -20,7 +23,12 @@ class DetailCubit extends Cubit<DetailState> {
       request: AdRequest(),
       listener: NativeAdListener(
         onAdLoaded: (ad) {
-          emit(DetailStateLoaded(waifu!, ad as NativeAd));
+          this.ad = ad as NativeAd?;
+          emit(DetailStateLoaded(
+            waifu!,
+            pictureStatus,
+            this.ad,
+          ));
         },
       ),
       nativeTemplateStyle: NativeTemplateStyle(
@@ -34,27 +42,59 @@ class DetailCubit extends Cubit<DetailState> {
   Future getWaifuInformation(JsonWaifu savedWaifu) async {
     emit(DetailStateLoading());
     try {
+      this.savedWaifu = savedWaifu;
       waifu = await this._waifuRepository.getWaifuInfo(savedWaifu.malId!);
+      waifu?.pictures = [];
 
       if (savedWaifu.imageUrl != waifu?.getWaifuImage()) {
         savedWaifu.imageUrl = waifu?.getWaifuImage() ?? savedWaifu.imageUrl;
         await this._waifuRepository.updateWaifuByValue(savedWaifu);
       }
+
+      getWaifuImages();
+
+      initAd(AppConfig().adId);
+      emit(DetailStateLoaded(
+        waifu!,
+        pictureStatus,
+        this.ad,
+      ));
     } catch (e) {
       print(e);
       emit(DetailStateError(e.toString()));
-      return;
     }
+  }
 
+  Future getWaifuImages() async {
     try {
-      Future.delayed(Duration(seconds: 1));
+      pictureStatus = PictureStatus.loading;
+      emit(DetailStateLoaded(
+        waifu!,
+        pictureStatus,
+        this.ad,
+      ));
+
       waifu?.pictures =
-          await this._waifuRepository.getWaifuPictures(savedWaifu.malId!);
+          await this._waifuRepository.getWaifuPictures(savedWaifu!.malId!);
+
+      if (waifu?.pictures?.length == 0)
+        pictureStatus = PictureStatus.empty;
+      else
+        pictureStatus = PictureStatus.loaded;
+
+      emit(DetailStateLoaded(
+        waifu!,
+        pictureStatus,
+        this.ad,
+      ));
     } catch (e) {
       print(e);
+      pictureStatus = PictureStatus.error;
+      emit(DetailStateLoaded(
+        waifu!,
+        pictureStatus,
+        this.ad,
+      ));
     }
-
-    initAd(AppConfig().adId);
-    emit(DetailStateLoaded(waifu!, null));
   }
 }

@@ -45,26 +45,30 @@ class _DetailPageState extends State<DetailPage> {
         waifu: widget.waifu,
         body: Container(
           color: Colors.white,
-          child: BlocBuilder<DetailCubit, DetailState>(
-            bloc: _detailBloc,
-            builder: (context, DetailState state) {
-              if (state is DetailStateLoading)
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
+          child: BlocProvider(
+            create: (context) => _detailBloc,
+            child: BlocBuilder<DetailCubit, DetailState>(
+              bloc: _detailBloc,
+              builder: (context, DetailState state) {
+                if (state is DetailStateLoading)
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
 
-              if (state is DetailStateLoaded)
-                return CharacterDetail(
-                  characterInformation: state.waifu,
-                  date: widget.date,
-                  ad: state.adWidget,
-                );
+                if (state is DetailStateLoaded)
+                  return CharacterDetail(
+                    characterInformation: state.waifu,
+                    date: widget.date,
+                    pictureStatus: state.pictureStatus,
+                    ad: state.adWidget,
+                  );
 
-              return ErrorMessages(
-                clickedFunction: () =>
-                    _detailBloc.getWaifuInformation(widget.waifu),
-              );
-            },
+                return ErrorMessages(
+                  clickedFunction: () =>
+                      _detailBloc.getWaifuInformation(widget.waifu),
+                );
+              },
+            ),
           ),
         ),
       ),

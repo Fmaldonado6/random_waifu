@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:random_waifu/data/models/models.dart';
+import 'package:random_waifu/ui/screens/detail/cubit/detail_cubit.dart';
+import 'package:random_waifu/ui/screens/detail/cubit/detail_state.dart';
 import 'package:random_waifu/ui/screens/detail/widgets/expandable_widget.dart';
 import 'package:random_waifu/ui/screens/detail/widgets/side_image.dart';
 import 'package:random_waifu/ui/screens/image_detail/image_detail.dart';
+import 'package:random_waifu/ui/widgets/error_message.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CharacterDetailInformation extends StatelessWidget {
   final Waifu characterInformation;
   final String? date;
   final NativeAd? adWidget;
+  final PictureStatus pictureStatus;
   final double marginBetweenCards = 20;
 
   CharacterDetailInformation({
     Key? key,
     required this.characterInformation,
+    required this.pictureStatus,
     this.date,
     this.adWidget,
   }) : super(key: key);
@@ -61,7 +67,6 @@ class CharacterDetailInformation extends StatelessWidget {
         CharacterExpandableWidget(
           child: characterInformation.animeography?.length == 0
               ? ListTile(
-                  contentPadding: EdgeInsets.all(0),
                   leading: Icon(Icons.help_outline),
                   title: Text("No animes found"),
                 )
@@ -77,7 +82,6 @@ class CharacterDetailInformation extends StatelessWidget {
         CharacterExpandableWidget(
           child: characterInformation.mangaography?.length == 0
               ? ListTile(
-                  contentPadding: EdgeInsets.all(0),
                   leading: Icon(Icons.help_outline),
                   title: Text("No mangas found"),
                 )
@@ -93,7 +97,6 @@ class CharacterDetailInformation extends StatelessWidget {
         CharacterExpandableWidget(
           child: characterInformation.voiceActors?.length == 0
               ? ListTile(
-                  contentPadding: EdgeInsets.all(0),
                   leading: Icon(Icons.help_outline),
                   title: Text("No voice actresses found"),
                 )
@@ -107,76 +110,13 @@ class CharacterDetailInformation extends StatelessWidget {
           height: marginBetweenCards,
         ),
         CharacterExpandableWidget(
-          child: characterInformation.pictures?.length == 0
-              ? ListTile(
-                  contentPadding: EdgeInsets.all(0),
-                  leading: Icon(Icons.help_outline),
-                  title: Text("No pictures found"),
-                )
-              : GridView.builder(
-                  padding: EdgeInsets.only(left: 10, right: 10),
-                  itemCount: characterInformation.pictures?.length,
-                  shrinkWrap: true,
-                  physics: ClampingScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent:
-                        (MediaQuery.of(context).size.width - 20) / 3,
-                    childAspectRatio: 3 / 4,
-                    mainAxisSpacing: 20,
-                    crossAxisSpacing: 20,
-                  ),
-                  itemBuilder: (context, index) {
-                    var item = characterInformation.pictures![index];
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: Colors.indigo.shade200,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: Stack(
-                          children: [
-                            Positioned.fill(
-                              child: Image.network(
-                                item.jpg?.imageUrl ?? "",
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            Positioned.fill(
-                              child: Material(
-                                color: Colors.transparent,
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ImageDetailPage(
-                                          title:
-                                              characterInformation.name ?? "",
-                                          pictures: characterInformation
-                                              .pictures!
-                                              .map((e) => e.jpg?.imageUrl ?? "")
-                                              .toList(),
-                                          initial: index,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
+          child: _getPicturesList(characterInformation.pictures, context),
           header: "Pictures",
         ),
         Container(
           width: double.infinity,
           height: 500,
-          margin: EdgeInsets.only(top: 20),
+          margin: EdgeInsets.only(top: 50),
           child: adWidget != null
               ? AdWidget(
                   ad: adWidget!,
@@ -207,22 +147,85 @@ class CharacterDetailInformation extends StatelessWidget {
     );
   }
 
-  ListView _getPicturesList(List<WaifuImages> list, int subtitle) {
-    return ListView.builder(
-      padding: EdgeInsets.all(0),
-      itemCount: list.length,
-      shrinkWrap: true,
-      physics: ClampingScrollPhysics(),
-      itemBuilder: (context, index) {
-        final current = list[index];
-        return _infoTile(
-          "Hola",
-          current.jpg?.imageUrl ?? "",
-          "Language: ",
-          current.jpg?.imageUrl,
-        );
-      },
-    );
+  Widget _getPicturesList(
+    List<WaifuImages>? list,
+    BuildContext context,
+  ) {
+    if (pictureStatus == PictureStatus.loading)
+      return Container(
+        height: 150,
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+
+    if (pictureStatus == PictureStatus.empty)
+      return ListTile(
+        leading: Icon(Icons.help_outline),
+        title: Text("No pictures found"),
+      );
+
+    if (pictureStatus == PictureStatus.loaded)
+      return GridView.builder(
+        padding: EdgeInsets.only(left: 10, right: 10),
+        itemCount: characterInformation.pictures?.length,
+        shrinkWrap: true,
+        physics: ClampingScrollPhysics(),
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: (MediaQuery.of(context).size.width - 20) / 3,
+          childAspectRatio: 3 / 4,
+          mainAxisSpacing: 20,
+          crossAxisSpacing: 20,
+        ),
+        itemBuilder: (context, index) {
+          var item = characterInformation.pictures![index];
+          return Container(
+            decoration: BoxDecoration(
+              color: Colors.indigo.shade200,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: Image.network(
+                      item.jpg?.imageUrl ?? "",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Positioned.fill(
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ImageDetailPage(
+                                title: characterInformation.name ?? "",
+                                pictures: characterInformation.pictures!
+                                    .map((e) => e.jpg?.imageUrl ?? "")
+                                    .toList(),
+                                initial: index,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        },
+      );
+
+    return ErrorMessages(clickedFunction: () {
+      final cubit = context.read<DetailCubit>();
+      cubit.getWaifuImages();
+    });
   }
 
   ListView _getMangasList(List<Manga> list, int subtitle) {
@@ -267,8 +270,9 @@ class CharacterDetailInformation extends StatelessWidget {
       color: Colors.white,
       child: InkWell(
         onTap: () async {
-          final canLaunchUrl = await canLaunch(url ?? "");
-          if (canLaunchUrl) launch(url!);
+          final uri = Uri.parse(url ?? "");
+          final canLaunch = await canLaunchUrl(uri);
+          if (canLaunch) launchUrl(uri);
         },
         child: Padding(
           padding: const EdgeInsets.only(

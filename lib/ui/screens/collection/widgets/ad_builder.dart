@@ -20,7 +20,7 @@ class AdBuilder extends StatelessWidget {
           ),
         ),
         width: double.infinity,
-        height: ad != null ? 75 : 0,
+        height: ad != null ? 90 : 0,
         child: ad != null
             ? AdWidget(
                 ad: ad!,

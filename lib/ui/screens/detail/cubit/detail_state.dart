@@ -11,12 +11,24 @@ class DetailStateLoading extends DetailState {
 
 class DetailStateLoaded extends DetailState {
   final Waifu waifu;
+  final PictureStatus pictureStatus;
   final NativeAd? adWidget;
-  const DetailStateLoaded(this.waifu, this.adWidget);
+  const DetailStateLoaded(
+    this.waifu,
+    this.pictureStatus,
+    this.adWidget,
+  );
 }
 
 class DetailStateError extends DetailState {
   final String error;
 
   const DetailStateError(this.error);
+}
+
+enum PictureStatus{
+  loading,
+  loaded,
+  error,
+  empty
 }
