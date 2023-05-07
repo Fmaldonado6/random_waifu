@@ -41,16 +41,9 @@ class DetailCubit extends Cubit<DetailState> {
         await this._waifuRepository.updateWaifuByValue(savedWaifu);
       }
 
-      List<WaifuImages> images = [];
 
-      try {
-        images =
-            await this._waifuRepository.getWaifuPictures(savedWaifu.malId!);
-      } catch (e) {
-        print("Couldnt get pictures");
-      }
-
-      waifu?.pictures = images;
+      await Future.delayed(Duration(seconds: 1));
+      waifu?.pictures = await this._waifuRepository.getWaifuPictures(savedWaifu.malId!);
 
       initAd(AppConfig().adId);
       emit(DetailStateLoaded(waifu!, null));
