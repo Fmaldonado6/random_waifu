@@ -45,6 +45,7 @@ class ImageDetailPage extends StatelessWidget {
           pageController: controller,
           builder: (context, index) {
             return PhotoViewGalleryPageOptions(
+              minScale: PhotoViewComputedScale.contained * 0.8,
               filterQuality: FilterQuality.high,
               imageProvider: NetworkImage(pictures[index]),
               initialScale: PhotoViewComputedScale.contained * 0.8,
