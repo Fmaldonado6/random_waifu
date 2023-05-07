@@ -45,6 +45,7 @@ class ImageDetailPage extends StatelessWidget {
         },
         child: PhotoView(
           initialScale: PhotoViewComputedScale.contained,
+          filterQuality: FilterQuality.high,
           minScale: PhotoViewComputedScale.contained,
           imageProvider: NetworkImage(
             picture,
