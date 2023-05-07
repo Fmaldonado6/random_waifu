@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 
 class ImageDetailPage extends StatelessWidget {
   late PageController controller;
   final List<String> pictures;
   final int initial;
   final String title;
+  int currentPicture = 0;
   ImageDetailPage({
     Key? key,
     required this.title,
@@ -15,6 +17,7 @@ class ImageDetailPage extends StatelessWidget {
     this.initial = 0,
   }) : super(key: key) {
     this.controller = PageController(initialPage: initial);
+    currentPicture = initial;
   }
   @override
   Widget build(BuildContext context) {
@@ -29,27 +32,25 @@ class ImageDetailPage extends StatelessWidget {
         title: Text(title),
       ),
       backgroundColor: Colors.black,
-      body: PageView(
-        controller: controller,
-        children: pictures.map((e) => buildPictures(context, e)).toList(),
-      ),
-    );
-  }
-
-  Widget buildPictures(BuildContext context, String picture) {
-    return Container(
-      width: double.infinity,
-      child: InkWell(
+      body: InkWell(
         onLongPress: () {
-          openSaveBottomSheet(context, picture);
+          openSaveBottomSheet(context, pictures[currentPicture]);
         },
-        child: PhotoView(
-          initialScale: PhotoViewComputedScale.contained,
-          filterQuality: FilterQuality.high,
-          minScale: PhotoViewComputedScale.contained,
-          imageProvider: NetworkImage(
-            picture,
-          ),
+        child: PhotoViewGallery.builder(
+          onPageChanged: (index) {
+            currentPicture = index;
+          },
+          scrollPhysics: const BouncingScrollPhysics(),
+          itemCount: pictures.length,
+          pageController: controller,
+          builder: (context, index) {
+            return PhotoViewGalleryPageOptions(
+              filterQuality: FilterQuality.high,
+              imageProvider: NetworkImage(pictures[index]),
+              initialScale: PhotoViewComputedScale.contained * 0.8,
+              heroAttributes: PhotoViewHeroAttributes(tag: pictures[index]),
+            );
+          },
         ),
       ),
     );
@@ -72,7 +73,7 @@ class ImageDetailPage extends StatelessWidget {
             ListTile(
               onTap: () async {
                 try {
-                  await GallerySaver.saveImage(picture);
+                  await GallerySaver.saveImage(picture, albumName: "waifus");
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text("Image Saved")),
                   );
