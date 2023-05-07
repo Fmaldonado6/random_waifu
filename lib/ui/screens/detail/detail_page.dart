@@ -32,6 +32,7 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   void dispose() {
+    _detailBloc.dispose();
     _detailBloc.close();
     super.dispose();
   }

@@ -123,4 +123,8 @@ class CollectionCubit extends Cubit<CollectionState> {
       sortType: this.sortType,
     ));
   }
+
+  void dispose(){
+    ad?.dispose();
+  }
 }

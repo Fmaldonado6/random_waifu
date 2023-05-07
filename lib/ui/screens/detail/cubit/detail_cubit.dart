@@ -97,4 +97,8 @@ class DetailCubit extends Cubit<DetailState> {
       ));
     }
   }
+
+  void dispose() {
+    ad?.dispose();
+  }
 }

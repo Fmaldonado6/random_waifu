@@ -28,6 +28,7 @@ class _CollectionPageState extends State<CollectionPage> {
 
   @override
   void dispose() {
+    _collectionCubit.dispose();
     _collectionCubit.close();
     super.dispose();
   }
