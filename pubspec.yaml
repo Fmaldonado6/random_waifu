@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.4.3+42
+version: 1.4.4+43
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -45,14 +45,19 @@ dependencies:
   firebase_database: ^9.0.10
   json_serializable: ^6.1.5
   flutter_signin_button: ^2.0.0
-  google_mobile_ads: ^1.2.0
+  google_mobile_ads: ^3.0.0
   flutter_local_notifications: ^9.4.0
+  photo_view: ^0.14.0
   shared_preferences: ^2.0.11
+  gallery_saver: ^2.3.2
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.3
+
+dependency_overrides:
+  firebase_core_platform_interface: 4.5.1
 
 dev_dependencies:
   flutter_test:

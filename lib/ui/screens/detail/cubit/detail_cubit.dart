@@ -23,6 +23,9 @@ class DetailCubit extends Cubit<DetailState> {
           emit(DetailStateLoaded(waifu!, ad as NativeAd));
         },
       ),
+      nativeTemplateStyle: NativeTemplateStyle(
+        templateType: TemplateType.medium,
+      ),
     );
 
     ad.load();
@@ -37,6 +40,17 @@ class DetailCubit extends Cubit<DetailState> {
         savedWaifu.imageUrl = waifu?.getWaifuImage() ?? savedWaifu.imageUrl;
         await this._waifuRepository.updateWaifuByValue(savedWaifu);
       }
+
+      List<WaifuImages> images = [];
+
+      try {
+        images =
+            await this._waifuRepository.getWaifuPictures(savedWaifu.malId!);
+      } catch (e) {
+        print("Couldnt get pictures");
+      }
+
+      waifu?.pictures = images;
 
       initAd(AppConfig().adId);
       emit(DetailStateLoaded(waifu!, null));

@@ -47,10 +47,14 @@ class Waifu {
   String? name;
   String? about;
   WaifuImages? images;
+  @JsonKey(name: "anime")
   List<Anime>? animeography;
+  @JsonKey(name: "manga")
   List<Manga>? mangaography;
-  @JsonKey(name: "voice_actors")
+  @JsonKey(name: "voices")
   List<VoiceActressInformation>? voiceActors;
+
+  List<WaifuImages>? pictures;
 
   String? getWaifuImage() {
     if (images == null) return null;

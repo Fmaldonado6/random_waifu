@@ -34,9 +34,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _launchURL() async {
-    const url = 'https://twitter.com/Fmaldonado4202';
-    if (await canLaunch(url)) {
-      await launch(url);
+    var url = Uri.parse('https://twitter.com/Fmaldonado4202');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
     } else {
       throw 'Could not launch $url';
     }

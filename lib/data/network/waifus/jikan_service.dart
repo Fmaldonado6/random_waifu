@@ -8,8 +8,15 @@ class JikanService extends DataService {
   JikanService(Dio dio) : super("https://api.jikan.moe/v4/", dio);
 
   Future<Waifu> getWaifuInfo(int id) async {
-    final res = await this.dio.get("${this.apiUrl}characters/$id");
+    final res = await this.dio.get("${this.apiUrl}characters/$id/full");
     return Waifu.fromJson(res.data["data"]);
+  }
+
+    Future<List<WaifuImages>> getWaifuPictures(int id) async {
+    final res = await this.dio.get("${this.apiUrl}characters/$id/pictures");
+    print(res);
+    final list = res.data["data"] as List;
+    return list.map((e) => WaifuImages.fromJson(e)).toList();
   }
 
   Future<List<Anime>> getWaifuAnime(int id) async {

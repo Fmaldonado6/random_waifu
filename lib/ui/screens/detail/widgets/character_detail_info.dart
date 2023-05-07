@@ -3,6 +3,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:random_waifu/data/models/models.dart';
 import 'package:random_waifu/ui/screens/detail/widgets/expandable_widget.dart';
 import 'package:random_waifu/ui/screens/detail/widgets/side_image.dart';
+import 'package:random_waifu/ui/screens/image_detail/image_detail.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CharacterDetailInformation extends StatelessWidget {
@@ -102,10 +103,80 @@ class CharacterDetailInformation extends StatelessWidget {
                 ),
           header: "Voice actresses",
         ),
+        SizedBox(
+          height: marginBetweenCards,
+        ),
+        CharacterExpandableWidget(
+          child: characterInformation.pictures?.length == 0
+              ? ListTile(
+                  contentPadding: EdgeInsets.all(0),
+                  leading: Icon(Icons.help_outline),
+                  title: Text("No pictures found"),
+                )
+              : GridView.builder(
+                  padding: EdgeInsets.only(left: 10, right: 10),
+                  itemCount: characterInformation.pictures?.length,
+                  shrinkWrap: true,
+                  physics: ClampingScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent:
+                        (MediaQuery.of(context).size.width - 20) / 3,
+                    childAspectRatio: 3 / 4,
+                    mainAxisSpacing: 20,
+                    crossAxisSpacing: 20,
+                  ),
+                  itemBuilder: (context, index) {
+                    var item = characterInformation.pictures![index];
+                    return Container(
+                      decoration: BoxDecoration(
+                        color: Colors.indigo.shade200,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: Stack(
+                          children: [
+                            Positioned.fill(
+                              child: Image.network(
+                                item.jpg?.imageUrl ?? "",
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Positioned.fill(
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ImageDetailPage(
+                                          title:
+                                              characterInformation.name ?? "",
+                                          pictures: characterInformation
+                                              .pictures!
+                                              .map((e) => e.jpg?.imageUrl ?? "")
+                                              .toList(),
+                                          initial: index,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+          header: "Pictures",
+        ),
         Container(
           width: double.infinity,
+          height: 500,
           margin: EdgeInsets.only(top: 20),
-          height: 100,
           child: adWidget != null
               ? AdWidget(
                   ad: adWidget!,
@@ -131,6 +202,24 @@ class CharacterDetailInformation extends StatelessWidget {
           current.person?.getImage() ?? "",
           "Language: ${current.language ?? ""}",
           current.person?.url,
+        );
+      },
+    );
+  }
+
+  ListView _getPicturesList(List<WaifuImages> list, int subtitle) {
+    return ListView.builder(
+      padding: EdgeInsets.all(0),
+      itemCount: list.length,
+      shrinkWrap: true,
+      physics: ClampingScrollPhysics(),
+      itemBuilder: (context, index) {
+        final current = list[index];
+        return _infoTile(
+          "Hola",
+          current.jpg?.imageUrl ?? "",
+          "Language: ",
+          current.jpg?.imageUrl,
         );
       },
     );

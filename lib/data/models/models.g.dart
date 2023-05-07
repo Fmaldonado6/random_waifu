@@ -34,25 +34,28 @@ Waifu _$WaifuFromJson(Map<String, dynamic> json) => Waifu(
       images: json['images'] == null
           ? null
           : WaifuImages.fromJson(json['images'] as Map<String, dynamic>),
-      animeography: (json['animeography'] as List<dynamic>?)
+      animeography: (json['anime'] as List<dynamic>?)
           ?.map((e) => Anime.fromJson(e as Map<String, dynamic>))
           .toList(),
-      mangaography: (json['mangaography'] as List<dynamic>?)
+      mangaography: (json['manga'] as List<dynamic>?)
           ?.map((e) => Manga.fromJson(e as Map<String, dynamic>))
           .toList(),
-      voiceActors: (json['voice_actors'] as List<dynamic>?)
+      voiceActors: (json['voices'] as List<dynamic>?)
           ?.map((e) =>
               VoiceActressInformation.fromJson(e as Map<String, dynamic>))
           .toList(),
-    );
+    )..pictures = (json['pictures'] as List<dynamic>?)
+        ?.map((e) => WaifuImages.fromJson(e as Map<String, dynamic>))
+        .toList();
 
 Map<String, dynamic> _$WaifuToJson(Waifu instance) => <String, dynamic>{
       'name': instance.name,
       'about': instance.about,
       'images': instance.images,
-      'animeography': instance.animeography,
-      'mangaography': instance.mangaography,
-      'voice_actors': instance.voiceActors,
+      'anime': instance.animeography,
+      'manga': instance.mangaography,
+      'voices': instance.voiceActors,
+      'pictures': instance.pictures,
     };
 
 Anime _$AnimeFromJson(Map<String, dynamic> json) => Anime()

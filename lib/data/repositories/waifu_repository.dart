@@ -62,16 +62,13 @@ class WaifuRepository {
   Future<Waifu> getWaifuInfo(int id) async {
     await Future.delayed(Duration(seconds: 1));
     final waifu = await _jikanService.getWaifuInfo(id);
-    final seiyus = await _jikanService.getWaifuVoiceActresses(id);
-    final animes = await _jikanService.getWaifuAnime(id);
-    await Future.delayed(Duration(seconds: 1));
-    final mangas = await _jikanService.getWaifuManga(id);
-
-    waifu.mangaography = mangas;
-    waifu.animeography = animes;
-    waifu.voiceActors = seiyus;
 
     return waifu;
+  }
+
+  Future<List<WaifuImages>> getWaifuPictures(int id) async {
+    final images = await _jikanService.getWaifuPictures(id);
+    return images;
   }
 
   Future<List<JsonWaifu>> getWaifus() async {

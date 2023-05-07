@@ -4,6 +4,7 @@
 // InjectableConfigGenerator
 // **************************************************************************
 
+// ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:dio/dio.dart' as _i5;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
@@ -26,9 +27,16 @@ import 'injection_config.dart' as _i18; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
-_i1.GetIt $initGetIt(_i1.GetIt get,
-    {String? environment, _i2.EnvironmentFilter? environmentFilter}) {
-  final gh = _i2.GetItHelper(get, environment, environmentFilter);
+_i1.GetIt $initGetIt(
+  _i1.GetIt get, {
+  String? environment,
+  _i2.EnvironmentFilter? environmentFilter,
+}) {
+  final gh = _i2.GetItHelper(
+    get,
+    environment,
+    environmentFilter,
+  );
   final networkModule = _$NetworkModule();
   gh.factory<_i3.AuthService>(() => _i3.AuthService());
   gh.singleton<_i4.Database>(_i4.Database());
@@ -41,24 +49,27 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   gh.singleton<_i11.WaifusService>(_i11.WaifusService(get<_i5.Dio>()));
   gh.singleton<_i12.CharactersDao>(_i12.CharactersDao(get<_i4.Database>()));
   gh.singleton<_i13.WaifuRepository>(_i13.WaifuRepository(
-      get<_i12.CharactersDao>(),
-      get<_i10.TodayDao>(),
-      get<_i7.JikanService>(),
-      get<_i11.WaifusService>()));
+    get<_i12.CharactersDao>(),
+    get<_i10.TodayDao>(),
+    get<_i7.JikanService>(),
+    get<_i11.WaifusService>(),
+  ));
   gh.factory<_i14.CloudCubit>(() => _i14.CloudCubit(
-      get<_i3.AuthService>(),
-      get<_i6.FirebaseService>(),
-      get<_i13.WaifuRepository>(),
-      get<_i8.Preferences>()));
+        get<_i3.AuthService>(),
+        get<_i6.FirebaseService>(),
+        get<_i13.WaifuRepository>(),
+        get<_i8.Preferences>(),
+      ));
   gh.factory<_i15.CollectionCubit>(
       () => _i15.CollectionCubit(get<_i13.WaifuRepository>()));
   gh.factory<_i16.DetailCubit>(
       () => _i16.DetailCubit(get<_i13.WaifuRepository>()));
   gh.factory<_i17.HomeCubit>(() => _i17.HomeCubit(
-      get<_i13.WaifuRepository>(),
-      get<_i8.Preferences>(),
-      get<_i3.AuthService>(),
-      get<_i6.FirebaseService>()));
+        get<_i13.WaifuRepository>(),
+        get<_i8.Preferences>(),
+        get<_i3.AuthService>(),
+        get<_i6.FirebaseService>(),
+      ));
   return get;
 }
 

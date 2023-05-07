@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:random_waifu/data/models/models.dart';
 import 'package:random_waifu/data/utils/date_helper.dart';
+import 'package:random_waifu/ui/screens/image_detail/image_detail.dart';
 
 class CharacterAppbar extends StatelessWidget {
   final double bottomAppBarSize = 90;
@@ -63,6 +64,24 @@ class CharacterAppbar extends StatelessWidget {
                             Colors.black.withAlpha(255),
                           ],
                         ),
+                      ),
+                    ),
+                  ),
+                  Positioned.fill(
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ImageDetailPage(
+                                title: waifu.title ?? "",
+                                pictures: [waifu.imageUrl ?? ""],
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -156,7 +175,9 @@ class CharacterAppbar extends StatelessWidget {
                                   width: 7,
                                 ),
                                 Text(
-                                  date != null ? DateHelper.getFullDate(date!) : "Unknown",
+                                  date != null
+                                      ? DateHelper.getFullDate(date!)
+                                      : "Unknown",
                                   style: const TextStyle(
                                     fontSize: 14,
                                   ),
