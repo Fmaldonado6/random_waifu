@@ -82,12 +82,14 @@ class HomeCubit extends Cubit<HomeState> {
       final waifusList = await _waifuRepository.waifus;
 
       JsonWaifu? waifu = localWaifus.isEmpty ? null : localWaifus.last;
+        print(waifusList.length);
 
 
       if (shouldFetchWaifu) {
         bool exists = true;
 
         waifusList.shuffle();
+
 
 
         while (exists && waifusList.isNotEmpty) {
