@@ -82,6 +82,18 @@ class CloudCubit extends Cubit<CloudState> {
     }
   }
 
+  Future deleteAccount() async {
+    try {
+      emit(CloudStateLogin());
+
+      await _databaseService.deleteAllWaifus(_userInformation!.uid);
+      await _authService.deleteAccount();
+      await signOut();
+    } catch (e) {
+      emit(CloudStateError("Error $e"));
+    }
+  }
+
   Future<void> signOut() async {
     try {
       emit(CloudStateLogin());

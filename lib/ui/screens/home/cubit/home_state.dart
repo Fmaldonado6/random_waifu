@@ -1,4 +1,3 @@
-
 import 'package:random_waifu/data/models/models.dart';
 
 abstract class HomeState {
@@ -12,6 +11,10 @@ class HomeStateLoading extends HomeState {
 class HomeStateLoaded extends HomeState {
   final JsonWaifu waifu;
   const HomeStateLoaded(this.waifu);
+}
+
+class HomeStateListFinish extends HomeStateLoaded {
+  HomeStateListFinish(JsonWaifu waifu) : super(waifu);
 }
 
 class HomeStateError extends HomeState {

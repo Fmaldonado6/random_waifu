@@ -83,13 +83,21 @@ class HomeCubit extends Cubit<HomeState> {
 
       JsonWaifu? waifu = localWaifus.isEmpty ? null : localWaifus.last;
 
+
       if (shouldFetchWaifu) {
         bool exists = true;
 
-        while (exists) {
-          final random = Random().nextInt(waifusList.length);
-          waifu = waifusList[random];
+        waifusList.shuffle();
+
+
+        while (exists && waifusList.isNotEmpty) {
+          waifu = waifusList.removeLast();
           exists = await this._waifuRepository.characterExists(waifu.malId!);
+        }
+
+        if (exists && waifusList.isEmpty) {
+          emit(HomeStateListFinish(localWaifus.last));
+          return;
         }
 
         await this._waifuRepository.addWaifu(waifu!);
@@ -117,6 +125,24 @@ class HomeCubit extends Cubit<HomeState> {
       _firebaseService.saveWaifus(characterResource, savedUser.uid);
     } catch (e) {
       print("Couldn't save waifu");
+    }
+  }
+
+  Future restart() async {
+    emit(HomeStateLoading());
+
+    try {
+      await _waifuRepository.restart();
+
+      final savedUser = await this._authService.currentUser;
+
+      if (savedUser != null)
+        await _firebaseService.deleteAllWaifus(savedUser.uid);
+
+      getRandomWaifu();
+    } catch (e) {
+      print("Could't restart waifu");
+      emit(HomeStateError(e.toString()));
     }
   }
 

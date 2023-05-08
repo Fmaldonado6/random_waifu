@@ -11,8 +11,12 @@ class FirebaseService {
 
   Future saveWaifus(List<SavedCharacter> characters, String id) async {
     var json = characters.map((e) => e.toJson()).toList();
-  
+
     await db.child(id).child("waifus").set(json);
+  }
+
+  Future deleteAllWaifus(String id) async {
+    await db.child(id).remove();
   }
 
   Future<List<SavedCharacter>> loadWaifus(String id) async {

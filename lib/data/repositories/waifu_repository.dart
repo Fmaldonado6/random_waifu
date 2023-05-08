@@ -131,4 +131,9 @@ class WaifuRepository {
       await updateWaifus(waifu, i);
     }
   }
+
+  Future restart() async {
+    await clearDay();
+    await _charactersDao.deleteAll();
+  }
 }

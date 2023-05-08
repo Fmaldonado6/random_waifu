@@ -28,6 +28,10 @@ class AuthService {
     }
   }
 
+  Future deleteAccount() async {
+    return _auth.currentUser?.delete();
+  }
+
   Future<void> signOut() async {
     await googleSignIn.signOut();
   }

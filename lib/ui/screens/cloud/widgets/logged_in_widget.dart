@@ -35,7 +35,6 @@ class LoggedInWidget extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-      
           Divider(),
           ListTile(
             leading: Icon(Icons.download_outlined),
@@ -56,6 +55,22 @@ class LoggedInWidget extends StatelessWidget {
               title: "Save waifus",
               text: "This action will override your cloud saved waifus",
               callback: () => saveWaifus(context),
+            ),
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.delete_forever_outlined),
+            title: Text("Delete account"),
+            onTap: () => ConfirmDialog().show(
+              context: context,
+              title: "Delete account",
+              confirm: "Delete Account",
+              text:
+                  "This action will delete your account and all of your cloud saved waifus",
+              callback: () {
+                deleteAccount(context);
+                Navigator.of(context).pop();
+              },
             ),
           ),
           Divider(),
@@ -87,6 +102,19 @@ class LoggedInWidget extends StatelessWidget {
     var res = await context.read<CloudCubit>().loadWaifus(userInformation.uid);
     var string = "Waifus loaded!";
     if (!res) string = "Couldn´t load waifus!";
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(string),
+      ),
+    );
+    Navigator.of(context).pop();
+  }
+
+  void deleteAccount(BuildContext context) async {
+    var res = await context.read<CloudCubit>().deleteAccount();
+    var string = "Account Deleted!";
+    if (!res) string = "Couldn´t delete account!";
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

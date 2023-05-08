@@ -7,7 +7,9 @@ import 'package:random_waifu/ui/screens/collection/collection_page.dart';
 import 'package:random_waifu/ui/screens/home/cubit/home_cubit.dart';
 import 'package:random_waifu/ui/screens/home/cubit/home_state.dart';
 import 'package:random_waifu/ui/screens/home/widgets/character_information.dart';
+import 'package:random_waifu/ui/widgets/confirm_dialog_widget.dart';
 import 'package:random_waifu/ui/widgets/error_message.dart';
+import 'package:random_waifu/ui/widgets/finish_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
@@ -76,8 +78,34 @@ class _HomePageState extends State<HomePage> {
       ),
       body: BlocProvider(
         create: (context) => _homeCubit,
-        child: BlocBuilder<HomeCubit, HomeState>(
+        child: BlocConsumer<HomeCubit, HomeState>(
           bloc: _homeCubit,
+          listener: (context, state) {
+            if (state is HomeStateListFinish) {
+              EndDialog().show(
+                context: context,
+                title: "Congratulations!",
+                text:
+                    "You have collected every waifu, thanks for downloading Random Waifu",
+                confirm: "Restart",
+                callback: () {
+                  Navigator.pop(context);
+
+                  ConfirmDialog().show(
+                    context: context,
+                    title: "Restart",
+                    text:
+                        "This will delete your current waifus from the local device and cloud, are you sure you want to continue?",
+                    confirm: "I want to start over",
+                    callback: () {
+                      Navigator.pop(context);
+                      _homeCubit.restart();
+                    },
+                  );
+                },
+              );
+            }
+          },
           builder: (context, state) {
             if (state is HomeStateLoading)
               return Center(
