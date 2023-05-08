@@ -25,6 +25,8 @@ class WaifuRepository {
 
   List<JsonWaifu>? _localWaifus;
   Future<List<JsonWaifu>> get localWaifus async => await getLocalWaifus();
+  int totalWaifus = 0;
+
 
   Future init() async {
     await this._charactersDao.database.init();

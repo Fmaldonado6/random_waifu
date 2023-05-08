@@ -14,10 +14,12 @@ class CollectionStateLoaded extends CollectionState {
   final List<List<JsonWaifu>>? waifusByAnime;
   final NativeAd? ad;
   final SortType sortType;
+  final int totalWaifus;
 
   const CollectionStateLoaded({
     required this.waifus,
     required this.sortType,
+    required this.totalWaifus,
     this.ad,
     this.waifusByAnime,
   });

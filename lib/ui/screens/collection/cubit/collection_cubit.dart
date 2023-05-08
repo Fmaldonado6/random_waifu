@@ -19,6 +19,7 @@ class CollectionCubit extends Cubit<CollectionState> {
   NativeAd? ad;
   SortType sortType = SortType.Acending;
   CollectionCubit(this._waifuRepository) : super(CollectionStateLoading());
+  int totalWaifus = 0;
 
   void initAd(String adId) {
     final ad = NativeAd(
@@ -40,6 +41,7 @@ class CollectionCubit extends Cubit<CollectionState> {
           emit(CollectionStateLoaded(
             waifus: _sortedWaifus,
             waifusByAnime: _waifusByAnimeList,
+            totalWaifus: totalWaifus,
             ad: this.ad,
             sortType: this.sortType,
           ));
@@ -55,9 +57,13 @@ class CollectionCubit extends Cubit<CollectionState> {
       emit(CollectionStateLoading());
       savedWaifus = await this._waifuRepository.localWaifus;
       _sortedWaifus = savedWaifus;
+      totalWaifus = _waifuRepository.totalWaifus;
+      if (savedWaifus.length > totalWaifus)
+        totalWaifus += savedWaifus.length - totalWaifus;
       this.initAd(AppConfig().adId);
       emit(CollectionStateLoaded(
         waifus: _sortedWaifus,
+        totalWaifus: totalWaifus,
         waifusByAnime: _waifusByAnimeList,
         ad: this.ad,
         sortType: this.sortType,
@@ -98,7 +104,8 @@ class CollectionCubit extends Cubit<CollectionState> {
 
       _waifusByAnimeList = waifusByAnime.values.toList();
 
-      _waifusByAnimeList.addAll([waifusWithoutAnime]);
+      if (waifusWithoutAnime.length > 0)
+        _waifusByAnimeList.addAll([waifusWithoutAnime]);
     }
 
     ad?.dispose();
@@ -107,6 +114,7 @@ class CollectionCubit extends Cubit<CollectionState> {
 
     emit(CollectionStateLoaded(
       waifus: _sortedWaifus,
+      totalWaifus: totalWaifus,
       waifusByAnime: _waifusByAnimeList,
       ad: this.ad,
       sortType: this.sortType,
@@ -119,12 +127,13 @@ class CollectionCubit extends Cubit<CollectionState> {
     emit(CollectionStateLoaded(
       waifus: _sortedWaifus,
       waifusByAnime: _waifusByAnimeList,
+      totalWaifus: totalWaifus,
       ad: this.ad,
       sortType: this.sortType,
     ));
   }
 
-  void dispose(){
+  void dispose() {
     ad?.dispose();
   }
 }

@@ -40,7 +40,9 @@ class _CollectionLoadedByAnimeState extends State<CollectionLoadedByAnime> {
               SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
+                    print(index);
                     final currentWaifus = widget.waifus[index];
+                    print(currentWaifus);
                     return Container(
                       margin: EdgeInsets.all(15),
                       child: PhysicalModel(
