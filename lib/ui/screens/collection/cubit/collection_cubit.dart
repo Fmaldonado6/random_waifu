@@ -26,8 +26,11 @@ class CollectionCubit extends Cubit<CollectionState> {
       adUnitId: adId,
       factoryId: "adFactory",
       request: AdRequest(),
+      
       nativeTemplateStyle: NativeTemplateStyle(
+    
         templateType: TemplateType.small,
+        
         primaryTextStyle: NativeTemplateTextStyle(size: 12),
         secondaryTextStyle: NativeTemplateTextStyle(size: 12),
         tertiaryTextStyle: NativeTemplateTextStyle(size: 12),
@@ -38,13 +41,14 @@ class CollectionCubit extends Cubit<CollectionState> {
       listener: NativeAdListener(
         onAdLoaded: (ad) {
           this.ad = ad as NativeAd;
-          emit(CollectionStateLoaded(
-            waifus: _sortedWaifus,
-            waifusByAnime: _waifusByAnimeList,
-            totalWaifus: totalWaifus,
-            ad: this.ad,
-            sortType: this.sortType,
-          ));
+          if (!this.isClosed)
+            emit(CollectionStateLoaded(
+              waifus: _sortedWaifus,
+              waifusByAnime: _waifusByAnimeList,
+              totalWaifus: totalWaifus,
+              ad: this.ad,
+              sortType: this.sortType,
+            ));
         },
       ),
     );
@@ -54,22 +58,23 @@ class CollectionCubit extends Cubit<CollectionState> {
 
   getCollection() async {
     try {
-      emit(CollectionStateLoading());
+      if (!this.isClosed) emit(CollectionStateLoading());
       savedWaifus = await this._waifuRepository.localWaifus;
       _sortedWaifus = savedWaifus;
       totalWaifus = _waifuRepository.totalWaifus;
       if (savedWaifus.length > totalWaifus)
         totalWaifus += savedWaifus.length - totalWaifus;
       this.initAd(AppConfig().adId);
-      emit(CollectionStateLoaded(
-        waifus: _sortedWaifus,
-        totalWaifus: totalWaifus,
-        waifusByAnime: _waifusByAnimeList,
-        ad: this.ad,
-        sortType: this.sortType,
-      ));
+      if (!this.isClosed)
+        emit(CollectionStateLoaded(
+          waifus: _sortedWaifus,
+          totalWaifus: totalWaifus,
+          waifusByAnime: _waifusByAnimeList,
+          ad: this.ad,
+          sortType: this.sortType,
+        ));
     } catch (e) {
-      emit(CollectionStateError(e.toString()));
+      if (!this.isClosed) emit(CollectionStateError(e.toString()));
     }
   }
 
@@ -112,25 +117,27 @@ class CollectionCubit extends Cubit<CollectionState> {
     ad = null;
     initAd(AppConfig().adId);
 
-    emit(CollectionStateLoaded(
-      waifus: _sortedWaifus,
-      totalWaifus: totalWaifus,
-      waifusByAnime: _waifusByAnimeList,
-      ad: this.ad,
-      sortType: this.sortType,
-    ));
+    if (!this.isClosed)
+      emit(CollectionStateLoaded(
+        waifus: _sortedWaifus,
+        totalWaifus: totalWaifus,
+        waifusByAnime: _waifusByAnimeList,
+        ad: this.ad,
+        sortType: this.sortType,
+      ));
   }
 
   void invertList() {
     savedWaifus = savedWaifus.reversed.toList();
 
-    emit(CollectionStateLoaded(
-      waifus: _sortedWaifus,
-      waifusByAnime: _waifusByAnimeList,
-      totalWaifus: totalWaifus,
-      ad: this.ad,
-      sortType: this.sortType,
-    ));
+    if (!this.isClosed)
+      emit(CollectionStateLoaded(
+        waifus: _sortedWaifus,
+        waifusByAnime: _waifusByAnimeList,
+        totalWaifus: totalWaifus,
+        ad: this.ad,
+        sortType: this.sortType,
+      ));
   }
 
   void dispose() {

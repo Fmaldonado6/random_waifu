@@ -24,11 +24,12 @@ class DetailCubit extends Cubit<DetailState> {
       listener: NativeAdListener(
         onAdLoaded: (ad) {
           this.ad = ad as NativeAd?;
-          emit(DetailStateLoaded(
-            waifu!,
-            pictureStatus,
-            this.ad,
-          ));
+          if (!this.isClosed)
+            emit(DetailStateLoaded(
+              waifu!,
+              pictureStatus,
+              this.ad,
+            ));
         },
       ),
       nativeTemplateStyle: NativeTemplateStyle(
@@ -54,25 +55,27 @@ class DetailCubit extends Cubit<DetailState> {
       getWaifuImages();
 
       initAd(AppConfig().adId);
-      emit(DetailStateLoaded(
-        waifu!,
-        pictureStatus,
-        this.ad,
-      ));
+      if (!this.isClosed)
+        emit(DetailStateLoaded(
+          waifu!,
+          pictureStatus,
+          this.ad,
+        ));
     } catch (e) {
       print(e);
-      emit(DetailStateError(e.toString()));
+      if (!this.isClosed) emit(DetailStateError(e.toString()));
     }
   }
 
   Future getWaifuImages() async {
     try {
       pictureStatus = PictureStatus.loading;
-      emit(DetailStateLoaded(
-        waifu!,
-        pictureStatus,
-        this.ad,
-      ));
+      if (!this.isClosed)
+        emit(DetailStateLoaded(
+          waifu!,
+          pictureStatus,
+          this.ad,
+        ));
 
       waifu?.pictures =
           await this._waifuRepository.getWaifuPictures(savedWaifu!.malId!);
@@ -82,19 +85,21 @@ class DetailCubit extends Cubit<DetailState> {
       else
         pictureStatus = PictureStatus.loaded;
 
-      emit(DetailStateLoaded(
-        waifu!,
-        pictureStatus,
-        this.ad,
-      ));
+      if (!this.isClosed)
+        emit(DetailStateLoaded(
+          waifu!,
+          pictureStatus,
+          this.ad,
+        ));
     } catch (e) {
       print(e);
       pictureStatus = PictureStatus.error;
-      emit(DetailStateLoaded(
-        waifu!,
-        pictureStatus,
-        this.ad,
-      ));
+      if (!this.isClosed)
+        emit(DetailStateLoaded(
+          waifu!,
+          pictureStatus,
+          this.ad,
+        ));
     }
   }
 
