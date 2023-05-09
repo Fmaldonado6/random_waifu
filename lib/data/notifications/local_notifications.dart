@@ -12,6 +12,8 @@ class PushNotificationService {
   Future initialise() async {
     final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     const androidSettings = AndroidInitializationSettings('app_icon');
+    const iosSettings = IOSInitializationSettings();
+
     const androidChannel = AndroidNotificationChannel(
       'channel_id_1',
       "Channel",
@@ -20,7 +22,7 @@ class PushNotificationService {
     );
 
     final initializationSettings =
-        InitializationSettings(android: androidSettings);
+        InitializationSettings(android: androidSettings, iOS: iosSettings);
 
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
     await flutterLocalNotificationsPlugin
@@ -48,11 +50,16 @@ class PushNotificationService {
       seconds: midnight.second - now.second,
     ));
 
-    await flutterLocalNotificationsPlugin.zonedSchedule(0, "New waifu!",
-        "A new waifu is available!", difference, platformChannelSpecifics,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
-        androidAllowWhileIdle: true,
-        matchDateTimeComponents: DateTimeComponents.time);
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      0,
+      "New waifu!",
+      "A new waifu is available!",
+      difference,
+      platformChannelSpecifics,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      androidAllowWhileIdle: true,
+      matchDateTimeComponents: DateTimeComponents.time,
+    );
   }
 }

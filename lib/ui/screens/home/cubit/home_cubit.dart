@@ -71,7 +71,7 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   Future getRandomWaifu() async {
-    emit(HomeStateLoading());
+    if (!this.isClosed) emit(HomeStateLoading());
 
     try {
       bool shouldFetchWaifu = await shouldFetch();
@@ -96,7 +96,7 @@ class HomeCubit extends Cubit<HomeState> {
         }
 
         if (exists && waifusList.isEmpty) {
-          emit(HomeStateListFinish(localWaifus.last));
+          if (!this.isClosed) emit(HomeStateListFinish(localWaifus.last));
           return;
         }
 
@@ -105,9 +105,9 @@ class HomeCubit extends Cubit<HomeState> {
         await this._saveNewWaifu();
       }
 
-      emit(HomeStateLoaded(waifu!));
+      if (!this.isClosed) emit(HomeStateLoaded(waifu!));
     } catch (e) {
-      emit(HomeStateError(e.toString()));
+      if (!this.isClosed) emit(HomeStateError(e.toString()));
     }
   }
 
@@ -129,7 +129,7 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   Future restart() async {
-    emit(HomeStateLoading());
+    if (!this.isClosed) emit(HomeStateLoading());
 
     try {
       await _waifuRepository.restart();

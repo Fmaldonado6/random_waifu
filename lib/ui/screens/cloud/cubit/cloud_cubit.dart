@@ -25,17 +25,18 @@ class CloudCubit extends Cubit<CloudState> {
 
   Future<void> init() async {
     try {
-      emit(CloudStateLogin());
+      if (!this.isClosed) emit(CloudStateLogin());
 
       _userInformation = await _authService.currentUser;
       _autoSave = _preferences.getAutoSave();
 
       if (_userInformation == null) return emit(CloudStateInitial());
 
-      emit(CloudStateCompleted(_userInformation, _autoSave));
+      if (!this.isClosed)
+        emit(CloudStateCompleted(_userInformation, _autoSave));
     } catch (e) {
       print(e);
-      emit(CloudStateError("Error $e"));
+      if (!this.isClosed) emit(CloudStateError("Error $e"));
     }
   }
 
@@ -84,47 +85,48 @@ class CloudCubit extends Cubit<CloudState> {
 
   Future deleteAccount() async {
     try {
-      emit(CloudStateLogin());
+      if (!this.isClosed) emit(CloudStateLogin());
 
       await _databaseService.deleteAllWaifus(_userInformation!.uid);
       await _authService.deleteAccount();
       await signOut();
     } catch (e) {
-      emit(CloudStateError("Error $e"));
+      if (!this.isClosed) emit(CloudStateError("Error $e"));
     }
   }
 
   Future<void> signOut() async {
     try {
-      emit(CloudStateLogin());
+      if (!this.isClosed) emit(CloudStateLogin());
 
       await _authService.signOut();
 
-      emit(CloudStateInitial());
+      if (!this.isClosed) emit(CloudStateInitial());
     } catch (e) {
-      emit(CloudStateError("Error $e"));
+      if (!this.isClosed) emit(CloudStateError("Error $e"));
     }
   }
 
   Future setAutoSave() async {
     _autoSave = !_autoSave;
     await this._preferences.setAutoSave(_autoSave);
-    emit(CloudStateCompleted(_userInformation, _autoSave));
+    if (!this.isClosed) emit(CloudStateCompleted(_userInformation, _autoSave));
   }
 
   Future<void> login() async {
     try {
-      emit(CloudStateLogin());
+      if (!this.isClosed) emit(CloudStateLogin());
 
       _userInformation = await _authService.signInGoogle();
 
       _autoSave = _preferences.getAutoSave();
 
-      emit(CloudStateCompleted(_userInformation, _autoSave));
+      if (!this.isClosed)
+        emit(CloudStateCompleted(_userInformation, _autoSave));
     } catch (e) {
       print(e);
 
-      emit(CloudStateError("Error $e"));
+      if (!this.isClosed) emit(CloudStateError("Error $e"));
     }
   }
 }
