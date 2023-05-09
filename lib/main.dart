@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:random_waifu/ui/screens/home/home_page.dart';
 
 class MyApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -17,9 +18,8 @@ class MyApp extends StatelessWidget {
           elevation: 0,
           color: Colors.indigo,
           systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarIconBrightness: Brightness.light,
-            statusBarBrightness: Brightness.dark
-          ),
+              statusBarIconBrightness: Brightness.light,
+              statusBarBrightness: Brightness.dark),
         ),
         primarySwatch: Colors.indigo,
         visualDensity: VisualDensity.adaptivePlatformDensity,
