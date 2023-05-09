@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -11,7 +12,7 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
-  Future<User?> signInGoogle() async {
+  Future signInGoogle() async {
     final result = await googleSignIn.signIn();
 
     final auth = await result?.authentication;
@@ -42,8 +43,23 @@ class AuthService {
   }
 
   Future<User?> signInWithApple() async {
-    final appleProvider = AppleAuthProvider();
-    final result = await _auth.signInWithProvider(appleProvider);
+    final rawNonce = _generateNonce();
+    final nonce = _sha256ofString(rawNonce);
+
+    final appleCredential = await SignInWithApple.getAppleIDCredential(
+      scopes: [
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName,
+      ],
+      nonce: nonce,
+    );
+
+    final oauthCredential = OAuthProvider("apple.com").credential(
+      idToken: appleCredential.identityToken,
+      rawNonce: rawNonce,
+    );
+
+    final result = await _auth.signInWithCredential(oauthCredential);
 
     return result.user;
   }

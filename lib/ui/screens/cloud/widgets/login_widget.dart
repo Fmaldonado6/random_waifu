@@ -61,7 +61,7 @@ class LoginWidget extends StatelessWidget {
                   width: double.infinity,
                   child: SignInButton(
                     Buttons.Apple,
-                    onPressed: () => context.read<CloudCubit>().loginGoogle(),
+                    onPressed: () => context.read<CloudCubit>().loginApple(),
                     elevation: 5,
                     shape: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
