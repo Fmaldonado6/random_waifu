@@ -113,11 +113,28 @@ class CloudCubit extends Cubit<CloudState> {
     if (!this.isClosed) emit(CloudStateCompleted(_userInformation, _autoSave));
   }
 
-  Future<void> login() async {
+  Future<void> loginGoogle() async {
     try {
       if (!this.isClosed) emit(CloudStateLogin());
 
       _userInformation = await _authService.signInGoogle();
+
+      _autoSave = _preferences.getAutoSave();
+
+      if (!this.isClosed)
+        emit(CloudStateCompleted(_userInformation, _autoSave));
+    } catch (e) {
+      print(e);
+
+      if (!this.isClosed) emit(CloudStateError("Error $e"));
+    }
+  }
+
+    Future<void> loginApple() async {
+    try {
+      if (!this.isClosed) emit(CloudStateLogin());
+
+      _userInformation = await _authService.signInWithApple();
 
       _autoSave = _preferences.getAutoSave();
 

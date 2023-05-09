@@ -28,6 +28,7 @@ ServiceDefinitions.json
 Runner/GeneratedPluginRegistrant.*
 GoogleService-Info.plist
 firebase_app_id_file.json
+Env.xcconfig
 
 # Exceptions to above rules.
 !default.mode1v3

@@ -17,7 +17,12 @@
             "name": "Flutter Dev",
             "type": "dart",
             "request": "launch",
-            "toolArgs": ["--dart-define", "APPLICATION_ID=ca-app-pub-3940256099942544~3347511713"],
+            "toolArgs": [
+                "--dart-define",
+                "APPLICATION_ID=ca-app-pub-3940256099942544~3347511713",
+                "--dart-define",
+                "REVERSED_CLIENT_ID=com.googleusercontent.apps.42084414849-djsppa4bg0quhhpanda7kpekn30h5qmh"
+            ],
             "program": "lib/env/main_dev.dart"
         }
     ]

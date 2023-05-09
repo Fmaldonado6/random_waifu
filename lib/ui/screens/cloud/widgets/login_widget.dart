@@ -1,6 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:random_waifu/ui/screens/cloud/cubit/cloud_cubit.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
@@ -25,7 +26,6 @@ class LoginWidget extends StatelessWidget {
               ),
             ),
           ),
-         
           Container(
             child: Text(
               "Log in to save your waifus to the cloud.",
@@ -44,7 +44,7 @@ class LoginWidget extends StatelessWidget {
             width: double.infinity,
             child: SignInButton(
               Buttons.Google,
-              onPressed: () => context.read<CloudCubit>().login(),
+              onPressed: () => context.read<CloudCubit>().loginGoogle(),
               elevation: 5,
               shape: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),
@@ -52,6 +52,24 @@ class LoginWidget extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(
+            height: 20,
+          ),
+          Platform.isIOS
+              ? SizedBox(
+                  height: 45,
+                  width: double.infinity,
+                  child: SignInButton(
+                    Buttons.Apple,
+                    onPressed: () => context.read<CloudCubit>().loginGoogle(),
+                    elevation: 5,
+                    shape: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: const BorderSide(color: Colors.transparent),
+                    ),
+                  ),
+                )
+              : Container(),
         ],
       ),
     );
