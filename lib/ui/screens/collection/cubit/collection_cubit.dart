@@ -20,6 +20,8 @@ class CollectionCubit extends Cubit<CollectionState> {
   SortType sortType = SortType.Acending;
   CollectionCubit(this._waifuRepository) : super(CollectionStateLoading());
   int totalWaifus = 0;
+  int collectedWaifus = 0;
+  int? extraWaifus;
 
   void initAd(String adId) {
     final ad = NativeAd(
@@ -42,6 +44,8 @@ class CollectionCubit extends Cubit<CollectionState> {
             waifus: _sortedWaifus,
             waifusByAnime: _waifusByAnimeList,
             totalWaifus: totalWaifus,
+            collectedWaifus: collectedWaifus,
+            extraWaifus: extraWaifus,
             ad: this.ad,
             sortType: this.sortType,
           ));
@@ -58,12 +62,25 @@ class CollectionCubit extends Cubit<CollectionState> {
       savedWaifus = await this._waifuRepository.localWaifus;
       _sortedWaifus = savedWaifus;
       totalWaifus = _waifuRepository.totalWaifus;
-      if (savedWaifus.length > totalWaifus)
-        totalWaifus += savedWaifus.length - totalWaifus;
+
+      for (var waifu in savedWaifus) {
+        if (waifu.getName() != null) {
+          collectedWaifus++;
+          continue;
+        }
+
+        if (extraWaifus == null)
+          extraWaifus = 1;
+        else
+          extraWaifus = extraWaifus! + 1;
+      }
+
       this.initAd(AppConfig().adId);
       emit(CollectionStateLoaded(
         waifus: _sortedWaifus,
         totalWaifus: totalWaifus,
+        collectedWaifus: collectedWaifus,
+        extraWaifus: extraWaifus,
         waifusByAnime: _waifusByAnimeList,
         ad: this.ad,
         sortType: this.sortType,
@@ -115,6 +132,8 @@ class CollectionCubit extends Cubit<CollectionState> {
     emit(CollectionStateLoaded(
       waifus: _sortedWaifus,
       totalWaifus: totalWaifus,
+      collectedWaifus: collectedWaifus,
+      extraWaifus: extraWaifus,
       waifusByAnime: _waifusByAnimeList,
       ad: this.ad,
       sortType: this.sortType,
@@ -128,6 +147,8 @@ class CollectionCubit extends Cubit<CollectionState> {
       waifus: _sortedWaifus,
       waifusByAnime: _waifusByAnimeList,
       totalWaifus: totalWaifus,
+      collectedWaifus: collectedWaifus,
+      extraWaifus: extraWaifus,
       ad: this.ad,
       sortType: this.sortType,
     ));

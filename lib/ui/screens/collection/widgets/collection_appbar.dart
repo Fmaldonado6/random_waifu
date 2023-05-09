@@ -8,12 +8,14 @@ class CollectionAppbar extends StatelessWidget {
 
   final int totalWaifus;
   final int collectedWaifus;
+  final int? extraWaifus;
   const CollectionAppbar({
     Key? key,
     required this.body,
     required this.totalWaifus,
     required this.collectedWaifus,
     required this.actions,
+    required this.extraWaifus,
   }) : super(key: key);
 
   @override
@@ -129,7 +131,9 @@ class CollectionAppbar extends StatelessWidget {
                                   width: 7,
                                 ),
                                 Text(
-                                  "$collectedWaifus/$totalWaifus",
+                                  extraWaifus == null
+                                      ? "$collectedWaifus/$totalWaifus"
+                                      : "$collectedWaifus + $extraWaifus/$totalWaifus",
                                   style: const TextStyle(
                                     fontSize: 14,
                                   ),

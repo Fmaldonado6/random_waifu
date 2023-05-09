@@ -15,11 +15,15 @@ class CollectionStateLoaded extends CollectionState {
   final NativeAd? ad;
   final SortType sortType;
   final int totalWaifus;
+  final int collectedWaifus;
+  final int? extraWaifus;
 
   const CollectionStateLoaded({
     required this.waifus,
     required this.sortType,
     required this.totalWaifus,
+    required this.collectedWaifus,
+    this.extraWaifus,
     this.ad,
     this.waifusByAnime,
   });

@@ -22,6 +22,7 @@ class _CollectionPageState extends State<CollectionPage> {
   final _collectionCubit = getIt.get<CollectionCubit>();
   int totalWaifus = 0;
   int collectedWaifus = 0;
+  int? extraWaifus;
 
   @override
   void initState() {
@@ -43,6 +44,7 @@ class _CollectionPageState extends State<CollectionPage> {
       body: CollectionAppbar(
         collectedWaifus: collectedWaifus,
         totalWaifus: totalWaifus,
+        extraWaifus: extraWaifus,
         actions: [
           PopupMenuButton<SortType>(
             onSelected: (value) {
@@ -85,8 +87,8 @@ class _CollectionPageState extends State<CollectionPage> {
                 if (state is CollectionStateLoaded) {
                   setState(() {
                     totalWaifus = state.totalWaifus;
-
-                    collectedWaifus = state.waifus.length;
+                    collectedWaifus = state.collectedWaifus;
+                    extraWaifus = state.extraWaifus;
                   });
                 }
               },
