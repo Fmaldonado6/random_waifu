@@ -17,6 +17,7 @@
             "name": "Flutter Dev",
             "type": "dart",
             "request": "launch",
+            "args": ["--dart-define APPLICATION_ID=ca-app-pub-3940256099942544~3347511713"],
             "program": "lib/env/main_dev.dart"
         }
     ]

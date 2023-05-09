@@ -50,6 +50,6 @@
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true/>
 		<key>GADApplicationIdentifier</key>
-		<string>${ADMOB_APP_ID}</string>
+		<string>${APPLICATION_ID}</string>
 	</dict>
 </plist>
