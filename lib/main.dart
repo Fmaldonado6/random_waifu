@@ -22,7 +22,6 @@ void main() async {
   Hive.registerAdapter(KitsuImageAdapter());
   await MobileAds.instance.initialize();
   await Firebase.initializeApp();
-  print(const String.fromEnvironment("NATIVE_AD_ID"));
   AppConfig(
     adId: const String.fromEnvironment("NATIVE_AD_ID"),
     rewardedAd: const String.fromEnvironment("REWARDED_AD_ID"),
