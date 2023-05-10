@@ -1,0 +1,29 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "flutter",
+            "label": "Generate appbundle",
+            
+            "command": "flutter",
+            "args": [
+                "build appbundle",
+                "--dart-define-from-file",
+                "env/env-prod.json",
+            ],
+            "problemMatcher": []
+        },
+        {
+            "type": "flutter",
+            "label": "Generate ipa",
+            
+            "command": "flutter",
+            "args": [
+                "build ipa",
+                "--dart-define-from-file",
+                "env/env-prod.json",
+            ],
+            "problemMatcher": []
+        }
+    ]
+}
