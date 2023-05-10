@@ -46,6 +46,7 @@ class CollectionCubit extends Cubit<CollectionState> {
               waifusByAnime: _waifusByAnimeList,
               totalWaifus: totalWaifus,
               collectedWaifus: collectedWaifus,
+              extraWaifus: extraWaifus,
               ad: this.ad,
               sortType: this.sortType,
             ));
@@ -81,6 +82,7 @@ class CollectionCubit extends Cubit<CollectionState> {
           waifus: _sortedWaifus,
           collectedWaifus: collectedWaifus,
           totalWaifus: totalWaifus,
+          extraWaifus: extraWaifus,
           waifusByAnime: _waifusByAnimeList,
           ad: this.ad,
           sortType: this.sortType,
@@ -134,6 +136,7 @@ class CollectionCubit extends Cubit<CollectionState> {
         waifus: _sortedWaifus,
         collectedWaifus: collectedWaifus,
         totalWaifus: totalWaifus,
+        extraWaifus: extraWaifus,
         waifusByAnime: _waifusByAnimeList,
         ad: this.ad,
         sortType: this.sortType,
@@ -147,6 +150,7 @@ class CollectionCubit extends Cubit<CollectionState> {
       emit(CollectionStateLoaded(
         waifus: _sortedWaifus,
         waifusByAnime: _waifusByAnimeList,
+        extraWaifus: extraWaifus,
         collectedWaifus: collectedWaifus,
         totalWaifus: totalWaifus,
         ad: this.ad,
