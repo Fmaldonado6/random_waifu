@@ -70,6 +70,7 @@ class AuthService {
 
   Future<void> signOut() async {
     await googleSignIn.signOut();
+    await _auth.signOut();
   }
 
   Future<User?> get currentUser async => _auth.currentUser;
