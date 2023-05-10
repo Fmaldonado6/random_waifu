@@ -4,10 +4,10 @@
         {
             "type": "flutter",
             "label": "Generate appbundle",
-            
             "command": "flutter",
             "args": [
-                "build appbundle",
+                "build",
+                "appbundle",
                 "--dart-define-from-file",
                 "env/env-prod.json",
             ],
@@ -16,10 +16,10 @@
         {
             "type": "flutter",
             "label": "Generate ipa",
-            
             "command": "flutter",
             "args": [
-                "build ipa",
+                "build",
+                "ipa",
                 "--dart-define-from-file",
                 "env/env-prod.json",
             ],
