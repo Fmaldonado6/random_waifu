@@ -16,7 +16,7 @@
             "request": "launch",
             "toolArgs": [
                 "--dart-define-from-file",
-                "env/env-dev.json",
+                "env/env-prod.json",
             ],
         },
         {
