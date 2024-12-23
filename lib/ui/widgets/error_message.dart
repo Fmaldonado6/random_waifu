@@ -26,7 +26,7 @@ class ErrorMessages extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(18),
               ),
-              primary: Colors.indigo.shade100,
+              backgroundColor: Colors.indigo.shade100,
             ),
             onPressed: clickedFunction,
             child: Text("RETRY"),

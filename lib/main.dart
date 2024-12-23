@@ -1,14 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:random_waifu/app_config.dart';
 import 'package:random_waifu/data/database/entities/entities.dart';
 import 'package:random_waifu/di/injection_config.dart';
-import 'package:hive/hive.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:random_waifu/ui/screens/home/home_page.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,9 +31,7 @@ void main() async {
   );
 }
 
-
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -44,6 +41,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Random Waifu',
       theme: ThemeData(
+        useMaterial3: false,
         appBarTheme: AppBarTheme(
           elevation: 0,
           color: Colors.indigo,

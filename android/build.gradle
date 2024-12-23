@@ -1,4 +1,7 @@
 buildscript {
+    ext {
+        agp_version = '7.4.0'
+    }
     ext.kotlin_version = '1.8.0'
     repositories {
         google()
@@ -6,7 +9,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.2'
+        classpath "com.android.tools.build:gradle:$agp_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.0"
         classpath 'com.google.gms:google-services:4.3.15'
         classpath 'com.google.dagger:hilt-android-gradle-plugin:2.45'
@@ -29,6 +32,6 @@ subprojects {
     project.evaluationDependsOn(':app')
 }
 
-task clean(type: Delete) {
+tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }

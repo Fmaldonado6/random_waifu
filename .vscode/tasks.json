@@ -22,6 +22,7 @@
                 "ipa",
                 "--dart-define-from-file",
                 "env/env-prod.json",
+                "--stacktrace"
             ],
             "problemMatcher": []
         }

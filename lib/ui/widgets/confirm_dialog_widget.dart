@@ -17,7 +17,7 @@ class ConfirmDialog {
           actions: <Widget>[
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Colors.indigoAccent,
+                backgroundColor: Colors.indigoAccent,
               ),
               onPressed: () async {
                 callback();

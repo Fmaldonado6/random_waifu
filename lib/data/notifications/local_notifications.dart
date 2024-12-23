@@ -12,7 +12,14 @@ class PushNotificationService {
   Future initialise() async {
     final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     const androidSettings = AndroidInitializationSettings('app_icon');
-    const iosSettings = IOSInitializationSettings();
+    const iosSettings = DarwinInitializationSettings();
+
+    final hasPermission = await flutterLocalNotificationsPlugin
+            .resolvePlatformSpecificImplementation<
+                AndroidFlutterLocalNotificationsPlugin>()
+            ?.requestNotificationsPermission() ??
+        true;
+    if (!hasPermission) return;
 
     const androidChannel = AndroidNotificationChannel(
       'channel_id_1',
@@ -58,7 +65,7 @@ class PushNotificationService {
       platformChannelSpecifics,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
-      androidAllowWhileIdle: true,
+      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
       matchDateTimeComponents: DateTimeComponents.time,
     );
   }
